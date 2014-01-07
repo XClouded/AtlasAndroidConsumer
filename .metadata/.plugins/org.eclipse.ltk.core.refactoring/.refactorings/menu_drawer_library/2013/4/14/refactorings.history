@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MenuDrawer.java&apos; to &apos;Atlas/src/atlasapp.slidemenu&apos;&#x0A;- Original project: &apos;library&apos;&#x0A;- Destination element: &apos;Atlas/src/atlasapp.slidemenu&apos;&#x0A;- Original element: &apos;net.simonvt.menudrawer.MenuDrawer.java&apos;" description="Copy compilation unit" destination="=Atlas/src&lt;atlasapp.slidemenu" element1="/src&lt;net.simonvt.menudrawer{MenuDrawer.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1364781978636" units="1" version="1.0"/>
+</session>

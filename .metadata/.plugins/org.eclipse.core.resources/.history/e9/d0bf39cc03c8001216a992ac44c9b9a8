@@ -1,0 +1,6 @@
+package atlasapp.database;
+
+public class OutboundEmailProperties 
+{
+
+}

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/select_cal_select_calendar_slider_background"
+   
+     >
+
+    <RelativeLayout
+        android:id="@+id/selectCalendarsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+        
+    <ImageView
+        android:id="@+id/selectCalHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/select_cal_select_calendars_view_title_bar_title_text" >
+    </ImageView>
+   
+    
+    <RadioGroup
+      android:id="@+id/selectCelndarsBtns"
+      android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+     
+      android:orientation="vertical"
+      android:layout_below="@id/selectCalHeader"
+       
+      
+      
+      
+       >
+
+        <RadioButton
+            android:id="@+id/btnCalAll"
+            style="@style/navbar_button"
+            android:layout_width="260dp"
+            
+            android:drawableRight="@drawable/all_calendars_selector"
+            android:text="All"
+            android:textSize="24px" />
+
+    <RadioButton
+      android:id="@+id/btnCal1"
+      style="@style/navbar_button"
+ android:layout_width="260dp"
+     android:drawableRight="@drawable/all_calendars_selector"
+     android:text="Business"
+      android:textSize="24px"
+    
+    />
+    <RadioButton
+      android:id="@+id/btnCal2" 
+      style="@style/navbar_button"
+      android:layout_width="260dp"
+      android:drawableRight="@drawable/all_calendars_selector"
+  android:text="Family"
+    android:textSize="24px"
+    />
+
+    <RadioButton
+        android:id="@+id/btnNotes"
+        style="@style/navbar_button"
+       
+       android:layout_width="260dp"
+          android:drawableRight="@drawable/all_calendars_selector"
+     android:textSize="24px"
+        android:text="Health" />
+
+   
+    </RadioGroup>
+    
+    
+    
+    
+  
+
+    
+    
+    </RelativeLayout>
+    
+    
+    
+    
+     <RelativeLayout
+        android:id="@+id/sortCalendarsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+       android:layout_below="@id/selectCalendarsLayout" >
+        
+    <ImageView
+        android:id="@+id/sortCalHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/select_cal_sort_by" >
+    </ImageView>
+   
+    
+    <RadioGroup
+      android:id="@+id/sortCelndarsBtns"
+      android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+     
+      android:orientation="vertical"
+      android:layout_below="@id/sortCalHeader"
+       
+      
+      
+      
+       >
+
+        <RadioButton
+            android:id="@+id/btnPriority"
+            style="@style/navbar_button"
+           android:layout_width="260dp"
+            android:drawableRight="@drawable/all_calendars_selector"
+            android:text="Priority"
+            android:textSize="24px"
+            />
+
+    <RadioButton
+      android:id="@+id/btnDueDate"
+      style="@style/navbar_button"
+ android:layout_width="260dp"
+     android:drawableRight="@drawable/all_calendars_selector"
+     android:text="Due Date"
+      android:textSize="24px"
+    
+    />
+    <RadioButton
+      android:id="@+id/btnDuration" 
+      style="@style/navbar_button"
+      android:layout_width="260dp"
+      android:drawableRight="@drawable/all_calendars_selector"
+  android:text="Duration"
+    android:textSize="24px"
+    />
+
+    <RadioButton
+        android:id="@+id/btnDelagated"
+        style="@style/navbar_button"
+       
+       android:layout_width="260dp"
+          android:drawableRight="@drawable/all_calendars_selector"
+     android:textSize="24px"
+        android:text="Delagated" />
+
+   
+    </RadioGroup>
+    
+    
+    
+    
+  
+
+    
+    
+    </RelativeLayout>
+    
+    
+    
+    
+
+</RelativeLayout>

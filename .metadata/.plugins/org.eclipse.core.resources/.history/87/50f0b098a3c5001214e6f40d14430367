@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_day_mover"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/calendarHourRespondList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomBarMenu"
+        android:layout_alignParentRight="true" >
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/bottomBarMenu"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/atl_event_respond_bk_event_response" >
+
+        <RelativeLayout
+            android:id="@+id/eventInviterLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/atl_event_respond_bk_event_response" >
+
+            <ImageView
+                android:id="@+id/eventInviterImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/eventInviterTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/eventInviterImage"
+                android:text="as invited you to..."
+                android:textColor="@color/white" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/eventEventTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/eventInviterTitleTextView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/eventInviterImage"
+                android:text="Coffee "
+                android:textColor="@color/blue" >
+            </TextView>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/eventKeylineHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventInviterLayout"
+            android:src="@drawable/atl_event_respond_keyline_horizontal" >
+        </ImageView>
+
+        <RelativeLayout
+            android:id="@+id/eventLeftLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/eventKeylineHorizontal"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/eventLeftLayoutDescriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Tap each time to indicate \n if that time works for you or not."
+                android:textColor="@color/white" >
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/eventLeftLayoutAltVote"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/eventLeftLayoutDescriptionTextView" >
+
+                <RelativeLayout
+                    android:id="@+id/eventLeftLayoutVoteAndSend"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp" >
+
+                    <ImageButton
+                        android:id="@+id/pickAndVoteBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="35dp"
+                        android:src="@drawable/atl_event_respond_vote_na" />
+
+                    <ImageView
+                        android:id="@+id/decideLaterBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="24dp"
+                        android:src="@drawable/atl_event_respond_btn_decide_later" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/eventLeftLayoutAltHourPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/eventLeftLayoutVoteAndSend"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp" >
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/eventLeftLayoutAltVoteBubbleImageVoteSelected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/eventLeftLayoutAltHourPicker"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp" >
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/eventLeftLayoutAltVoteBubbleImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/eventLeftLayoutAltVoteBubbleImageVoteSelected"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/attendeesBtn" >
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignBottom="@+id/idealBtn"
+                        android:layout_alignParentLeft="true"
+                        android:background="@drawable/atl_event_respond_bubble_left" >
+                    </ImageView>
+
+                    <ImageButton
+                        android:id="@+id/idealBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/atl_event_respond_big_ideal" />
+
+                    <ImageButton
+                        android:id="@+id/OkayBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/idealBtn"
+                        android:src="@drawable/atl_event_respond_big_ok" />
+
+                    <ImageButton
+                        android:id="@+id/CantBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/OkayBtn"
+                        android:src="@drawable/atl_event_respond_big_cant" />
+
+                    <ImageView
+                        android:id="@+id/alt1Decide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/OkayBtn"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="21dp"
+                        android:contentDescription="@string/app_title"
+                        android:src="@drawable/atl_event_respond_btn_small_ideal" />
+
+                    <ImageView
+                        android:id="@+id/alt2Decide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/app_title"
+                        android:src="@drawable/atl_event_respond_btn_small_ok" />
+
+                    <ImageView
+                        android:id="@+id/alt3Decide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/imageView1"
+                        android:layout_alignTop="@+id/alt2Decide"
+                        android:src="@drawable/atl_event_respond_btn_small_cant" />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@+id/attendeesBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="30dp"
+                    android:src="@drawable/atl_event_respond_btn_invitee_list" />
+
+                <TextView
+                    android:id="@+id/eventRightLayoutDescription2TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/attendeesBtn"
+                    android:layout_below="@+id/attendeesBtn"
+                    android:layout_marginTop="14dp"
+                    android:text="See the list."
+                    android:textColor="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/alt1Hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/eventLeftLayoutAltVoteBubbleImage"
+                    android:src="@drawable/atl_event_respond_btn_alt_times" />
+
+                <ImageButton
+                    android:id="@+id/alt2Hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/alt1Hour"
+                     android:layout_below="@+id/eventLeftLayoutAltVoteBubbleImage"
+                    android:src="@drawable/atl_event_respond_btn_alt_times" />
+
+                <ImageButton
+                    android:id="@+id/alt3Hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     android:layout_below="@+id/eventLeftLayoutAltVoteBubbleImage"
+                    android:layout_toRightOf="@+id/alt2Hour"
+                    android:src="@drawable/atl_event_respond_btn_alt_times"
+                    android:text="ALT 3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/eventRightLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/eventKeylineHorizontal"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/eventLeftLayout" >
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/eventRightLayoutDescriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="You are one of  \n X attendees."
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

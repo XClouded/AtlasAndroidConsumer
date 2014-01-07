@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/atlSigninLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/white" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_marginBottom="5dp"
+			android:layout_marginTop="5dp"
+			android:src="@drawable/atl_welcome_atlas_logo" >
+		</ImageView>
+		
+		<ImageButton
+			android:id="@+id/signinIForgotBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="5dp"
+			android:background="@drawable/atl_signin_forgot_btn"
+			android:contentDescription="@string/app_name" >
+		</ImageButton>
+	</RelativeLayout>
+	<ScrollView
+		android:id="@+id/cal_edit_content_scroll_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/topBarMenu"
+		android:scrollbars="none" >
+		<RelativeLayout
+			android:id="@+id/atlSigninContentBody"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/topBarMenu" >
+			<ImageView
+				android:id="@+id/atlSigninTitle"
+				android:layout_width="match_parent"
+				android:layout_height="90dp"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentTop="true"
+				android:src="@drawable/atl_signin_background_top" >
+			</ImageView>
+			<RelativeLayout
+				android:id="@+id/atlSigninCenter"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_below="@+id/atlSigninTitle" >
+				<ImageButton
+					android:id="@+id/fbSignInBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/atlSigninTitle"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/atl_signin_fb_signin" />
+				<atlasapp.facebook.LoginButton
+					android:id="@+id/fbauthButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/fbSignInBtn"
+					android:layout_alignLeft="@+id/fbSignInBtn"
+					android:layout_alignRight="@+id/fbSignInBtn"
+					android:layout_alignTop="@+id/fbSignInBtn"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:src="@drawable/atl_signin_fb_signin"
+					android:textColor="#0000" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/atlSigninCenter_1"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/atlSigninCenter"
+				android:layout_marginTop="20dp" >
+				<ImageView
+					android:id="@+id/atlSigninCenterTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					android:layout_centerHorizontal="true"
+					android:src="@drawable/atl_signin_background_center" />
+				<EditText
+					android:id="@+id/atlSigninEmailEditText"
+					android:layout_width="wrap_content"
+					android:layout_height="37dp"
+					android:layout_alignBottom="@+id/atlSigninCenterTitle"
+					android:layout_marginBottom="52dp"
+					android:layout_marginLeft="40dp"
+					android:layout_marginRight="80dp"
+					android:background="@color/transparent"
+					android:textColor="@color/black"
+					android:ems="11"
+					android:hint="@string/sign_in_email_address_hint"
+					android:inputType="textEmailAddress" >
+					<requestFocus />
+				</EditText>
+				<EditText
+					android:id="@+id/atlSigninPasswordEditText"
+					android:layout_width="wrap_content"
+					android:layout_height="37dp"
+					android:layout_alignBottom="@+id/atlSigninCenterTitle"
+					android:layout_alignLeft="@+id/atlSigninEmailEditText"
+					android:layout_alignRight="@+id/atlSigninEmailEditText"
+					android:layout_marginBottom="10dp"
+					android:background="@color/transparent"
+					android:ems="11"
+					android:textColor="@color/black"
+					android:hint="@string/sign_in_password_hint"
+					android:inputType="textPassword" />
+			</RelativeLayout>
+			<ImageButton
+				android:id="@+id/atlSigninBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/atlSigninCenter_1"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="20dp"
+				android:background="@color/transparent"
+				android:src="@drawable/atl_signin_button" />
+			<View
+				android:layout_width="fill_parent"
+				android:layout_height="2dp"
+				android:layout_below="@+id/atlSigninBtn"
+				android:layout_marginTop="40dp" />
+		</RelativeLayout>
+	</ScrollView>
+</RelativeLayout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bk_gray"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<TextView
+			android:id="@+id/navbarTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/alert_task_request_title"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" />
+	</RelativeLayout>
+	<RelativeLayout 
+	    android:id="@+id/bottomBarMenu2"
+		android:layout_width="fill_parent"
+	
+		android:layout_height="100dp"
+		android:layout_below="@+id/topBarMenu" 
+		 android:layout_centerHorizontal="true"
+		 >
+
+	    	<TextView
+	    	    android:id="@+id/alerts_task_request_description_textview2"
+	    	    android:layout_width="wrap_content"
+	    	    android:layout_height="wrap_content"
+	    	    android:layout_alignParentBottom="true"
+	    	    android:layout_centerHorizontal="true"
+	    	    android:layout_marginBottom="12dp"
+	    	    android:gravity="center_vertical"
+	    	    android:text="@string/alerts_task_request_description_sample"
+	    	    android:textSize="24sp"
+	    	    android:textStyle="normal" />
+
+	    ></RelativeLayout>
+	<com.atlasapp.section_main.ATLMultiSectionListView
+		android:id="@+id/listTask"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/bottomBarMenu"
+		android:layout_below="@+id/bottomBarMenu2" />
+	<RelativeLayout
+		android:id="@+id/bottomBarMenu"
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/alerts_invite_box_bg" >
+		<RelativeLayout
+			android:id="@+id/bottomBarMenu_EventDescription"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#0000" >
+			<RelativeLayout
+				android:id="@+id/leftLayout"
+				android:layout_width="70dip"
+				android:layout_height="55dip"
+				android:background="#0000" >
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/centerLayout"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@+id/leftLayout" >
+				<TextView
+					android:id="@+id/alerts_events_title"
+					style="@style/ATLTitleOfListView"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentTop="true"
+					android:layout_marginLeft="10dp"
+					android:layout_marginTop="5dp"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:textColor="@color/white" />
+			</RelativeLayout>
+		</RelativeLayout>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" >
+			<ImageButton
+				android:id="@+id/declineBtn"
+				android:layout_width="63dp"
+				android:layout_height="36dp"
+				android:layout_alignParentBottom="true"
+				android:layout_centerHorizontal="true"
+				android:layout_marginBottom="10dp"
+				android:background="@drawable/alerts_task_request_decline_btn2x"
+				android:contentDescription="@string/app_title" />
+			<ImageButton
+				android:id="@+id/acceptBtn"
+				android:layout_width="63dp"
+				android:layout_height="36dp"
+				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="10dp"
+				android:layout_marginRight="40dp"
+				android:layout_toLeftOf="@+id/declineBtn"
+				android:background="@drawable/alerts_task_request_accept_btn2x"
+				android:contentDescription="@string/app_title" />
+			<ImageButton
+				android:id="@+id/cancelBtn"
+				android:layout_width="63dp"
+				android:layout_height="36dp"
+				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="10dp"
+				android:layout_marginLeft="40dp"
+				android:layout_toRightOf="@+id/declineBtn"
+				android:background="@drawable/alerts_task_request_decide_later_btn2x"
+				android:contentDescription="@string/app_title" />
+			<TextView
+				android:id="@+id/alerts_task_request_description_textview"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_above="@+id/declineBtn"
+				android:layout_alignParentTop="true"
+				android:layout_centerHorizontal="true"
+				android:layout_marginLeft="40dp"
+				android:layout_marginRight="40dp"
+				android:gravity="center_vertical"
+				android:text="@string/alerts_task_request_description_sample"
+				android:textSize="14sp"
+				android:textStyle="normal" />
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>

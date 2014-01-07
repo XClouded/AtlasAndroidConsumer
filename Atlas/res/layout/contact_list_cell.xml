@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/contactCellLayout"
+	android:layout_width="match_parent"
+	android:layout_height="55dip"
+	android:background="@android:color/white" >
+	<include
+		android:id="@+id/header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		layout="@layout/listview_header" />
+	<RelativeLayout
+		android:id="@+id/leftLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="55dip"
+		android:layout_alignParentLeft="true"
+		android:background="@android:color/white" >
+		<ImageView 	
+		    android:id="@+id/imageSelectedContact"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentLeft="true"
+			android:contentDescription="@string/app_name"
+			android:visibility="gone"
+			 />
+		<ImageView
+			android:id="@+id/imageContact"
+			android:layout_width="55dip"
+			android:layout_height="match_parent"
+			android:layout_toRightOf="@+id/imageSelectedContact"
+			android:contentDescription="@string/app_name" />
+		<!--
+		<ImageView
+			android:layout_width="1dip"
+			android:layout_height="match_parent"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:contentDescription="@string/app_name"
+			android:src="@android:color/darker_gray" />
+		-->
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/centerLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="55dip"
+		android:layout_toRightOf="@+id/leftLayout"
+		 >
+		<TextView
+			android:id="@+id/contactDisplayName"
+			style="@style/ATLTitleOfListView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			
+			android:layout_alignParentLeft="true"
+			
+			android:textAppearance="?android:attr/textAppearanceMedium" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/rightLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="55dip"
+		android:layout_alignParentRight="true"
+		android:background="@android:color/white" >
+		<ImageView
+			android:id="@+id/imageAtlasUser"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_centerInParent="true"
+			android:contentDescription="@string/app_name" />
+	</RelativeLayout>
+</RelativeLayout>

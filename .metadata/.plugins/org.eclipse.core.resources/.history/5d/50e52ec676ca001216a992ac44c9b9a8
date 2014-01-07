@@ -1,0 +1,429 @@
+package atlasapp.common;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import android.util.Log;
+import atlasapp.common.ATLConstants.ATL_ENVIRONMENT;
+import atlasapp.common.ATLConstants.EmailTemplateType;
+import atlasapp.database.EventProperties;
+import atlasapp.database.ItemUserProperties;
+import atlasapp.model.ATLContactModel;
+/**
+ * 
+ * @author sharonnachum
+ *
+ */
+public class ATLEmailTemplate 
+{
+	
+	
+	/**
+	 * Return a string representation of the email template for event
+	 * @param event
+	 * @param itemUser
+	 * @param emailTemplateType
+	 * @return
+	 */
+	public static String emailTemplateForEvent(ArrayList<EventProperties> event,
+			ArrayList<ItemUserProperties> itemUser,
+			EmailTemplateType emailTemplateType)
+	{
+		Log.v("ATLAS EMAIL TEMPLATE", "IN OUTBOUND SEND");
+
+		if (event==null || event.size()==0 || itemUser==null || itemUser.size()==0)
+			return null;
+		Log.v("ATLAS EMAIL TEMPLATE", "event & item user exsitsts");
+		ATLContactModel myUser = ATLContactModel.getContactByAtlasId(itemUser.get(0).atlasId);
+
+		String primaryWebItemUserId = getPrimaryWebItemUserId(event,itemUser);
+		String webSite = UtilitiesProject.getATLWebSite(ATL_ENVIRONMENT.DEV);
+		if (primaryWebItemUserId==null || primaryWebItemUserId.equals("")||
+				webSite==null || webSite.equals("") || myUser==null)
+			return null;
+		Log.v("ATLAS EMAIL TEMPLATE", "primaryWebItemUserId exsitsts");
+
+		String webUrl =webSite+ "/respond/"+primaryWebItemUserId;
+		String header="";
+		String body="";
+		String headerImage="";
+		String bodyTable=bodyTableTemplateWithTitle(event.get(0).title, event.get(0).message);
+		String appStoreUrl = webSite +"/routing/appstore_invite_email.html";
+		
+		switch(emailTemplateType){
+	    case EmailTemplateInvitation:
+	      header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";" +
+	      		"color:#3066af;'>From "+ATLUser.getUserFirstName()+" " +ATLUser.getUserLastName()+
+	      		"<br /><span style='font-size: 18px;'>"+ATLUser.getUserFirstName()+"" +
+	      				" is using Atlas<br />" +
+	      		"to schedule this meeting with you.<span></td></tr>"; 
+	      headerImage = "top-blue-bg2.png";
+	      body = "<tr><td height='34' colspan='2' align='center' " +
+	      		"style='font:bold 26px \"Helvetica Neue\",\"Arial\"," +
+	      		"\"sans-serif\";color:#3066af;'>" +
+	      		"<img src='http://getatlas.com/emails/img/envelope.png'>" +
+	      		"</td></tr><tr><td colspan='2' height='25'>" +
+	      		"</td></tr><tr><td colspan='2' height='13'>" +
+	      		"<img src='http://getatlas.com/emails/img/divider.png'>" +
+	      		"</td></tr><tr><td colspan='2' height='15'></td></tr><tr>" +
+	      		"<td colspan='2' align='center' style='color:#2e3135;font:bold 26px" +
+	      		" \"Helvetica Neue\",\"Arial\",\"sans-serif\";'>"+myUser.getFirstname()+"," +
+	      		" </td></tr><tr>" +
+	      		"<td colspan='2' align='center' style='color:#3c4046;font:26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		ATLUser.getUserFirstName()+" has invited you to...</td>" +
+	      		"</tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+	      		"<td colspan='2' align='center'>" +
+	      		bodyTable+"</td></tr><tr><td colspan='2' height='45'>" +
+	      		"</td></tr><tr><td colspan='2' align='center' style='color:#3c4046;" +
+	      		"font:bold 26px \"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		"Respond for free via...</td></tr><tr><td colspan='2' height='15'>" +
+	      		"</td></tr><tr><td colspan='2'><table width='640'><tr>" +
+	      		"<td align='center' width='261' height='129'>" +
+	      		"<a href='"+appStoreUrl+"'>" +
+	      		"<img src='http://getatlas.com/emails/img/button-mobile.png' " +
+	      		"width='261' height='129' alt='Mobile'></a></td><td align='center' " +
+	      		"width='261' height='129'><a href='"+webUrl+"'>" +
+	      		"<img src='http://getatlas.com/emails/img/button-web.png' " +
+	      		"width='261' height='129' alt='Web'></a></td></tr></table></td>" +
+	      		"</tr>";//, itemUser.contact.firstname, myUser.firstname, bodyTable, appStoreUrl, webUrl];
+	      break;
+	    case EmailTemplateCounterOffer:
+	      header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";color:#3066af;'>" +
+	      		"Counter Offer from "+ATLUser.getUserFirstName()+" " +ATLUser.getUserLastName()+
+	      		"</td></tr>";
+	      headerImage = "top-blue-bg6.png";
+	      body = "<tr><td height='34' colspan='2' align='center' " +
+	      		"style='font:bold 26px \"Helvetica Neue\",\"Arial\","+
+	      		"\"sans-serif\";color:#3066af;'>" +
+	      	    "<img src='http://getatlas.com/emails/img/envelope.png'>" +
+	      	    "</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+	      	    "<td colspan='2' height='13'>" +
+	      	    "<img src='http://getatlas.com/emails/img/divider.png'></td>" +
+	      	    "</tr><tr><td colspan='2' height='15'></td></tr><tr>" +
+	      	    "<td colspan='2' align='center' style='color:#2e3135;font:bold 26px " +
+	      	    "\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>"+myUser.getFirstname()+"" +
+	      	    ", </td></tr><tr>" +
+	      	    "<td colspan='2' align='center' style='color:#3c4046;font:26px " +
+	      	    "\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      	    "click to see the new options.</td></tr><tr><td colspan='2' height='25'>" +
+	      	    "</td></tr><tr><td colspan='2' align='center'>" +
+	      	    bodyTable+"</td></tr><tr><td colspan='2' height='45'>" +
+	      	    "</td></tr><tr><td colspan='2' align='center' style='color:#3c4046;font:bold 26px " +
+	      	    "\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      	    "Respond for free via...</td></tr><tr><td colspan='2' height='15'>" +
+	      	    "</td></tr><tr><td colspan='2'><table width='640'><tr>" +
+	      	    "<td align='center' width='261' height='129'><a " +
+	      	    "href='"+appStoreUrl+"'>" +
+	      	    "<img src='http://getatlas.com/emails/img/button-mobile.png' " +
+	      	    "width='261' height='129' alt='Mobile'></a></td><td align='center' " +
+	      	    "width='261' height='129'><a href='"+webUrl+"'>" +
+	      	    "<img src='http://getatlas.com/emails/img/button-web.png' " +
+	      	    "width='261' height='129' alt='Web'></a>" +
+	      	    "</td></tr></table></td></tr>";//, itemUser.contact.firstname, bodyTable, appStoreUrl, webUrl];
+	      break;
+	    case EmailTemplateCancelled:
+	      header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";color:#3066af;'>" +
+	      		"From "+ATLUser.getUserFirstName()+" " +ATLUser.getUserLastName()+
+	      		"</td></tr>";//, myUser.firstname, myUser.lastname];
+	      headerImage = "top-blue-bg7.png";
+	      body = "<tr><td height='34' colspan='2' align='center' " +
+	      		"style='font:bold 26px \"Helvetica Neue\",\"Arial\"," +
+	      		"\"sans-serif\";color:#3066af;'>" +
+	      		"<img src='http://getatlas.com/emails/img/envelope.png' />" +
+	      		"</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+	      		"<td colspan='2' height='13'>" +
+	      		"<img src='http://getatlas.com/emails/img/divider.png' />" +
+	      		"</td></tr><tr><td colspan='2' height='15'>" +
+	      		"</td></tr><tr><td colspan='2' align='center' " +
+	      		"style='color:#2e3135;font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		myUser.getFirstname()+", </td></tr><tr>" +
+	      		"<td colspan='2' align='center' style='color:#3c4046;font:26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		ATLUser.getUserFirstName()+" has cancelled the event!</td>"+
+	      		"</tr><tr><td colspan='2' height='25'>" +
+	      		"</td></tr><tr><td colspan='2' align='center'>"+bodyTable+"" +
+	      		"</td></tr><tr><td colspan='2' height='45'></td></tr>";//, itemUser.contact.firstname, myUser.firstname, bodyTable];
+	      break;
+	    case EmailTemplateDeclined:
+	      header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";color:#3066af;'>" +
+	      		"From "+ATLUser.getUserFirstName()+" " +ATLUser.getUserLastName()+
+	      		"</td></tr>";//, myUser.firstname, myUser.lastname];
+	      headerImage = "top-blue-bg8.png";
+	      body = "<tr><td height='34' colspan='2' align='center' " +
+	      		"style='font:bold 26px \"Helvetica Neue\",\"Arial\",\"sans-serif\"" +
+	      		";color:#3066af;'>" +
+	      		"<img src='http://getatlas.com/emails/img/envelope.png' />" +
+	      		"</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+	      		"<td colspan='2' height='13'>" +
+	      		"<img src='http://getatlas.com/emails/img/divider.png' />" +
+	      		"</td></tr><tr><td colspan='2' height='15'></td></tr><tr>" +
+	      		"<td colspan='2' align='center' style='color:#2e3135;font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		myUser.getFirstname()+", </td></tr><tr><td colspan='2' " +
+	      		"align='center' style='color:#3c4046;font:26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		ATLUser.getUserFirstName()+" has declined the event</td>" +
+	      		"</tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+	      		"<td colspan='2' align='center'>" +
+	      		bodyTable+"</td></tr><tr><td colspan='2' height='45'></td></tr>";//, itemUser.contact.firstname, myUser.firstname, bodyTable];
+	      break;
+	    case EmailTemplateBooked:
+	      header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";color:#3066af;'>From " +
+	      		ATLUser.getUserFirstName()+" " +ATLUser.getUserLastName()+"</td>" +
+	      		"</tr>";//, myUser.firstname, myUser.lastname];
+	      headerImage = "top-blue-bg3.png";
+	      body = "<tr><td height='34' colspan='2' align='center' " +
+	      		"style='font:bold 26px \"Helvetica Neue\",\"Arial\"," +
+	      		"\"sans-serif\";color:#3066af;'>" +
+	      		"<img src='http://getatlas.com/emails/img/envelope.png' />" +
+	      		"</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+	      		"<td colspan='2' height='13'>" +
+	      		"<img src='http://getatlas.com/emails/img/divider.png' /></td>" +
+	      		"</tr><tr><td colspan='2' height='15'></td></tr><tr><td colspan='2' " +
+	      		"align='center' style='color:#2e3135;font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		myUser.getFirstname()+", </td></tr><tr><td colspan='2' " +
+	      		"align='center' style='color:#3c4046;font:26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		ATLUser.getUserFirstName()+" has booked the event!</td>" +
+	      		"</tr><tr><td colspan='2' height='25'></td></tr><tr><td colspan='2' " +
+	      		"align='center'>"+bodyTable+"</td></tr><tr><td colspan='2' " +
+	      		"height='45'></td></tr><tr><td colspan='2' align='center' " +
+	      		"style='color:#3c4046;font:bold 26px " +
+	      		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+	      		"Get the attachment with all the details.</td></tr><tr>" +
+	      		"<td colspan='2' height='15'></td></tr><tr><td " +
+	      		"colspan='2' align='center' width='640' height='109'>" +
+	      		"<a href='"+webUrl+"'>" +
+	      		"<img src='http://getatlas.com/emails/img/attachment.png' " +
+	      		"width='389' height='109' alt='Attachment' /></a></td></tr>";//, itemUser.contact.firstname, myUser.firstname, bodyTable, webUrl];
+	      break;
+	  }
+		headerImage =ATLConstants.kImageUrl+headerImage;// @"http://getatlas.com/emails/img/"
+		return  commonTemplateWithHeaderImageUrl(headerImage,
+				header, body, 
+				appStoreUrl ,webUrl, 
+				webUrl);
+
+	}
+	private static String getPrimaryWebItemUserId(ArrayList<EventProperties> event,
+			ArrayList<ItemUserProperties> itemUser)
+	{
+		String primaryWebItemUserId="";
+		
+		if (event!=null && event.size()>0 && itemUser!=null && itemUser.size()>0)
+		{
+			String primary=null;
+			for (EventProperties eventAlt:event)
+				primary = (eventAlt.primaryWebEventId==null || eventAlt.primaryWebEventId.equals(""))?
+						eventAlt.webEventId :  eventAlt.primaryWebEventId;
+			if (primary!=null && !primary.equals(""))
+			{
+				for (ItemUserProperties itemUserRec:itemUser)
+				{
+					if (itemUserRec!=null && itemUserRec.webItemId.equals(primary))
+					{
+						primaryWebItemUserId = 
+								itemUserRec.webItemUserId ;
+						break;
+					}
+				}
+			}
+			
+		}
+		
+		return primaryWebItemUserId;
+	}
+	/**
+	 * Return a string representation of the email template to verify user email address 
+	 * @param emailAddress
+	 * @param forEmailAddressId
+	 * @param emailAddressId
+	 * @return
+	 */
+	public static String emailTemplateToVerifyEmailAddress(String emailAddress,
+				String forEmailAddressId, String emailAddressId)
+	{
+		String webSite = UtilitiesProject.getATLWebSite(ATL_ENVIRONMENT.ATLAS);
+		 String webUrl = webSite+"/verify/"+ emailAddressId;
+		  String appStoreUrl = webSite+"/routing/appstore_invite_email.html";//, [ATLUtilitiesProject website]];
+		  String header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";color:#3066af;'>Welcome " +
+		  		ATLUser.getUserFirstName()+"</td></tr>";//, myUser.firstname];
+		  //http://getatlas.com/emails/img/top-blue-bg4.png
+		  String headerImage ="top-blue-bg4.png";// (ATLUser.getImageUrl()!=null &&!ATLUser.getImageUrl().equals(""))?ATLUser.getImageUrl():"top-blue-bg4.png";
+		  String body ="<tr><td colspan='2' height='25'></td></tr><tr>" +
+		  		"<td colspan='2' height='13'><img src='http://getatlas.com/emails/img/divider.png' " +
+		  		"width='640' height='13' /></td></tr><tr><td colspan='2' height='25'>" +
+		  		"</td></tr><tr><td colspan='2' height='15' align='center'>" +
+		  		"<img src='http://getatlas.com/emails/img/confirm.png' width='69' height='69' />" +
+		  		"</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+		  		"<td colspan='2' align='center' style='color:#2e3135;font:bold 26px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>Please confirm your email address:</td>" +
+		  		"</tr><tr><td colspan='2' height='25'></td></tr><tr><td colspan='2' align='center' " +
+		  		"style='color:#3c4046;font:italic 26px \"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+		  		"<a href='"+webUrl+"'>"+emailAddress+"</a></td></tr><tr><td colspan='2' height='28'>" +
+		  		"</td></tr><tr><td colspan='2' align='center' style='color:#2e3135;font:18px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+		  		"If you didn't initiate this verify process, please ignore this email.</td>" +
+		  		"</tr><tr><td colspan='2' height='28'></td></tr><tr><td colspan='2' height='63' " +
+		  		"align='center'><a href='"+webUrl+"' title='Confirm Email'>" +
+		  		"<img src='http://getatlas.com/emails/img/button-confirm.png' width='261' " +
+		  		"height='63' alt='Confirm Email' /></a></td></tr><tr>" +
+		  		"<td colspan='2' height='75'></td></tr><tr><td colspan='2' align='center'>" +
+		  		"<table width='640'><tr><td width='90'>" +
+		  		"</td><td width='460' align='center' style='color:#3c4046;font:26px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+		  		" Your feedback is very important to us. We want to make scheduling meetings and phone calls as easy as possible. </td>" +
+		  		"<td width='90'></td></tr><tr><td colspan='3' height='25'></td>" +
+		  		"</tr><tr><td width='90'></td>" +
+		  		"<td width='460' align='center' style='color:#3c4046;font:26px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+		  		" With your help, we can. </td><td width='90'>" +
+		  		"</td></tr><tr><td colspan='3' height='10'></td></tr>" +
+		  		"<tr><td width='90'>" +
+		  		"</td><td width='460' height='24' align='center'>" +
+		  		"<img src='http://getatlas.com/emails/img/team-atlas.png' " +
+		  		"height='24' width='148' /></td><td width='90'></td></tr>" +
+		  		"</table></td></tr>";//, webUrl, emailAddress, webUrl];
+		  headerImage =ATLConstants.kImageUrl+headerImage;
+		  return commonTemplateWithHeaderImageUrl(headerImage,header,body,appStoreUrl,webUrl,webUrl);
+	}
+	
+	/**
+	 * Return a string representation of the email template to notify waiting list 
+	 * user with email address 
+	 * @return
+	 */
+	public static String emailTemplateToNotifyWaitingListUserWithEmailAddress(String emailAddress)
+	{
+		String webUrl = UtilitiesProject.getATLWebSite(ATL_ENVIRONMENT.ATLAS);
+
+//		String webUrl = "%@", [ATLUtilitiesProject website]];
+		  String appStoreUrl = webUrl+ "/routing/appstore_invite_email.html";//, [ATLUtilitiesProject website]];
+		  String header = "<tr><td colspan='2' align='center' style='font:bold 26px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";color:#3066af;'>" +
+		  		"You're on the list!</td></tr>";
+		  String headerImage = "top-blue-bg5.png";
+		  String body = "<tr><td colspan='2' height='25'></td></tr>" +
+		  		"<tr><td colspan='2' height='13'>" +
+		  		"<img src='http://getatlas.com/emails/img/divider.png' width='640' " +
+		  		"height='13'></td></tr><tr><td colspan='2' height='25'>" +
+		  		"</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+		  		"<td colspan='2' align='center'><table width='640'><tr>" +
+		  		"<td width='90'></td><td width='460' align='center' " +
+		  		"style='color:#3c4046;font:16px \"Helvetica Neue\",\"Arial\"," +
+		  		"\"sans-serif\";'>" +
+		  		"Scheduling has become such a pain so we are furiously working to build the fastest scheduling platform, ever.</td>" +
+		  		"<td width='90'></td></tr><tr><td colspan='3' height='10'>" +
+		  		"</td></tr><tr><td width='90'></td><td width='460' " +
+		  		"align='center' style='color:#3c4046;font:16px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+		  		"Due to high demand, we are controlling growth so we can respond to user feedback and continue to iterate the product.</td>" +
+		  		"<td width='90'></td></tr><tr><td colspan='3' height='10'>" +
+		  		"</td></tr><tr><td width='90'></td>" +
+		  		"<td width='460' align='center' style='color:#3c4046;font:16px " +
+		  		"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+		  		"We'll notify you by email soon!</td><td width='90'></td>" +
+		  		"</tr></table></td></tr>";
+		  headerImage =ATLConstants.kImageUrl+headerImage;
+		  return commonTemplateWithHeaderImageUrl(headerImage,header, body,appStoreUrl,webUrl,webUrl);
+	}
+	
+	private static String commonTemplateWithHeaderImageUrl(String headerImageUrl,
+			String header, String body, 
+			String appStoreUrl ,String atlasUrl, 
+			String googlePlayUrl)
+	{
+		Date date = new Date();
+		String dateString  = new SimpleDateFormat("MMM dd, yyyy").format(date.getTime());
+		String picture = (ATLUser.getImageUrl()!=null && !ATLUser.getImageUrl().equals(""))?
+				ATLUser.getImageUrl() : ATLConstants.userDefaultProfilePictureParseURL;
+		String email = "<html><head><meta name=\"viewport\" " +
+				"content=\"width=device-width\"><title></title>" +
+				"</head><body topmargin='0' " +
+				"style='background-color:#ffffff;font:arial, " +
+				"sans-serif;padding:0;margin:0;'><center><table border='0' " +
+				"cellpadding='0' cellspacing='0' width='640' align='center'>" +
+				"<tr style='background-color:#5d94d6;color:#fff;'>" +
+				"<td width='0px' height='0px'></td><td colspan='1' " +
+				"style='padding-left:25px;padding-top:5px;font:18px " +
+				"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+				dateString+"</td></tr><tr><td width='0px' height='0px'></td>" +
+				"<td rowspan='2' width='640px' height='130' align='center' " +
+				"valign='bottom' style='padding-bottom: 12px;padding-right: 5px;" +
+				"border-right:1px solid black;'><img src='"+picture+"' width='130' " +
+				"height='130'></td></tr><tr><td height='293' colspan='2' " +
+				"width='640px'><img src='"+headerImageUrl+"'></td></tr>" +
+				header+"<tr><td height='15' " +
+				"colspan='2'></td></tr>"+body+"<tr><td colspan='2' height='95'>" +
+				"</td></tr><tr><td colspan='2' height='13'>" +
+				"<img src='http://getatlas.com/emails/img/divider.png' " +
+				"width='640' height='13'></td></tr><tr><td colspan='2' " +
+				"height='15'></td></tr><tr><td colspan='2' align='center' " +
+				"width='605' height='31'>" +
+				"<img src='http://getatlas.com/emails/img/tagline.png' width='605' " +
+				"height='31' alt='Atlas is the easiest way to schedule anything.'>" +
+				"</td></tr><tr><td colspan='2' height='25'></td></tr><tr>" +
+				"<td colspan='2' height='15'><table width='640'>" +
+				"<tr align='center'><td width='99' height='99'><a href='"+atlasUrl+"'>" +
+				"<img width='99' height='99' " +
+				"src='http://getatlas.com/emails/img/logo.png'></a></td></tr>" +
+				"</table></td></tr><tr><td colspan='2' height='85'></td></tr>" +
+				"</table></center></body></html>";//, currentDate, picture, headerImageUrl, header, body, atlasUrl];
+	
+		return email;
+	
+	}
+	
+	private static String  bodyTableTemplateWithTitle(String title,String message)
+	{
+		String body=null ;
+		
+		if (title!=null && !title.equals(""))
+		{
+			if (message!=null && !message.equals(""))
+			{
+				body = "<table width='492' height='338' border='0' " +
+						"cellpadding='0' cellspacing='0' " +
+						"background='http://getatlas.com/emails/img/e-background.png' " +
+						"style='table-layout:fixed'><tr><td height='40'></td>" +
+						"</tr><tr><td height='50' align='center' " +
+						"style='color:#386db3;font:bold 40px " +
+						"\"Helvetica Neue\",\"Arial\",\"sans-serif\";'>\"" +
+						title+"\"</td></tr><tr><td height='10'>" +
+						"</td></tr><tr><td height='40' align='center' " +
+						"style='color:#000;font:bold 20px \"Helvetica Neue\"," +
+						"\"Arial\",\"sans-serif\";'>Message from Organizer:</td></tr>" +
+						"<tr><td height='80' align='center'>" +
+						"<div style='width:440px;word-wrap:break-word;color:#386db3;" +
+						"font:20px \"Helvetica Neue\",\"Arial\",\"sans-serif\";'>" +
+						message+"</div></td></tr><tr><td></td></tr></table>";//, title, message];
+				
+			}
+			else
+			{
+				body = "<table width='492' height='338' border='0' " +
+						"cellpadding='0' cellspacing='0' " +
+						"background='http://getatlas.com/emails/img/e-background.png' " +
+						"style='table-layout:fixed'><tr><td height='260' align='center' " +
+						"style='color:#386db3;font:bold 40px \"Helvetica Neue\",\"Arial\"," +
+						"\"sans-serif\";'>\"" +
+						title+"\"</td></tr><tr><td></td></tr></table>";//, title];
+				
+			}
+		}
+		
+		return body;
+		
+	}
+
+}

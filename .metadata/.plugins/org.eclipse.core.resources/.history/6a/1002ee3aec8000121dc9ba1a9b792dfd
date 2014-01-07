@@ -1,0 +1,612 @@
+package com.atlasapp.atlas_database;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import com.atlasapp.atlas_database.DatabaseConstants.ACTION;
+import com.atlasapp.atlas_database.DatabaseConstants.EVENT_STATUS;
+import com.atlasapp.atlas_database.DatabaseConstants.OPERATION_METHOD;
+import com.atlasapp.atlas_database.DatabaseConstants.SERVER_MESSAGE;
+import com.atlasapp.atlas_database.DatabaseConstants.TABLES_NAME;
+import com.atlasapp.common.ATLEventCalendarModel;
+import com.atlasapp.common.ATLEventModelCallBackInterface;
+import com.atlasapp.model.ATLContactModel;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+public class Event extends AtlasServerTable implements ParseDBCallBackInterface,ATLEventModelCallBackInterface{
+	
+	private EventProperties eventProperties;
+	/// for event listeners
+	public  EventCallBackInterface eventDelagator;
+	
+	
+	private ArrayList<EventProperties> eventPropertiesUpdated;
+	private int eventsAltNumber;
+	private String primaryEventWebId;
+	private int upadtedEventsCount,primaryEventIndex;
+	private ArrayList<EventProperties> updatedEventsProperties;
+	private int webEventIdCount;
+	private ArrayList<String> eventsWebItemIds;
+	private ArrayList<String> primaryWebEventIds;
+	//private ArrayList<EventProperties> eventsRetreievdByItemUser;
+	
+	// HashMap containig all the events members
+	// each event with key set to the event primary_web_event_id
+	/// and the value is the events members
+	private HashMap<String, ArrayList<ATLContactModel>> allEventMembers;
+
+		
+	
+	private HashMap<String,ArrayList<EventProperties>> eventsRetreievdByItemUser;
+	private HashMap<String, ArrayList<String>> allEventMembersAtlasIds;
+	private boolean searchDone;
+	public Event()
+	{
+		TABLE_NAME = TABLES_NAME.EVENT.getTableName();
+		atlasServerTable = new ParseObject(TABLE_NAME);
+		userQuery = new ParseQuery(TABLE_NAME);
+		parseQuery = new ParseQuery(TABLE_NAME);
+		// sign Event to database call back's methods
+		parseCallBackDeleget = this;
+		eventsAltNumber = 0;
+		primaryEventWebId = "";
+	}
+
+	
+	/**
+	 * Gets an objectId to a row in the event table 
+	 * and return an object with all the event properties
+	 * @param objectId
+	 * @return the Event properties as a struct or null if the event doesnt exist 
+//	 */
+//	public EventProperties getEvent(String objectId)
+//	{
+//		EventProperties eventRow = null;
+//		
+//		if (objectId!=null && !objectId.equals(""))
+//		{
+//			eventRow = new EventProperties();
+//			retrieveRowByObjectId(objectId);
+//
+//			if (retreivedObjectId!=null)
+//			{
+//				eventRow = getEventPropertiesFromParseObject(retreivedObjectId);
+//			}
+//		}
+//		return eventRow;
+//	}
+	/**
+	 * Gets the array list of the EventsProperties with the 
+	 * object_id filled  to update
+	 * @param updatedEvents
+	 */
+	void updateEvent(ArrayList<EventProperties> updatedEvents)
+	{
+		
+		if (updatedEvents!=null && updatedEvents.size()>0)
+		{
+			upadtedEventsCount = 0;
+			primaryEventIndex = 0;
+			updatedEventsProperties = updatedEvents;
+			eventPropertiesUpdated = null;
+			// call back on upadted
+			setEventOnParseDB(updatedEventsProperties.get(0),true);
+		}
+	}
+	/**
+	 * Gets the event primaryEventObjecId(primary event object id)
+	 * and return an array with all the events associated with the event 
+	 * as array list of events properties or empty if hasnt found 
+	 * @param primaryEventObjecId
+	 * @return
+	 */
+	private void getAllEventsAssociated(String primaryEventObjecId)
+	{
+		
+		if (primaryEventObjecId!=null && !primaryEventObjecId.equals(""))
+		{
+			HashMap<String,Object> conditions = new HashMap<String,Object>();
+					conditions.put("primary_web_event_id", primaryEventObjecId)	;	
+			findWhereEqualTo(conditions,OPERATION_METHOD.FIND);
+		}
+	}
+	/**
+	 * Update the 'event' table on Parse according to the
+	 * EventProperties given 
+	 * @param event
+	 * @return SUCCESS or FAIL if updated 
+	 */
+	private  void setEventOnParseDB(EventProperties event,boolean update )
+	{
+		if (event!=null)
+		{
+			
+			HashMap<String,Object> eventHashMap = new HashMap<String,Object>();
+			eventHashMap.put("title", event.title);
+			eventHashMap.put("location", event.location);
+			eventHashMap.put("notes", event.notes);
+			eventHashMap.put("atlas_id", event.atlasId);
+			eventHashMap.put("duration", event.duration);
+			eventHashMap.put("display_order", event.displayOrder);
+			if (!event.isPrimary)
+				eventHashMap.put("primary_web_event_id", event.primaryWebEventId);
+			else
+				eventHashMap.put("primary_web_event_id", event.objectId);
+			if (event.objectId!=null && !event.objectId.equals(""))
+				eventHashMap.put("web_event_id", event.objectId);
+			
+			
+			eventHashMap.put("status", event.status.ordinal());
+			eventHashMap.put("action", event.action.getActionName());
+			if (event.startDateTime!=null)
+				eventHashMap.put("start_datetime", event.startDateTime);
+			
+			if (!update)
+				put(eventHashMap); 
+			else
+				updateObjectId( event.objectId,eventHashMap); 
+			
+
+		}
+	}
+	
+	/**
+	 * Gets n antire Event invite as an ArrayList of each event item,type EventProperties
+	 * and upadted Parse DB  
+	 * @param event
+	 * @return Success call back from setCalendarEventCallBack method 
+	 */
+	public  void setEventOnParseDB(ArrayList<EventProperties> event)
+	{
+		SERVER_MESSAGE messageBack = (event!=null && event.size()>0)? SERVER_MESSAGE.SUCCESS:SERVER_MESSAGE.FAIL;
+		eventPropertiesUpdated =event;
+		eventsAltNumber = 0;
+		if (messageBack.equals(SERVER_MESSAGE.SUCCESS))
+		{
+			
+			
+			
+			setEventOnParseDB(eventPropertiesUpdated.get(0),false);
+			
+		
+		}else
+			
+			eventDelagator.setCalendarEventCallBack(false,null);
+
+		
+	
+	}
+	
+	
+	
+	
+	public static EventProperties getEventPropertiesFromParseObject(
+			ParseObject retreivedObject) {
+
+		EventProperties eventRow  = null;
+		if (retreivedObject!=null)
+		{
+			eventRow = new EventProperties();
+			eventRow.title = retreivedObject.getString("title");
+			eventRow.notes = retreivedObject.getString("notes");
+			eventRow.displayOrder = (Integer) retreivedObject.getNumber("display_order");
+
+			eventRow.location = retreivedObject.getString("location");
+			eventRow.startDateTime = retreivedObject.getDate("start_datetime");
+			eventRow.duration = (Integer) retreivedObject.getNumber("duration");
+			eventRow.atlasId = retreivedObject.getString("atlas_id");
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(eventRow.startDateTime);
+			cal.add(Calendar.MINUTE, eventRow.duration);
+			eventRow.endDateTime = cal.getTime();
+			eventRow.primaryWebEventId = retreivedObject.getString("primary_web_event_id");
+			eventRow.status =(retreivedObject.getNumber("status")!=null)?
+					((Integer)retreivedObject.getNumber("status")==1)? EVENT_STATUS.THE_ONE:
+						((Integer)retreivedObject.getNumber("status")==2)? EVENT_STATUS.NOT_THE_ONE:
+					EVENT_STATUS.PENDING:EVENT_STATUS.PENDING;
+			eventRow.action = retreivedObject.getString("action").equals("del")? ACTION.DELETE : ACTION.SAVE;
+			eventRow.objectId = retreivedObject.getObjectId();
+			eventRow.isPrimary = eventRow.objectId.equals(eventRow.primaryWebEventId);
+		}
+		return eventRow;
+	}
+
+
+	public void setEvent(EventProperties eventALT) {
+
+		
+		this.eventProperties = (eventALT!=null)? eventALT : eventProperties;
+		
+		
+	}
+
+
+	
+
+
+	/**
+	 * Call back when event was saved on Parse
+	 */
+	@Override
+	public void getSaveCallBack(boolean saved,ParseObject parseObjectSaved) {
+		if (saved && eventPropertiesUpdated!=null)
+		{
+			///update the event properties with objectId given from Parse DB
+			eventPropertiesUpdated.get(eventsAltNumber).objectId = parseObjectSaved.getObjectId();
+			eventsAltNumber++;
+			if ((Integer)parseObjectSaved.getNumber("display_order")==0)
+			{//// priamray event time id to be set for everyone 
+				primaryEventWebId = parseObjectSaved.getObjectId();
+			}
+			if (eventsAltNumber<eventPropertiesUpdated.size()) 
+			{/// save next alt event ....
+				atlasServerTable = new ParseObject(TABLE_NAME);
+				setEventOnParseDB(eventPropertiesUpdated.get(eventsAltNumber),false);
+				
+			}
+			else
+				{//// saved all events 
+					///// update each with primary_web_event_id
+				/// call back from getUpateCallBack
+					for (EventProperties evnentAlt:eventPropertiesUpdated)
+					{
+						evnentAlt.primaryWebEventId = primaryEventWebId;
+					//	evnentAlt.webEventId = evnentAlt.objectId;
+					}
+					atlasServerTable = new ParseObject(TABLE_NAME);
+
+					updateEvent(eventPropertiesUpdated);
+					
+				}
+		}
+		else
+		{
+			///// something wrong happened 
+			///// roll back all event
+			eventDelagator.setCalendarEventCallBack(false,eventPropertiesUpdated);
+
+		}
+		
+	}
+	@Override
+	public void getUpateCallBack(boolean success) {
+		if (success && updatedEventsProperties!=null && updatedEventsProperties.size()>0)
+		{
+			primaryEventIndex =  (updatedEventsProperties.get(primaryEventIndex).isPrimary)?
+					primaryEventIndex : primaryEventIndex+1;
+			primaryEventIndex = (primaryEventIndex>=updatedEventsProperties.size())?0:primaryEventIndex;
+			upadtedEventsCount++;
+			if(upadtedEventsCount<updatedEventsProperties.size())
+			{
+				atlasServerTable = new ParseObject(TABLE_NAME);
+				setEventOnParseDB(updatedEventsProperties.get(upadtedEventsCount),true);
+
+			}else
+			{
+				/// succecsssfuly updated on Parse!
+				//// SAVE LOCALLY
+				
+				ATLEventCalendarModel atlEventModel = new ATLEventCalendarModel();
+				atlEventModel.atlEventModelListener = this;
+				/// call back from savedEventOnLocalDB method
+				atlEventModel.writeEventToLocalDBEventTable(updatedEventsProperties, updatedEventsProperties.get(primaryEventIndex));
+			
+				//eventDelagator.setCalendarEventCallBack(true,updatedEventsProperties);
+
+				eventDelagator.eventUpdatedCallBack(true);
+			
+			}
+			
+		}
+		else
+		{
+			//// something wrong happened
+			///// roll back transaction
+			eventDelagator.setCalendarEventCallBack(false,eventPropertiesUpdated);
+			eventDelagator.eventUpdatedCallBack(false);
+
+		}
+	}
+	/**
+	 * Call back from ATLEventCalendarModel listener on saved event on local DB event table
+	 * on success return the event as array list of EventProperties, updated
+	 * with their event_id given from the local DB
+	 */
+	@Override
+	public void savedEventOnLocalDB(boolean success, ArrayList<EventProperties> event,
+			EventProperties primaryEvent)
+	{
+		if (success && primaryEvent!=null)
+		{	
+			// add the primary updated event property as the first event in the list
+			if (event==null)
+				event = new ArrayList<EventProperties>();
+			
+		//	event.add(0, primaryEvent);
+			eventDelagator.setCalendarEventCallBack(true,event);
+		}
+		else
+		{
+			eventDelagator.setCalendarEventCallBack(false,null);
+
+		}
+		
+	}
+	/**
+	 * Go through each of the primary web events id in the list
+	 * and retrieve all the events members
+	 * store them in a hash map with key as the primary id and vlaue
+	 * type array list of ATLContactModel of the events' members 
+	 * @param eventsPrimaryWebEventId
+	 */
+//	public void setAllEventMembers(ArrayList<String> primaryWebEventIds) 
+//	{
+//		if (primaryWebEventIds!=null && primaryWebEventIds.size()>0)
+//		{
+//			allEventMembersAtlasIds = new HashMap<String,ArrayList<String>>();
+//			this.primaryWebEventIds = primaryWebEventIds;
+//			searchDone = false;
+//			for (String primaryWebEventId:primaryWebEventIds)
+//			{
+//				HashMap<String,Object> conditions = new HashMap<String,Object>();
+//				conditions.put("primary_web_event_id", primaryWebEventId);
+//				// call back on getFindQueryCallBack
+//				findWhereEqualTo(conditions, OPERATION_METHOD.FIND);
+//			}
+//			
+//			searchDone = true;
+//		}
+//		else
+//		{
+//			eventDelagator.setAllEventMembersCallBack(null, false);
+//			
+//		}
+//	}
+	/** 
+	 * Call back from setAllEventMembers method on finding all members
+	 * associated with a primary_web_event_id
+	 */
+	@Override
+	public synchronized void getFindQueryCallBack(List<ParseObject> foundQueryList,
+			boolean found) 
+	{
+		if (found && foundQueryList!=null && foundQueryList.size()>0)
+		{
+			String key = foundQueryList.get(0).getString("primary_web_event_id");
+			String value;
+			ArrayList<String> eventsMembers = new ArrayList<String>();
+			for (ParseObject invitee:foundQueryList)
+			{
+				value = invitee.getString("atlas_id");
+				if (!eventsMembers.contains(value))
+					eventsMembers.add(value);
+				
+			}
+			allEventMembersAtlasIds.put(key, eventsMembers);
+			if (searchDone)
+			{
+				/// last find query request made...
+				
+				eventDelagator.setAllEventMembersCallBack(allEventMembersAtlasIds, true);
+			}
+		}
+	}
+	
+	/**
+	 * Gets a list of all the web_item_id to retrieve from the event table 
+	 * 
+	 * @param eventsWebItemIds
+	 */
+	public void retrieveEventsFromWebItemIds(ArrayList<String> eventsWebItemIds) 
+	{
+		webEventIdCount = 0;
+		// a list of all the primary_web_event_id's
+		primaryWebEventIds = new ArrayList<String>();
+		eventsRetreievdByItemUser = new HashMap<String,ArrayList<EventProperties>>();
+		this.eventsWebItemIds = eventsWebItemIds;
+		// call back from getObjectIdCallBack
+		retrieveRowByObjectId(eventsWebItemIds.get(webEventIdCount));
+	
+		parseQuery.whereContainedIn("web_event_id", eventsWebItemIds);
+	
+		parseQuery.findInBackground(new FindCallback() {
+			  public void done(List<ParseObject> list, ParseException e) {
+				    if (e == null) {
+				    	if (list!=null && list.size()>0)
+				    	{
+				    		for (ParseObject event:list)
+				    		{
+				    			EventProperties eventProperties = new EventProperties(event);
+								String key = eventProperties.primaryWebEventId;
+								if (!primaryWebEventIds.contains(key))
+									primaryWebEventIds.add(key);
+								ArrayList<EventProperties> currentList;
+								if (eventsRetreievdByItemUser.get(key)==null)
+								{
+									currentList = new ArrayList<EventProperties>();
+								}else
+									currentList = eventsRetreievdByItemUser.get(key);
+								currentList.add(eventProperties);
+								eventsRetreievdByItemUser.put(key,currentList);
+
+						    	}	
+				    		}
+							eventDelagator.getAllEventsAssociatedCallBack(eventsRetreievdByItemUser, true,primaryWebEventIds);
+
+				    	
+				    	
+				    	
+				        // The query was successful.
+				    } else {
+				        ///// something wrong happened, event wasnt found
+						eventDelagator.getAllEventsAssociatedCallBack(null, false, null);
+					}
+				  }
+				});
+	
+	}
+	
+	
+	/**
+	 * Creating the HashMap of events with primary_web_event_id 
+	 * as the key and the ArayList of all events with that primary 
+	 * event as the value
+	 */
+	@Override
+	public void getObjectIdCallBack(ParseObject retreivedObjectId,
+			boolean success) {
+		webEventIdCount++;
+		if (success && retreivedObjectId!=null)
+		{
+			if (webEventIdCount<eventsWebItemIds.size())
+			{
+				EventProperties eventProperties = new EventProperties(retreivedObjectId);
+				String key = eventProperties.primaryWebEventId;
+				if (!primaryWebEventIds.contains(key))
+					primaryWebEventIds.add(key);
+				ArrayList<EventProperties> currentList;
+				if (eventsRetreievdByItemUser.get(key)==null)
+				{
+					currentList = new ArrayList<EventProperties>();
+				}else
+					currentList = eventsRetreievdByItemUser.get(key);
+				currentList.add(eventProperties);
+				eventsRetreievdByItemUser.put(key,currentList);
+
+					
+				retrieveRowByObjectId(eventsWebItemIds.get(webEventIdCount));
+
+			}
+			else
+			{
+				//// all events were successfully retrieved
+				eventDelagator.getAllEventsAssociatedCallBack(eventsRetreievdByItemUser, true,primaryWebEventIds);
+			}
+		}
+		else
+		{
+			/// something wrong happened, event wasnt found
+			eventDelagator.getAllEventsAssociatedCallBack(null, false, null);
+		}
+		
+	}
+
+
+	@Override
+	public void getDataCallBack(byte[] fileRetreived, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getSuccessCallBack(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void registerSuccess(boolean signUpSuccess) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void signInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void saveFileCallBack(boolean success,ParseObject parseObjectSaved) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getUserEmailOnParseCallBack(
+			HashMap<String, String> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getFriendEmailOnParseCallBack(
+			List<ParseObject> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getFacebookFriendIdOnParseCallBack(
+			List<ParseObject> findResult, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public void getAllFBAtlasUsersFriendsCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+
+
+	@Override
+	public void getAllAtlasUsersCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void friendSignInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getAtlasNewFriendsByEmailCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void signInNewFriendUserSuccess(boolean success, ParseUser user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+
+
+
+	
+
+
+	
+}

@@ -1,0 +1,1280 @@
+package com.atlasapp.atlas_database;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import com.atlasapp.common.ATLConstants.TASK_CATEGORY;
+import com.atlasapp.common.ATLCurrentsUserAlerts;
+import com.atlasapp.common.AtlasAndroidUser;
+import com.atlasapp.common.SendEmailActivity;
+import com.atlasapp.model.ATLAlertModel;
+import com.atlasapp.model.ATLContactModel;
+import com.atlasapp.section_appentry.AtlasApplication;
+import com.parse.FindCallback;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.PushService;
+
+public class AtlasServerConnect {
+	
+	
+	public static enum USER_INFO { USER_NAME,  PASSWORD, EMAIL, OTHER }
+	
+	
+	public static enum TABLES_NAMES { USERS, TASK, EVENTS, NOTES}
+	public static enum SERVER_MESSAGE {
+		   FAIL, LOGGED_OUT, EMAIL_OR_USER_NAME_INVALID, SUCCESS, LOGGED_IN, EMAPY_VALUE
+		 }
+	
+	
+	private final String[] TABLES_ASSIGN = {"TaskAssignNew","EventInviteNew"};
+	private final String[] TABLES_ACCEPT = {"TaskAcceptNew","EventAcceptNew"};
+	
+	private ArrayList<ATLAlertModel> userEventALerts;
+	private ArrayList<ATLAlertModel> userTaskAlerts;
+	
+	
+	public static AtlasApplication application; 
+	////Server properties
+
+	public static User parseUser;
+	public static void setParseUser(User currentParseUser) { parseUser = currentParseUser; }
+    public static User getParseUser() { return parseUser; }
+    
+    
+    
+    public static String  parseUserUserName;
+    public static void setParseUserUserName(String currentParseUserUserName) { parseUserUserName = currentParseUserUserName; }
+	public static String getParseUserUserName() { return parseUserUserName; } 
+	    
+	    
+	public static String  parseUserUserNameDisplay;
+	public static void setParseUserUserNameDisplay(String currentParseUserUserNameDisplay) { parseUserUserNameDisplay = currentParseUserUserNameDisplay; }
+    public static String getParseUserUserNameDisplay() { return parseUserUserNameDisplay; } 
+  
+    public static String  parseUserUserObjectId;
+    public static void setParseUserUserObjectId(String currentParseUserUserObjectId) { parseUserUserObjectId = currentParseUserUserObjectId; }
+    public static String getParseUserUserObjectId() { return parseUserUserObjectId; }  
+			  
+			    
+			    
+    public static String  parseUserUserEmail;
+    public static void setParseUserUserEmail(String currentParseUserUserEmail) { parseUserUserEmail = currentParseUserUserEmail; }
+	public static String getParseUserUserEmail() { return parseUserUserEmail; } 
+	    
+	public static String  parseUserUserFBID;
+	public static void setParseUserUserFBID(String currentParseUserUserFBID) { parseUserUserFBID = currentParseUserUserFBID; }
+	public static String getParseUserUserFBID() { return parseUserUserFBID; } 
+					    
+	public static Bitmap  parseUserUserImage;
+	public static void setParseUserUserImage(Bitmap currentParseUserUserImage) { parseUserUserImage = currentParseUserUserImage; }
+     public static Bitmap getParseUserUserImage() { return parseUserUserImage; } 
+      
+     
+     public static String  parseUserUserPassword;
+     public static void setParseUserUserPassword(String currentParseUserUserPassword) { parseUserUserPassword = currentParseUserUserPassword; }
+     public static String getParseUserUserPassword() { return parseUserUserPassword; }
+					    
+		
+     public static ParseUser defaultUser;
+     public static boolean userSignInSuccessfuly= false;
+     public static String  parseUserUserAceessToken;
+     public static void setParseUserUserAceessToken(String currentParseUserUserAceessToken) { parseUserUserAceessToken = currentParseUserUserAceessToken; }
+     public static String getParseUserUserAceessToken() { return parseUserUserAceessToken; }
+			
+					    
+
+     public static boolean signOnServer=false;
+     public static void setSignOnServer(boolean currentSignOnServer) { signOnServer = currentSignOnServer; }
+     public static boolean isSignOnServer() { return signOnServer; }
+	
+	
+	/////
+	private static ParseInstallation myInstallation;
+	private static Activity activity;
+	private static AtlasServerConnect atlasServerConnect;
+	private static AtlasApplication applicationController;
+	private ArrayList<String> allFacebookAtlasUsersFBID;
+	private ATLCurrentsUserAlerts currentUserAlerts;
+	private HashMap<String, ATLContactModel> allCurrentSessionUsersOnAtlas;
+	
+	private AtlasServerConnect()   
+	{
+		
+	}
+	
+	public static AtlasServerConnect getSingletonObject(Activity currentActivity)
+	{
+		  activity = (currentActivity!=null)? currentActivity:activity;
+	      if (atlasServerConnect == null)
+	      {
+	    	  atlasServerConnect = new AtlasServerConnect();
+	    	// 
+	    	
+	      }
+	      return atlasServerConnect;
+	}
+	/**
+	 * Obtain the installation object for the current device
+	 */
+	public static void setParseInstallation()
+	{
+		  myInstallation = ParseInstallation.getCurrentInstallation();
+	}
+	
+	
+	/**
+	 * Create a new user on Parse from user 
+	 * info updated on AtlasAndroidUser object,  return parse user 
+	 * ID (ObjectId) and update the userSignOnServer accordingly
+	 * @return
+	 */ 
+	public  String createNewAtlasUser()
+	{
+		parseUser = new User();
+		
+		parseUser.register();
+		
+		setSignOnServer(!AtlasAndroidUser.getParseUserID().equals(""));
+	
+		return AtlasAndroidUser.getParseUserID();
+		
+	}
+	private  void setParseUserInfoFromServer() {
+		if (parseUser!=null)
+		{
+			setParseUserUserEmail(parseUser.getEmail());
+			setParseUserUserName(parseUser.getUsername());
+			setParseUserUserObjectId(parseUser.getObjectId());
+			setParseUserUserAceessToken(parseUser.getString("access_token"));
+			setParseUserUserFBID(parseUser.getString("fbID"));
+			setParseUserUserNameDisplay(parseUser.getString("displayname"));
+			setParseUserUserPassword(parseUser.getString("passwordCopy"));
+			
+			byte[] b = parseUser.getFile("picture");
+			if (b!=null)
+			{
+			 Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);      
+			// String  encodedImage = Base64.encodeToString( parseUser.getBytes("picture"), Base64.DEFAULT);
+			 setParseUserUserImage(bitmap);
+			}
+		}
+	}
+	
+	
+	/**
+	 * Update AtlasAndroidUser Object Info from Parse Server   
+	 */
+	public  boolean setAtlasAndroidUserFromServer(final String userName, final String password)
+	{
+		
+		if (parseUser==null)
+		{
+			
+			parseUser = new User();
+			parseUser.signIn(userName, password);
+			
+		}
+		// checking since signin might have failed
+	
+				setSignOnServer(parseUser!=null);
+		
+		if (isSignOnServer())
+			setAtlasAndroidUserObject(parseUser);
+		
+		return isSignOnServer();
+	}
+	/**
+	 * Set All Local AtlasAndroidUser Object properties from Server properties 
+	 * @param user
+	 */
+	private  void setAtlasAndroidUserObject(User user)
+	{
+		setParseUser(user);
+		setParseUserInfoFromServer();   
+		AtlasAndroidUser.setEmail(parseUserUserEmail);
+		AtlasAndroidUser.setfbID(parseUserUserFBID);
+		AtlasAndroidUser.setParseUserID(parseUserUserObjectId);
+		AtlasAndroidUser.setAccessToken(parseUserUserAceessToken);
+		AtlasAndroidUser.setPicture(parseUserUserImage);
+		AtlasAndroidUser.setAtlasPassword(parseUserUserPassword);
+		AtlasAndroidUser.setUserNameDisplay(parseUserUserNameDisplay);
+		AtlasAndroidUser.setUserSignonServer(true);
+	}
+	
+
+	/**
+	 * Log the user to the server according to 
+	 * sign-in user name and password
+	 * update the ParseConncet parse user 
+	 * properties from the server and set the 
+	 * userSignOnServer flag accordingly 
+	 * @param userName
+	 * @param password
+	 * 
+	 */
+	public  void logUserToServer(final String userName, final String password)
+	{
+		parseUser = new User();
+		parseUser.signIn(userName, password);
+	}
+	/**
+	 * Subscribe to a channel ,to enable push notification
+	 * @param context
+	 * @param channel
+	 * @param activity the Activity to be run when a user responds to notifications on this channel.
+	 */
+	public void subscribedToChannels(Context context,String channel,Class<? extends Activity> activity)
+	{
+		PushService.subscribe(context, channel, activity);
+	}
+
+	/**
+	 * UN Subscribe to a channel ,to disable push notification
+	 * @param context
+	 * @param channel
+	 */
+	public void unSubscribedToChannels(Context context,String channel)
+	{
+		PushService.unsubscribe(context, channel);
+	}
+	/**
+	 * Get the set of channels that the current device is subscribed to
+	 * @param context
+	 * @return
+	 */
+	public Set<String> getSubscriptions(Context context)
+	{
+		return PushService.getSubscriptions(context);
+	}
+	/**
+	 * Push Notification made in background to the list of channels
+	 * @param channel 
+	 * @param alertMessage
+	 * 
+	 */
+	public void pushNotification(LinkedList<String> channels, String alertMessage, JSONObject data)
+	{
+		
+//		JSONObject data = new JSONObject("{\"action\": \"com.atlasapp.common.PUSH_NOTIFICATION\","
+//                \"name\": \"Vaughn\",
+//                \"newsItem\": \"Man bites dog\""}));
+//		
+		  
+		
+		ParsePush push = new ParsePush();
+		push.setChannels(channels); 
+		push.setMessage(alertMessage);
+		push.setData(data);
+		push.sendInBackground();  
+//		try {
+//			push.send();
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	}
+	
+	
+	/**
+	 * Try to update user info on the server according to key value (case its not empty)
+	 * given 
+	 * connecting with login information on the current PraseUser
+	 * @param key
+	 * @param value   
+	 * @return 
+	 * @return SERVER_MESSAGE type  
+	 */
+	public  SERVER_MESSAGE  updateAtlasUserInfoOnServer(HashMap<String, Object> userAtlasInfoUpdtes)
+	{
+		SERVER_MESSAGE updateSuccess = SERVER_MESSAGE.FAIL;
+		
+		updateSuccess = (userAtlasInfoUpdtes.isEmpty())?  SERVER_MESSAGE.EMAPY_VALUE :updateSuccess;
+		
+		
+		if (!updateSuccess.equals(SERVER_MESSAGE.EMAPY_VALUE))
+		{
+
+			if (parseUser==null)
+				logUserToServer(AtlasAndroidUser.getEmail(), AtlasAndroidUser.getAtlasPassword());
+				
+			
+			
+			updateSuccess = (parseUser!=null)? SERVER_MESSAGE.LOGGED_IN:SERVER_MESSAGE.LOGGED_OUT; 
+			
+			parseUser.put(userAtlasInfoUpdtes);
+			updateSuccess  = parseUser.updateTableMessage ;
+		}
+		return updateSuccess;
+	}
+	
+	/**
+	 * Gets the current mobile ParseUser from Parse
+	 *  sets the AtlasAndroidUser object from DB and sets the SignOnServer flag to true
+	 * @return
+	 */
+	public  boolean setCurrentAtlasAndroidUserFromServer() {
+		boolean suceess =false;
+		suceess = (parseUser!=null);
+		if (suceess)
+		{
+			setAtlasAndroidUserObject(parseUser);
+		}
+		return suceess;
+			
+	}
+	
+	/**
+	 * Searching whether A  user is found on 
+	 * Parse by email address 
+	 * @param email
+	 * @return username and atlas password for that Parse user
+	 */ 
+	public  HashMap<String, String> getUserEmailOnParse( String email) {
+		
+		HashMap<String, String> userParseLogin = new HashMap<String, String>();
+	
+		ParseUser user=null;
+		
+		parseUser = new User();
+		List<ParseObject> list = parseUser.findWhereEqualTo("email", email);
+		if (list!=null && list.size()==1)
+			user = (ParseUser)list.get(0); 
+		 
+		if (user!=null) 
+		{
+			userParseLogin.put("email", user.getUsername());
+			userParseLogin.put("passwordCopy", user.get("passwordCopy").toString());
+			userParseLogin.put("object_id", user.getObjectId());
+			signOnServer = true;
+		}
+		
+		
+		return userParseLogin;
+	}
+	
+	/**
+	 * Updating users fbID and access_token saved on local profile 
+	 * on the server side and setting the SignOnServer flag accordingly
+	 */
+	public  void updateFacebookUseruser(HashMap<String, Object> facebookInfo) 
+	{
+		if (!AtlasAndroidUser.getfbID().equals("")&& !AtlasAndroidUser.getAccessToken().equals(""))
+		{
+		
+			//HashMap<String, Object > facebookInfo = new HashMap<String,Object>();
+			facebookInfo.put("fbID", facebookInfo.get("fbID"));
+			facebookInfo.put("access_token",facebookInfo.get("access_token"));
+		
+			updateAtlasUserInfoOnServer(facebookInfo);
+		}
+		
+	}
+	/**
+	 * Updating users fbID and access_token saved on local profile 
+	 * on the server side according to AtlasAndroidUser and setting the SignOnServer flag accordingly
+	 */
+	public  void updateFacebookUseruser() 
+	{
+		if (!AtlasAndroidUser.getfbID().equals("")&& !AtlasAndroidUser.getAccessToken().equals(""))
+		{
+		
+			HashMap<String, Object> facebookInfo = new HashMap<String,Object>();
+			facebookInfo.put("fbID", AtlasAndroidUser.getfbID());
+			facebookInfo.put("access_token", AtlasAndroidUser.getAccessToken());
+		
+		
+			updateAtlasUserInfoOnServer(facebookInfo);
+		}
+		
+	}
+	public boolean isFacebookAtlasUser(String email, String pass) {
+		User user = new User();
+		user.signIn(email, pass);
+		String fbId = user.getString("fbID");
+		boolean fbUser =(user!=null && fbId!=null && !fbId.equals(""));
+		return fbUser;
+	}
+	public void saveProfileImage(byte[] image)
+	{
+		if (parseUser!=null)
+			parseUser.saveImageFile("image.jpg", image);
+	
+	}
+	public byte[] getImage()
+	{
+		
+		return parseUser.getFile("picture");
+		
+	}
+	/**
+	 * Finding whether friend's facebook id on parse and 
+	 * if does return the friends info from server
+	 * and stores the friend's picture in a background process on local 
+	 * mobile atals pictures folder named after the friend's objectId
+	 * @param fbID friend's facebook id
+	 * @return facebook friend's info from atlas sever
+	 */
+	public  ATLContactModel getFacebookIdOnParse(String fbID)
+	{
+		ATLContactModel facebookAtlasFriend = null;
+		ParseUser facebookUser = null;
+		parseUser = new User();
+		List<ParseObject> list = parseUser.findWhereEqualTo("fbID", fbID);
+		if (list!=null && list.size()==1)
+			facebookUser = (ParseUser)list.get(0); 
+		if (facebookUser!=null && facebookUser.getEmail()!=null && !facebookUser.getString("email").equals("")
+				&&facebookUser.getString("passwordCopy")!=null && !facebookUser.getString("passwordCopy").equals("")) 
+		{
+			 
+		//	User user = new User(facebookUser);
+			//facebookAtlasFriend.setDisplayName(facebookUser.getString("userNameDisplay"));
+			facebookAtlasFriend.setFirstname(facebookUser.getString("displayname"));
+			facebookAtlasFriend.setLastname("");
+			facebookAtlasFriend.setEmailAddress(facebookUser.getEmail());
+			facebookAtlasFriend.setFacebookId(fbID);
+			facebookAtlasFriend.setAtlasId(facebookUser.getObjectId());
+			facebookAtlasFriend.setFromFacebook(true);
+			
+			
+			String friendsFilePictureName = facebookUser.getObjectId();
+			parseUser.saveFriendPictureFileInBackground(facebookUser, friendsFilePictureName, application);
+			
+//			byte[] profilePic = user.getFile("picture");
+//			if (profilePic!=null)
+//			{
+//				Bitmap bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+//				
+//				facebookAtlasFriend.setImage(bitmap);
+//			}	
+		
+			
+		}
+		return facebookAtlasFriend;
+	}
+	
+	    
+	
+	
+	
+	
+	/**
+	 * Return all the current Facebook users on Atlas Server DB (Parse)
+	 * @return ArrayList of all Facebook Atlas users each in a ATLContactModel type
+	 * without pictures...
+	 */
+	public  ArrayList<ATLContactModel> getAllFBAtlasUsers()
+	{
+		ArrayList<ATLContactModel> allFacebookAtlasUsers = new ArrayList<ATLContactModel>();
+		allFacebookAtlasUsersFBID = new ArrayList<String>();
+		
+		parseUser = new User();
+		parseUser.findWhereExists("fbID");
+		String[] empty = {""};
+		List<ParseObject> allFacebookAtlasUsersObjects = parseUser.findWhereNotContainedIn("fbID", Arrays.asList(empty));
+		if (allFacebookAtlasUsersObjects!=null && allFacebookAtlasUsersObjects.size()>0)
+		{
+			allFacebookAtlasUsers = new ArrayList<ATLContactModel>();
+			allFacebookAtlasUsersFBID = new ArrayList<String>();
+			for (ParseObject fbAtlasUser :allFacebookAtlasUsersObjects)
+			{
+				
+				if (fbAtlasUser.getString("email")!=null && !fbAtlasUser.getString("email").equals("") &&
+						fbAtlasUser.getString("passwordCopy")!=null && !fbAtlasUser.getString("passwordCopy").equals(""))
+				{
+				//User user = new User(fbAtlasUser);
+				
+				ATLContactModel atlContactModel = new ATLContactModel();
+				atlContactModel.setAddressBookId("");
+				atlContactModel.setAtlasId(fbAtlasUser.getObjectId());
+				atlContactModel.setEmailAddress(fbAtlasUser.getString("email"));
+				atlContactModel.setFacebookId(fbAtlasUser.getString("fbID"));
+				atlContactModel.setFirstname(fbAtlasUser.getString("displayname"));
+				atlContactModel.setFromFacebook(true);
+				atlContactModel.setLastname(fbAtlasUser.getString("displayname"));
+				 
+				
+				
+//				ParseFile applicantResume = (ParseFile)fbAtlasUser.get("picture");
+//				applicantResume.getDataInBackground(new GetDataCallback() {
+//				  public void done(byte[] data, ParseException e) {
+//				    if (e == null) {
+//				      // data has the bytes for the resume
+//				    	Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//						atlContactModel.setImage(bitmap);
+//				    } else {
+//				      // something went wrong
+//				    }
+//				  }
+//				});
+//				
+//				ParseFile applicantResume = (ParseFile)user.get("picture");
+//				byte[] profilePic;
+//				try {
+//					profilePic = applicantResume.getData();
+				
+				
+//				String friendsFilePictureName = fbAtlasUser.getObjectId();
+//				parseUser.saveFriendPictureFileInBackground(fbAtlasUser, friendsFilePictureName, application);
+//				
+					 
+//					byte[] profilePic = user.getFile("picture");
+//					if (profilePic!=null)
+//					{
+//						Bitmap bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+//						atlContactModel.setImage(bitmap);
+//					}	
+////				} catch (ParseException e) {
+////					// TODO Auto-generated catch block
+////					e.printStackTrace();
+////				}
+
+			
+				
+				allFacebookAtlasUsers.add(atlContactModel);
+				allFacebookAtlasUsersFBID.add(fbAtlasUser.getString("fbID"));
+			}
+			}
+			
+		}
+		return allFacebookAtlasUsers;
+	}
+	
+	
+	/**
+	 * Cheacking the list of emails given on Parse and
+	 * returning a list of ATLContactModel objects for 
+	 * user's email's that are on Parse (Atlas Users)
+	 * and srores their picture in a bacground process on mobile
+	 * local atlas picture folder
+	 * @param newABContactsEmailAdd
+	 * @return
+	 */
+	public ArrayList<ATLContactModel> getAtlasNewFriendsByEmail(
+			ArrayList<String> newABContactsEmailAdd) {
+		parseUser = new User();
+		ArrayList<ATLContactModel> allCommonAtlasUsers = new ArrayList<ATLContactModel>();
+		String[] emailsArray = newABContactsEmailAdd.toArray(new String[newABContactsEmailAdd.size()]);
+		List<ParseObject> allCommonEmails = parseUser.findWhereContainedIn("email",Arrays.asList(emailsArray));
+		if (allCommonEmails!=null && allCommonEmails.size()>0)
+		{
+			allCommonAtlasUsers = new ArrayList<ATLContactModel>();
+			for (ParseObject emailAtlasUser :allCommonEmails)
+			{
+				
+				if (emailAtlasUser.getString("email")!=null && !emailAtlasUser.getString("email").equals("") &&
+						emailAtlasUser.getString("passwordCopy")!=null && !emailAtlasUser.getString("passwordCopy").equals(""))
+				{
+				//User user = new User(emailAtlasUser);
+				ATLContactModel atlContactModel = new ATLContactModel();
+				atlContactModel.setAddressBookId("");
+				atlContactModel.setAtlasId(emailAtlasUser.getObjectId());
+				atlContactModel.setEmailAddress(emailAtlasUser.getString("email"));
+				atlContactModel.setFacebookId(emailAtlasUser.getString("fbID"));
+				atlContactModel.setFirstname(emailAtlasUser.getString("displayname"));
+				atlContactModel.setFromFacebook(true);
+				atlContactModel.setLastname("");
+				
+				
+				
+				String friendsFilePictureName = emailAtlasUser.getObjectId();
+				parseUser.saveFriendPictureFileInBackground(emailAtlasUser, friendsFilePictureName, application);
+				
+//				byte[] profilePic = user.getFile("picture");
+//				if (profilePic!=null)
+//				{
+//					Bitmap bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+//					atlContactModel.setImage(bitmap);
+//				}	
+				
+				allCommonAtlasUsers.add(atlContactModel);
+			}
+			}
+			
+		}
+		return allCommonAtlasUsers;
+	}
+	
+	/**
+	 * Gets all the atlas users on Parse by FB_ID,
+	 * in a ATLContactModel type , without pictures 
+	 * @param allUsersFBFriendsOnAtlasID
+	 * @return
+	 */
+	public ArrayList<ATLContactModel> getAllUsersByFBID(
+			ArrayList<String> allUsersFBFriendsOnAtlasID) {
+		
+		parseUser = new User();
+		ArrayList<ATLContactModel> allCommonAtlasUsers = new ArrayList<ATLContactModel>();
+		String[] array = allUsersFBFriendsOnAtlasID.toArray(new String[allUsersFBFriendsOnAtlasID.size()]);
+		List<ParseObject> allCommonFacebookAtlasUsersObjects = parseUser.findWhereContainedIn("fbID",Arrays.asList(array));
+		if (allCommonFacebookAtlasUsersObjects!=null && allCommonFacebookAtlasUsersObjects.size()>0)
+		{
+			
+			allCommonAtlasUsers = new ArrayList<ATLContactModel>();
+			for (ParseObject fbAtlasUser :allCommonFacebookAtlasUsersObjects)
+			{
+				if (fbAtlasUser.getString("email")!=null && !fbAtlasUser.getString("email").equals("") &&
+						fbAtlasUser.getString("passwordCopy")!=null && !fbAtlasUser.getString("passwordCopy").equals(""))
+				{
+				//User user = new User(fbAtlasUser);
+				
+				
+				ATLContactModel atlContactModel = new ATLContactModel();
+				atlContactModel.setAddressBookId("");
+				atlContactModel.setAtlasId(fbAtlasUser.getObjectId());
+				atlContactModel.setEmailAddress(fbAtlasUser.getString("email"));
+				atlContactModel.setFacebookId(fbAtlasUser.getString("fbID"));
+				atlContactModel.setFirstname(fbAtlasUser.getString("displayname"));
+				atlContactModel.setFromFacebook(true);
+				atlContactModel.setLastname("");
+				
+//				byte[] profilePic = user.getFile("picture");
+//				if (profilePic!=null)
+//				{
+//					Bitmap bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+//					atlContactModel.setImage(bitmap);
+//				}	
+				
+				allCommonAtlasUsers.add(atlContactModel);
+			}
+			}
+		}
+		return allCommonAtlasUsers;
+	}
+	
+	
+	/**
+	 * Must be called after getAllFBAtlasUsers() been called at least once
+	 * and populate the allFacebookAtlasUsersFBID with all the current facebook atlas
+	 * users' facebook id's
+	 * NO actual call to the Parse DB been done
+	 * @return all current facebook atlas users' facebook id's
+	 */
+	public  ArrayList<String> getAllFBAtlasUsersID()
+	{
+		if (allFacebookAtlasUsersFBID==null)
+			allFacebookAtlasUsersFBID = new ArrayList<String>();
+		
+		return allFacebookAtlasUsersFBID;
+	}
+	
+	/**
+	 * Finding whether friend's email on parse and 
+	 * if does return the friends info from server
+	 * and stores the friend's picture in a background process
+	 * on local mobile atlas folder
+	 * @param friend's email address
+	 * @return  friend's info from atlas sever
+	 */
+	public  ATLContactModel getFriendEmailOnParse(String email)
+	{
+		ATLContactModel friendAtlasFriend = null;
+		ParseUser friendUser=null;
+		parseUser = new User();
+		List<ParseObject> list =parseUser.findWhereEqualTo("email", email);
+		
+		if (list!=null && list.size()==1)
+		{
+			
+			
+			friendUser = (ParseUser)list.get(0); 
+			if (friendUser.getString("email")!=null && !friendUser.getString("email").equals("") &&
+					friendUser.getString("passwordCopy")!=null && !friendUser.getString("passwordCopy").equals(""))
+			{
+			//User user = new User(friendUser);
+			friendAtlasFriend = new ATLContactModel();
+			friendAtlasFriend.setFirstname(friendUser.getString("displayname"));
+			friendAtlasFriend.setLastname("");
+			friendAtlasFriend.setEmailAddress(friendUser.getEmail());
+			friendAtlasFriend.setFacebookId(friendUser.getString("fbID"));
+			friendAtlasFriend.setAtlasId(friendUser.getObjectId());
+			friendAtlasFriend.setFromFacebook(!friendUser.getString("fbID").equals(""));
+			
+			
+			
+			String friendsFilePictureName = friendUser.getObjectId();
+			parseUser.saveFriendPictureFileInBackground(friendUser, friendsFilePictureName, application);
+			
+//			byte[] profilePic = user.getFile("picture");
+//			if (profilePic!=null)
+//			{
+//				Bitmap bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+//				friendAtlasFriend.setImage(bitmap);
+//			}
+			}
+		}
+		
+		return friendAtlasFriend;
+	}
+	
+	public String  inviteToAtlas(String inviterId, String inviteeEmail, 
+			String inviteeName, String phone) {
+		
+		InviteToAtlas inviteToAtlas = new InviteToAtlas();
+		
+		HashMap<String, Object> fieldsValues = new HashMap<String, Object>();
+		
+		
+		fieldsValues.put("inviterID", inviterId);
+		fieldsValues.put("email",  inviteeEmail);
+		fieldsValues.put("name",  inviteeName);
+		fieldsValues.put("phone",  phone);
+		
+		inviteToAtlas.put(fieldsValues);
+		
+		return inviteToAtlas.getAtlasID(); 
+	}
+	
+	
+	
+	
+	/**
+	 * LogIn the given user by userName and Password  
+	 * Retrieve his picture from parse
+	 * and store it on local atlas folder on a background process 
+	 * @param userName
+	 * @param password
+	 * @param fileName
+	 */
+	public void retrieveUserFile(String userName, String fileName)
+	{
+		ParseQuery query = ParseUser.getQuery();
+		query.whereEqualTo("email", userName);
+		query.findInBackground(new FindCallback() {
+		  public void done(List<ParseObject> list, ParseException e) {
+		    if (e == null) {
+		        // The query was successful.
+		    	if (list!=null && list.size()==1)
+				{
+					ParseUser user = (ParseUser)list.get(0); 
+					if (user!=null)
+					{
+						String friendsFilePictureName = user.getObjectId();
+						
+						storeUserPictureInBackground(user,friendsFilePictureName);
+						
+					}
+				
+				}
+		    } else {
+		        // Something went wrong.
+		    }
+		  }
+		});
+//		User user = new User(userName,password);
+//		if (user!=null)
+//		{
+//			String friendsFilePictureName = user.getObjectId();
+//			storeUserPictureInBackground(user,friendsFilePictureName);
+//			
+//		}
+	}
+	/**
+	 * Retrieve the current user object picture from parse
+	 * and store it on local atlas folder on a background process 
+	 * @param friendsFilePictureName
+	 * @param application
+	 */
+	public void storeUserPictureInBackground(ParseUser user,final String friendsFilePictureName
+			) {
+		if (user!=null){
+		      ParseFile applicantResume = (ParseFile)user.get("picture");
+				applicantResume.getDataInBackground(new GetDataCallback() {
+					  public void done(byte[] data, ParseException e) {
+					    if (e == null) {
+					      // data has the bytes for the resume
+					    	Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+							
+					    	application.storeFriendPicture(friendsFilePictureName, bitmap);
+					    } else {
+					      // something went wrong
+					    }
+					  }
+					});
+		}
+	}
+	public ParseUser getParseUserByEmail(String email) {
+		ParseUser byEmailUser = null;
+		
+		parseUser = new User();
+		List<ParseObject> list = parseUser.findWhereEqualTo("email", email);
+		
+		if (list!=null && list.size()==1)
+		{
+			byEmailUser = (ParseUser)list.get(0); 
+		}
+		
+		
+		return byEmailUser;
+	}
+//	  TASK_MESSAGE = {
+//	         Title : 0,
+//	         Content: 1,
+//	         Catagory :2,
+//	         Deadline:3,
+//	         Date :4,
+//	         To:5
+//	         
+//	           
+	
+	public void taskAssign(ATLContactModel to, String title, String content,
+			TASK_CATEGORY category, Date date, String lv_dateFormateInUTC)
+	{
+		TaskAssign taskAssignTable = new TaskAssign();
+		if (to!=null && 
+			((title!=null && !title.equals("")||(content!=null && !content.equals(""))))
+			&& category!=null && date!=null && lv_dateFormateInUTC!=null && !lv_dateFormateInUTC.equals("")	)
+		{
+			
+					taskAssignTable.assignFriend(to.getAtlasId(),to.getEmailAddress(), title, content, category, date,to.getFirstname(),lv_dateFormateInUTC);
+					if (taskAssignTable.updateTableMessage.equals(SERVER_MESSAGE.SUCCESS))
+					{
+						if (to.getAtlasId()!=null && !to.getAtlasId().equals(""))
+						{// assign atlas user (push notification)
+							/// Task Request: Organizer's Name has assigned "Task Title" to you. Accept task?
+						
+							LinkedList<String> channels = new LinkedList<String>();
+							String message =  AtlasAndroidUser.getUserNameDisplay()+" has assigned "+title+" to you. Accept task?";
+							channels.add("ID"+to.getAtlasId());
+							JSONObject data = new JSONObject();
+							try {  
+								data = new JSONObject("{\"alert\": \""+message+"\",\"badge\": \"Increment\",\"sound\": \"Incoming_Atlas_Push.mp3\"}");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block     
+								e.printStackTrace();
+							}
+							if (data!=null && channels.size()>0 && message!=null && !message.equals(""))
+								pushNotification(channels,message,data);
+						  
+						}
+						else
+						{// assign Non atlas user
+							Intent intent = new Intent(activity.getBaseContext(),SendEmailActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+							intent.putExtra("name", to.getFirstname());
+							intent.putExtra("atlasId", taskAssignTable.getAtlasID());
+							intent.putExtra("item", "taskm");
+							intent.putExtra("emailAddress","sharonanachum@gmail.com");//to.getEmailAddress()
+							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							activity.getBaseContext().startActivity(intent);   
+						}
+					}
+		}
+		  
+		
+	}   
+	
+	
+	
+	public SERVER_MESSAGE calendarInvite(String fromName, ATLContactModel to, String title, String location,
+			  Date datePref,Date dateAlt1,Date dateAlt2, int duration,
+			  String prefdateFormateInUTC,String altOnefdateFormateInUTC,String altTwofdateFormateInUTC)
+	{
+		SERVER_MESSAGE serverMessage = SERVER_MESSAGE.FAIL;
+		CalendarInvite calendarInviteTable = new CalendarInvite();
+		if (to!=null && 
+			((title!=null && !title.equals("")&&(location!=null)))
+			&& datePref!=null &&
+			prefdateFormateInUTC!=null && !prefdateFormateInUTC.equals("")	)
+		{
+			calendarInviteTable.inviteFriend(fromName,to.getAtlasId(), to.getEmailAddress(), title, 
+					location, datePref, dateAlt1, dateAlt2, to.displayName(), duration, prefdateFormateInUTC, 
+					altOnefdateFormateInUTC, altTwofdateFormateInUTC);
+			
+					if (calendarInviteTable.updateTableMessage.equals(SERVER_MESSAGE.SUCCESS))
+					{
+						if (to.getAtlasId()!=null && !to.getAtlasId().equals(""))
+						{// event invite  atlas user (push notification)
+							/// Organizer's Name has invited you to "Event Title". Confirm event?
+						
+							LinkedList<String> channels = new LinkedList<String>();
+							String message =  fromName+" has invited you to "+title+". Confirm event?";
+							channels.add("ID"+to.getAtlasId());
+							JSONObject data = new JSONObject();
+							try {  
+								data = new JSONObject("{\"alert\": \""+message+"\",\"badge\": \"Increment\",\"sound\": \"Incoming_Atlas_Push.mp3\"}");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block     
+								e.printStackTrace();
+							}
+							if (data!=null && channels.size()>0 && message!=null && !message.equals(""))
+								pushNotification(channels,message,data);
+						  
+						}    
+						else
+						{// assign Non atlas user
+							Intent intent = new Intent(activity.getBaseContext(),SendEmailActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+							intent.putExtra("fromName", fromName);
+							intent.putExtra("name", to.getFirstname());
+							intent.putExtra("atlasId", calendarInviteTable.getAtlasID());
+							intent.putExtra("emailAddress",to.getEmailAddress());
+							intent.putExtra("item", "eventm");
+							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							activity.getBaseContext().startActivity(intent);   
+						}
+						
+						serverMessage = SERVER_MESSAGE.SUCCESS;
+					}
+		}
+		return serverMessage;
+		  
+		
+	}
+	public SERVER_MESSAGE taskAssign(String toAtlasId, String toEmailAddress, String title,
+			String content, TASK_CATEGORY category, Date date, String toFirstname, String lv_dateFormateInUTC)
+	{
+		SERVER_MESSAGE serverMessage = SERVER_MESSAGE.FAIL;
+		TaskAssign taskAssignTable = new TaskAssign();
+		if (toEmailAddress!=null && !toEmailAddress.equals("") &&
+			((title!=null && !title.equals("")&&(content!=null)))
+			&& date!=null &&
+					lv_dateFormateInUTC!=null && !lv_dateFormateInUTC.equals("")	)
+		{
+			taskAssignTable.assignFriend(toAtlasId, toEmailAddress, title, content, category, date, toFirstname, lv_dateFormateInUTC);
+			
+					if (taskAssignTable.updateTableMessage.equals(SERVER_MESSAGE.SUCCESS))
+					{
+						if (toAtlasId!=null && !toAtlasId.equals(""))
+						{// event invite  atlas user (push notification)
+							/// Organizer's Name has invited you to "Event Title". Confirm event?
+						
+							LinkedList<String> channels = new LinkedList<String>();
+							String message =  AtlasAndroidUser.getUserNameDisplay()+" has assigned you to "+title+". Confirm assignment?";
+							channels.add("ID"+toAtlasId);
+							JSONObject data = new JSONObject();
+							try {  
+								data = new JSONObject("{\"alert\": \""+message+"\",\"badge\": \"Increment\",\"sound\": \"Incoming_Atlas_Push.mp3\"}");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block     
+								e.printStackTrace();
+							}
+							if (data!=null && channels.size()>0 && message!=null && !message.equals(""))
+								pushNotification(channels,message,data);
+						  
+						}    
+						else
+						{// assign Non atlas user
+							Intent intent = new Intent(activity.getBaseContext(),SendEmailActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+							intent.putExtra("fromName", AtlasAndroidUser.getUserNameDisplay());
+							intent.putExtra("name", toFirstname);
+							intent.putExtra("atlasId", taskAssignTable.getAtlasID());
+							intent.putExtra("emailAddress",toEmailAddress);
+							intent.putExtra("item", "taskm");
+							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							activity.getBaseContext().startActivity(intent);   
+						}
+						
+						serverMessage = SERVER_MESSAGE.SUCCESS;
+					}
+		}
+		return serverMessage;
+		  
+		
+	}
+	public ArrayList<ParseObject> setAllUserAlerts()
+	{
+		ArrayList<ParseObject> newUserAlerts = new ArrayList<ParseObject>();
+		
+		for (String table:TABLES_ASSIGN)
+		{
+			AtlasServerTable alertTable = new AtlasServerTable();
+			alertTable.setTableName(table);
+			HashMap<String,Object> alertUnRead = new HashMap<String,Object>();
+			alertUnRead.put("isRead", false);
+			alertUnRead.put("fromID", AtlasAndroidUser.getParseUserID());
+			List<ParseObject> alerts = alertTable.findWhereEqualTo(alertUnRead);
+			if (alerts!=null && alerts.size()>0)
+				newUserAlerts.addAll(alerts);
+		}
+		
+		return newUserAlerts;
+		
+	}
+	public enum TABLE_ALERTS {
+		EVENT("EventInviteNew"), TASK("TaskAssignNew") ;
+		
+		private final String tableName;  
+  
+		private TABLE_ALERTS(String tableName) {  
+			this.tableName = tableName;  
+		}  
+  
+		public String getTableName() {  
+			return tableName;  
+		}  
+	}; 
+	/**
+	 * Sets the ArrayList of ATLAlertModel of all the current un read 
+	 * alerts from the corresponding talbe (alert : event/task)
+	 * given and updates ATLCurrentsUserAlerts
+	 * @param alert
+	 */
+	public void setAlerts(TABLE_ALERTS alert)
+	{
+		currentUserAlerts = ATLCurrentsUserAlerts.getSingletonObject(null);
+		ArrayList<ATLAlertModel> newUserAlerts = new ArrayList<ATLAlertModel>();
+		
+			AtlasServerTable alertTable = new AtlasServerTable();
+			alertTable.setTableName(alert.getTableName());
+			HashMap<String,Object> alertUnRead = new HashMap<String,Object>();
+			alertUnRead.put("isRead", false);
+			
+			
+			/// REPLACE THE PARSE ID (NGHIA'S) WITH AtlasAndroidUser.getParseUserID()); 
+			////FOR GETTING THE USER PARSE
+			//// ID ....
+			
+			if (alert.equals(TABLE_ALERTS.EVENT))
+			alertUnRead.put("invitee", AtlasAndroidUser.getParseUserID());//"d1EJbNSFvv");//
+		
+			else
+				alertUnRead.put("toID", AtlasAndroidUser.getParseUserID());//"d1EJbNSFvv");//
+
+			//alertUnRead.put("invitee", "8TYJRhpfth");////checking Lasha's alert
+			alertTable.findAlertsInBackground(alertUnRead,alert);
+			
+
+	}
+	
+	/**
+	 * Gets the alerts as a list of ParseObjects and return an
+	 * array of ATLAlertsModel the app can use, with all the prorperties 
+	 * initiated
+	 * @param alerts
+	 */
+	public ArrayList<ATLAlertModel> toATLAlertModel(ArrayList<ParseObject> alerts)
+	{
+		ArrayList<ATLAlertModel> alertsModel = new ArrayList<ATLAlertModel>();
+		
+		for (ParseObject alert:alerts)
+		{
+			ATLAlertModel newAlertModel = new ATLAlertModel();
+			
+			
+			//itemType = TABLE_ALERTS.TASK;
+			newAlertModel.alertEventLocation=alert.getString("location");
+			newAlertModel.alertEventtitle=alert.getString("title");
+			newAlertModel.alertSenderAtlasId = alert.getString("fromID");
+			newAlertModel.alertSendername =alert.getString("fromName");
+			   
+			newAlertModel.alertSenderemail=alert.getString("fromEmail");
+			newAlertModel.isRead = alert.getBoolean("isRead");
+			
+			///for Event Invite
+			newAlertModel.alertAlt1Datetime = alert.getDate("alt_one_date");
+			newAlertModel.alertAlt2Datetime = alert.getDate("alt_two_date");
+			newAlertModel.alertPreferredDatetime = alert.getDate("pref_date");
+			
+			newAlertModel.duration = (Integer) alert.getNumber("duration");
+			
+			////for Task Assign
+			newAlertModel.priorityCategory = alert.getString("catagory");
+			newAlertModel.alertDescription = alert.getString("content");
+			alertsModel.add(newAlertModel);
+		}
+		
+		
+	 	
+		
+		return alertsModel;
+	}
+	/**
+	 * Sets the ATLDBCommon properties in the background
+	 * @param retrieveFriends whether or not updating the local friends DB as well
+	 */
+	public void setAllAtlasUsers(boolean retrieveFriends) {
+		User users = new User();
+		
+		 users.setAllUsers(retrieveFriends);
+		
+	}
+	public SERVER_MESSAGE calendarInviteRespond(Boolean respond,String inviteId,
+			String optionPicked, String toAtlasId,
+			String toEmail, String toName,
+			String title, String location,
+			  Date datePref, int duration,
+			  String prefdateFormateInUTC)
+	{
+		SERVER_MESSAGE serverMessage = SERVER_MESSAGE.FAIL;
+		if (inviteId!=null && !inviteId.equals(""))
+		{
+			
+		
+		
+		
+		CalendarRespond calendarInviteRespondTable = new CalendarRespond();
+		if (toAtlasId!=null && 
+			((title!=null && !title.equals("")&&(location!=null)))
+			&&
+			((prefdateFormateInUTC!=null && !prefdateFormateInUTC.equals("")	&& respond)|| !respond))
+		{
+			calendarInviteRespondTable.respondFriend(inviteId,optionPicked, 
+					toAtlasId, title, location, toEmail, datePref,toName , 
+					duration, prefdateFormateInUTC);
+			
+					if (calendarInviteRespondTable.updateTableMessage.equals(SERVER_MESSAGE.SUCCESS))
+					{
+						if (toAtlasId!=null && !toAtlasId.equals(""))
+						{// event invite  atlas user (push notification)
+							///Responder's Name has confirmed "Event Title" at time 
+							//on day. (for example: "at 4pm on Saturday").
+						
+							LinkedList<String> channels = new LinkedList<String>();
+							String message =  AtlasAndroidUser.getUserNameDisplay()+" has confirmed "+title+" at "+datePref;
+							channels.add("ID"+toAtlasId);
+							JSONObject data = new JSONObject();
+							try {  
+								data = new JSONObject("{\"alert\": \""+message+"\",\"badge\": \"Increment\",\"sound\": \"Incoming_Atlas_Push.mp3\"}");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block     
+								e.printStackTrace();
+							}
+							if (data!=null && channels.size()>0 && message!=null && !message.equals(""))
+								pushNotification(channels,message,data);
+						  
+						}    
+//						else
+//						{// assign Non atlas user
+//							Intent intent = new Intent(activity.getBaseContext(),SendEmailActivity.class);
+//							intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//							intent.putExtra("fromName", AtlasAndroidUser.getUserNameDisplay());
+//							intent.putExtra("name", toName);
+//							intent.putExtra("atlasId", calendarInviteRespondTable.getAtlasID());
+//							intent.putExtra("emailAddress",toEmail);//"sharonanachum@gmail.com");//
+//							intent.putExtra("item", "eventm");
+//							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//							activity.getBaseContext().startActivity(intent);   
+//						}
+//					
+//						HashMap<String,Object> respond = new HashMap<String,Object>();
+//						respond.put("inviteID", inviteId);
+//						calendarInviteRespondTable.put(respond);
+//						
+						
+						
+						serverMessage = SERVER_MESSAGE.SUCCESS;
+					}
+		}
+		//// updating respond 
+		CalendarInvite updateCalendarInvite = new CalendarInvite();
+		HashMap<String, Object> updates = new HashMap<String,Object>();
+		updates.put("isRead", true);
+		updates.put("respond", true);
+		updateCalendarInvite.updateRowInTableInBackground(inviteId, updates);
+
+		}
+		else
+			serverMessage = SERVER_MESSAGE.FAIL;
+		return serverMessage;
+		  
+		
+	}
+	public SERVER_MESSAGE taskAssignRespond(String taskId,boolean acceptTask,String toId,String taskTitle,String taskContent,
+			String toEmail,Date datePref, String tofirstname,
+			  String prefdateFormateInUTC) 
+	{
+		SERVER_MESSAGE serverMessage = SERVER_MESSAGE.FAIL;
+		if (taskId!=null && !taskId.equals(""))
+		{
+			
+		
+		
+		
+		TaskAssignRespond taskAssignRespondTable = new TaskAssignRespond();
+		if (taskId!=null && 
+			((taskTitle!=null && !taskTitle.equals("")&&(taskContent!=null)))
+			&&
+			prefdateFormateInUTC!=null && !prefdateFormateInUTC.equals("")	)
+		{
+			taskAssignRespondTable.respondFriend(taskId, acceptTask,
+					toId, taskTitle, taskContent, toEmail, datePref, 
+					tofirstname, prefdateFormateInUTC);
+			
+					if (taskAssignRespondTable.updateTableMessage.equals(SERVER_MESSAGE.SUCCESS))
+					{
+						if (toId!=null && !toId.equals(""))
+						{// event invite  atlas user (push notification)
+							///Responder's Name has confirmed "Event Title" at time 
+							//on day. (for example: "at 4pm on Saturday").
+						
+							LinkedList<String> channels = new LinkedList<String>();
+							String respond = (acceptTask)? "confirmed":"declined";
+							String message =  AtlasAndroidUser.getUserNameDisplay()+" has "+respond+"  "+taskTitle+" at "+datePref;
+							channels.add("ID"+toId);
+							JSONObject data = new JSONObject();
+							try {  
+								data = new JSONObject("{\"alert\": \""+message+"\",\"badge\": \"Increment\",\"sound\": \"Incoming_Atlas_Push.mp3\"}");
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block     
+								e.printStackTrace();
+							}
+							if (data!=null && channels.size()>0 && message!=null && !message.equals(""))
+								pushNotification(channels,message,data);
+						  
+						}    
+//						else
+//						{// assign Non atlas user
+//							Intent intent = new Intent(activity.getBaseContext(),SendEmailActivity.class);
+//							intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//							intent.putExtra("fromName", AtlasAndroidUser.getUserNameDisplay());
+//							intent.putExtra("name", toName);
+//							intent.putExtra("atlasId", calendarInviteRespondTable.getAtlasID());
+//							intent.putExtra("emailAddress",toEmail);//"sharonanachum@gmail.com");//
+//							intent.putExtra("item", "eventm");
+//							intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//							activity.getBaseContext().startActivity(intent);   
+//						}
+//					
+//						HashMap<String,Object> respond = new HashMap<String,Object>();
+//						respond.put("inviteID", inviteId);
+//						calendarInviteRespondTable.put(respond);
+//						
+						
+						
+						serverMessage = SERVER_MESSAGE.SUCCESS;
+					}
+		}
+		//// updating respond 
+		TaskAssign updateTaskAssign = new TaskAssign();
+		HashMap<String, Object> updates = new HashMap<String,Object>();
+		updates.put("isRead", true);
+		updateTaskAssign.updateRowInTableInBackground(taskId, updates);
+
+		}
+		else
+			serverMessage = SERVER_MESSAGE.FAIL;
+		return serverMessage;
+		  
+		
+	}
+}

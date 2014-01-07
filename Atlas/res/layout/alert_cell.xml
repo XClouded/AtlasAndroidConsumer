@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="#0000" >
+	<include
+		android:id="@+id/header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		layout="@layout/listview_header" />
+	<RelativeLayout
+		android:id="@+id/leftLayout"
+		android:layout_width="60dp"
+		android:layout_height="match_parent"
+		android:layout_below="@+id/header"
+		android:layout_centerVertical="true"
+		android:background="#0000" >
+		<ImageView
+			android:id="@+id/alert_avatar_image"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/avatar2x" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/centerLayout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/leftLayout"
+		android:layout_below="@+id/header"
+		android:layout_toRightOf="@+id/leftLayout" >
+		<TextView
+			android:id="@+id/alerts_inviter_name"
+			style="@style/ATLTitleOfListView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:layout_marginLeft="3dp"
+			android:text="@string/alerts_inviter_name"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textColor="@color/white"
+			android:visibility="gone" />
+		<TextView
+			android:id="@+id/alerts_events_invite_you_to"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/alerts_inviter_name"
+			android:layout_alignTop="@+id/alerts_inviter_name"
+			android:layout_marginLeft="3dp"
+			android:layout_toRightOf="@+id/alerts_inviter_name"
+			android:gravity="center_vertical"
+			android:text="@string/alerts_events_invite_you_to"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:visibility="gone" />
+		<TextView
+			android:id="@+id/alerts_events_title"
+			style="@style/ATLTitleOfListView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/alerts_inviter_name"
+			android:layout_alignTop="@+id/alerts_inviter_name"
+			android:layout_marginLeft="3dp"
+			android:layout_marginTop="5dp"
+			android:layout_toRightOf="@+id/alerts_events_invite_you_to"
+			android:gravity="center_vertical"
+			android:text="@string/alerts_events_title"
+			android:textColor="@color/white"
+			android:textSize="18sp"
+			android:textStyle="normal" />
+		<RelativeLayout
+			android:id="@+id/bottomLayout"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/alerts_inviter_name"
+			android:layout_alignParentBottom="true"
+			android:layout_below="@+id/alerts_events_title"
+			android:layout_marginTop="5dp" >
+			<ImageView
+				android:id="@+id/alerts_tag_event"
+				android:layout_width="16dp"
+				android:layout_height="30dp"
+				android:layout_alignLeft="@+id/alerts_inviter_name"
+				android:layout_alignParentBottom="true"
+				android:layout_below="@+id/alerts_events_title"
+				android:layout_marginBottom="10dp"
+				android:layout_marginLeft="5dp"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/alerts_tag_notification_calendar2x" />
+			<TextView
+				android:id="@+id/alerts_event_prefered_date"
+				android:layout_width="wrap_content"
+				android:layout_height="24dp"
+				android:layout_alignBottom="@+id/alerts_tag_event"
+				android:layout_marginLeft="5dp"
+				android:layout_toRightOf="@+id/alerts_tag_event"
+				android:gravity="top"
+				android:text="@string/date_sample"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:textColor="@color/grey"
+				android:textStyle="bold" />
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>

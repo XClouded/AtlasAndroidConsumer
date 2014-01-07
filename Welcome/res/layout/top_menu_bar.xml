@@ -1,0 +1,70 @@
+ 
+ <merge xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+ <RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/topMenuBar"
+     android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+     android:background="@drawable/navbar" >
+      
+    <ImageButton
+        android:layout_margin="3dp"
+    android:id="@+id/topMenuBtn1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:background="#0000"
+    android:layout_alignParentLeft="true"
+    
+    />
+    <ImageButton 
+        android:layout_margin="3dp"
+        android:id="@+id/topMenuBtn2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:background="#0000"
+    android:layout_toRightOf="@id/topMenuBtn1"
+        
+        
+        />
+
+    <ImageView
+        android:id="@+id/mainTitleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+       
+        android:background="#0000"
+        android:visibility="invisible" />
+    
+    <ImageButton
+    android:id="@+id/topMenuBtn4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:background="#0000"
+    android:layout_alignParentRight="true"
+    android:layout_margin="3dp"
+    />
+    <ImageButton 
+        android:id="@+id/topMenuBtn3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"  
+    android:visibility="invisible"
+    android:background="#0000"
+    android:layout_toLeftOf="@id/topMenuBtn4"
+       android:layout_margin="3dp" 
+        
+        />
+    
+    
+    
+    
+    
+           
+       </RelativeLayout> 
+       
+ 
+ </merge>

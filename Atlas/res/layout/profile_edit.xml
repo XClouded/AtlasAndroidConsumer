@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:facebook="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/calendar_day_view_mlayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+	<RelativeLayout
+		android:id="@+id/calendar_day_view_cal_selects_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/calendar_day_view_alert_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:layout_gravity="right"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<atlasapp.common.ATLDragAndDropView
+		android:id="@+id/editProfileContent"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="@drawable/bk_gray" >
+		<RelativeLayout
+			android:id="@+id/topBarMenu"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:background="@drawable/navbar" >
+			<ImageButton
+				android:id="@+id/sortBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="5dp"
+				android:background="#0000"
+				android:contentDescription="@string/sort_btn"
+				android:src="@drawable/btn_sort" />
+			<ImageButton
+				android:id="@+id/alertBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="5dp"
+				android:background="#0000"
+				android:contentDescription="@string/allies_btn"
+				android:src="@drawable/btn_bubbles" />
+			<TextView
+				android:id="@+id/titleTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:text="@string/profile_title"
+				android:textColor="@color/white"
+				android:textSize="26sp"
+				android:textStyle="bold" />
+		</RelativeLayout>
+		<ScrollView
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/editProfileScroll"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/topBarMenu" >
+			<RelativeLayout
+				android:id="@+id/scrollableLayout"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" >
+				<RelativeLayout
+					android:id="@+id/editProfile"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"
+					android:layout_marginTop="10dp" >
+					<TextView
+						android:id="@+id/signInEditTitleCelltitle"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="10dp"
+						android:layout_marginLeft="5dp"
+						android:background="#0000"
+						android:text="@string/edit_profile_reg_info_title"
+						android:textColor="@color/title_section_list"
+						android:textSize="18sp"
+						android:textStyle="bold" />
+					<RelativeLayout
+						android:id="@+id/signInEditTitleCell"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_below="@+id/signInEditTitleCelltitle"
+						android:background="@drawable/profile_custom_cell_bg" >
+						<atlasapp.facebook.ProfilePictureView
+							android:id="@+id/selection_profile_pic"
+							android:layout_width="82dp"
+							android:layout_height="80dp"
+							android:layout_alignLeft="@id/signInEditTitleCell"
+							android:layout_alignTop="@id/signInEditTitleCell"
+							android:layout_marginLeft="8dp"
+							android:layout_marginTop="5dp"
+							facebook:preset_size="normal" />
+						<ImageButton
+							android:id="@+id/editProfileCameraBtn"
+							android:layout_width="82dp"
+							android:layout_height="80dp"
+							android:layout_alignParentLeft="true"
+							android:layout_marginLeft="8dp"
+							android:layout_marginTop="5dp"
+							android:background="#0000"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/edit_profile_reg_info_camera" />
+						<ImageView
+							android:id="@+id/camerapreview"
+							android:layout_width="82dp"
+							android:layout_height="80dp"
+							android:layout_above="@+id/editYourLoginLayout"
+							android:layout_alignParentLeft="true"
+							android:layout_marginLeft="8dp"
+							android:layout_marginTop="5dp"
+							android:contentDescription="@string/app_name" />
+						<EditText
+							android:id="@+id/profile_edit_first_name"
+							android:layout_width="match_parent"
+							android:layout_height="45dp"
+							android:layout_alignParentRight="true"
+							android:layout_alignParentTop="true"
+							android:layout_marginLeft="10dp"
+							android:layout_toRightOf="@+id/selection_profile_pic"
+							android:background="#0000"
+							android:ems="10"
+							android:hint="@string/profile_edit_first_name_hint"
+							android:inputType="textEmailSubject"
+							android:paddingLeft="5dp"
+							android:paddingRight="5dp"
+							android:textStyle="bold" />
+						<EditText
+							android:id="@+id/userNameDescEdit"
+							android:layout_width="match_parent"
+							android:layout_height="45dp"
+							android:layout_alignLeft="@+id/profile_edit_first_name"
+							android:layout_alignParentRight="true"
+							android:layout_below="@+id/profile_edit_first_name"
+							android:background="#0000"
+							android:ems="10"
+							android:hint="@string/profile_edit_last_name_hint"
+							android:inputType="text"
+							android:paddingLeft="5dp"
+							android:paddingRight="5dp"
+							android:textStyle="bold" >
+						</EditText>
+						<EditText
+							android:id="@+id/passwordVerify"
+							android:layout_width="match_parent"
+							android:layout_height="45dp"
+							android:layout_below="@+id/userNameDescEdit"
+							android:background="#0000"
+							android:contentDescription="@string/app_name"
+							android:hint="@string/sign_in_password_hint"
+							android:inputType="textPassword"
+							android:paddingLeft="10dp"
+							android:paddingRight="5dp"
+							android:text="@string/sign_in_password_hint"
+							android:textStyle="bold" />
+						<EditText
+							android:id="@+id/editProfilePassword"
+							android:layout_width="match_parent"
+							android:layout_height="45dp"
+							android:layout_below="@+id/passwordVerify"
+							android:background="#0000"
+							android:hint="@string/sign_in_verify_password_hint"
+							android:inputType="textPassword"
+							android:paddingLeft="10dp"
+							android:paddingRight="5dp"
+							android:text="@string/sign_in_password_hint"
+							android:textStyle="bold" />
+					</RelativeLayout>
+					<RelativeLayout
+						android:id="@+id/editYourLoginLayout"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_below="@id/signInEditTitleCell"
+						android:layout_marginTop="10dp"
+						android:background="#0000" >
+						<TextView
+							android:id="@+id/editYourLoginTitle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginBottom="7dp"
+							android:layout_marginLeft="5dp"
+							android:text="@string/edit_profile_log_info_title"
+							android:textColor="@color/title_section_list"
+							android:textSize="18sp"
+							android:textStyle="bold" />
+						<LinearLayout
+							android:id="@+id/my_profile_email_list_view"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_below="@+id/editYourLoginTitle"
+							android:background="#0000"
+							android:orientation="vertical" >
+						</LinearLayout>
+						<ImageView
+							android:id="@+id/signInEditTitleCell_bg"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_below="@id/editYourLoginTitle"
+							android:layout_marginTop="5dp"
+							android:background="@drawable/edit_profile_pwd_cell_bg"
+							android:contentDescription="@string/app_name"
+							android:visibility="gone" />
+						<EditText
+							android:id="@+id/emailEdit"
+							android:layout_width="match_parent"
+							android:layout_height="45dp"
+							android:layout_alignTop="@+id/signInEditTitleCell_bg"
+							android:background="#0000"
+							android:hint="@string/sign_in_username_hint"
+							android:inputType="textEmailSubject"
+							android:paddingLeft="10dp"
+							android:paddingRight="5dp"
+							android:textStyle="bold"
+							android:visibility="gone" />
+						<EditText
+							android:id="@+id/editAddNewEmail"
+							android:layout_width="match_parent"
+							android:layout_height="45dp"
+							android:layout_below="@+id/emailEdit"
+							android:background="#0000"
+							android:hint="@string/profile_edit_add_email_hint"
+							android:inputType="textEmailSubject"
+							android:paddingLeft="10dp"
+							android:paddingRight="5dp"
+							android:textStyle="bold"
+							android:visibility="gone" />
+					</RelativeLayout>
+				</RelativeLayout>
+				<ImageButton
+					android:id="@+id/editProfileSaveBtn"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentRight="true"
+					android:layout_below="@+id/editProfile"
+					android:layout_marginTop="20dp"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/edit_profile_btn_save" />
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="20dp"
+					android:layout_below="@id/editProfileSaveBtn" >
+				</View>
+			</RelativeLayout>
+		</ScrollView>
+		<View
+			android:id="@+id/calendar_day_view_cover_view"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@color/transparent"
+			android:visibility="gone" >
+		</View>
+	</atlasapp.common.ATLDragAndDropView>
+</FrameLayout>

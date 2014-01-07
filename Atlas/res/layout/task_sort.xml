@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<RelativeLayout
+		android:id="@+id/task_sort_user_view"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="#0000" >
+		<ImageView
+			android:id="@+id/task_select_user_avatar"
+			android:layout_width="45dp"
+			android:layout_height="45dp"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:contentDescription="@string/app_name" >
+		</ImageView>
+		<TextView
+			android:id="@+id/task_sort_user_name_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/task_select_user_avatar"
+			android:text="@string/task_sort_user_name_text"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" >
+		</TextView>
+	</RelativeLayout>
+	<TextView
+		android:id="@+id/task_sort_bar"
+		android:layout_width="320dp"
+		android:layout_height="32dp"
+		android:layout_below="@+id/task_sort_user_view"
+		android:background="@drawable/alerts_titlebar_bg2x"
+		android:gravity="center_vertical"
+		android:paddingLeft="20dp"
+		android:text="@string/task_sort_bar_title"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		android:textStyle="bold" >
+	</TextView>
+	<com.ericharlow.DragNDrop.DragNDropListView
+		android:id="@+id/task_sort_list_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/task_sort_bar"
+		android:background="#0000" >
+	</com.ericharlow.DragNDrop.DragNDropListView>
+	<RelativeLayout
+		android:id="@+id/task_sort_show_completed_view"
+		android:layout_width="match_parent"
+		android:layout_height="55dp"
+		android:layout_below="@+id/task_sort_list_view"
+		android:background="@drawable/task_sort_cell_background" >
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:layout_alignParentTop="true"
+			android:background="@color/black" />
+		<TextView
+			android:id="@+id/task_sort_show_competed"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:text="@string/task_sort_show_competed_text"
+			android:textColor="@color/white"
+			android:textSize="20sp"
+			android:textStyle="bold" >
+		</TextView>
+		<!--
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/task_sort_check_unselect" >
+        </ImageView>
+		-->
+		<!--
+        <com.atlasapp.commom.ATLCustomCheckBox
+            android:id="@+id/task_sort_show_completed_checkbox"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:checked="false" >
+        </com.atlasapp.commom.ATLCustomCheckBox>
+		-->
+		<CheckBox
+			android:id="@+id/task_sort_show_completed_checkbox"
+			android:layout_width="23dp"
+			android:layout_height="23dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="7dp"
+			android:button="@drawable/custom_check_box"
+			android:checked="true" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:layout_alignParentBottom="true"
+			android:background="@color/black" />
+	</RelativeLayout>
+</RelativeLayout>

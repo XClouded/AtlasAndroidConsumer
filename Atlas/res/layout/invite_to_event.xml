@@ -1,0 +1,166 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/find_friends_background"
+    android:id="@+id/invite_to_event_content"
+    
+    >
+  
+    
+    
+    
+   <!--  <RelativeLayout
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_alignParentTop="true">
+        
+          <include android:id="@+id/tabBarIncludeLayout" layout="@layout/top_menu_bar" />
+        
+    </RelativeLayout> -->
+    <RelativeLayout 
+    android:id="@+id/topBarMenu"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/navbar"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    
+    
+    >
+   
+    <ImageButton 
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+     android:layout_centerVertical="true"
+        
+        
+        android:src="@drawable/invite_friends_back"
+        android:background="#0000"
+       
+        
+        
+        
+        />
+   
+    
+  <!--   <ImageView 
+        android:id="@+id/navbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/notes_title_notes"
+        
+        
+        
+        /> -->
+    
+   
+</RelativeLayout>
+    
+    <RelativeLayout 
+      
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+     
+      android:layout_below="@id/topBarMenu"
+     
+      >
+      <ImageView
+        android:id="@+id/searchImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/topBarMenu"
+        
+        android:src="@drawable/notes_search_bar_bg" />
+    
+     <ImageView
+        android:id="@+id/findMyFriendsTitleImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/searchImg"
+        
+        android:src="@drawable/find_friends_on_atlas_title" />
+
+     <EditText
+         android:id="@+id/searchText"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/searchImg"
+         android:layout_alignParentLeft="true"
+         android:layout_marginBottom="32dp"
+         android:layout_marginLeft="60dp"
+         android:background="#0000"
+         android:ems="10"
+         android:hint="Search" />
+     
+     <RelativeLayout 
+         android:id="@+id/inviteFriendsSocialBar"
+         android:background="@drawable/invite_friends_social_background"
+         android:layout_below="@id/findMyFriendsTitleImg"         
+           android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         
+         
+         >
+         <ImageButton 
+             android:id="@+id/inviteFacebookFriendBtn"
+             android:background="@drawable/invite_friends_social_icon_facebook"
+                 android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+             />
+         
+          <ImageButton 
+             android:id="@+id/inviteTwitterFriendBtn"
+             android:background="@drawable/invite_friends_social_icon_twitter"
+                 android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/inviteFacebookFriendBtn"
+        android:layout_marginLeft="20dp"
+       
+             />
+          
+           <ImageButton 
+             android:id="@+id/inviteLinkedinFriendBtn"
+             android:background="@drawable/invite_friends_social_icon_linkedin"
+                 android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+     android:layout_toRightOf="@id/inviteTwitterFriendBtn"
+       android:layout_marginLeft="20dp"
+             />
+           
+            <ImageButton 
+             android:id="@+id/inviteAddressbookFriendBtn"
+             android:background="@drawable/invite_friends_social_icon_addressbook"
+                 android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/inviteLinkedinFriendBtn"
+         android:layout_marginLeft="20dp"
+             />
+            
+         
+         
+         
+         
+     </RelativeLayout>
+      
+  </RelativeLayout>
+    
+    
+    
+  
+
+
+    
+</RelativeLayout>

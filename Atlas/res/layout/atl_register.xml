@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/atlRegisterLayout"
+    android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/white"   
+	 >
+
+     <RelativeLayout 
+       android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" 
+        
+        
+        >
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+           	android:text="Create Account"
+           	android:textSize="24dp"
+           	android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            >
+        </TextView>
+    	
+    </RelativeLayout>
+    
+     
+      <RelativeLayout 
+         android:id="@+id/atlRegisterWelcomeTitleLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="70dp"
+		android:layout_centerHorizontal="true"
+		
+		android:layout_below="@+id/topBarMenu"
+         >
+         <ImageView
+            android:id="@+id/atlRegisterWelcomeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            
+            
+            android:src="@drawable/atl_register_welcome_title" />
+        
+     <TextView
+           android:id="@+id/atlRegisterNameTxtView"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+           	android:text="Hello!"
+            android:layout_centerHorizontal="true"
+           	android:layout_alignParentBottom="true"
+           
+            > 
+        </TextView> -->
+         
+         
+     </RelativeLayout>
+    
+     <RelativeLayout 
+         android:id="@+id/facebookBtnLayout"
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		
+		android:layout_below="@+id/atlRegisterWelcomeTitleLayout"
+         >
+        <!--  <ImageView
+            android:id="@+id/atlRegisterFBBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            
+            android:src="@drawable/atl_register_fb_signup" /> -->
+
+         <atlasapp.facebook.LoginButton
+             android:id="@+id/fbauthButton"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+             android:background="#0000"
+             android:src="@drawable/atl_signin_fb_signin"
+             android:textColor="#0000" />
+         
+     </RelativeLayout>
+
+        
+        <RelativeLayout 
+         android:id="@+id/registerCenterLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		
+		android:layout_below="@+id/facebookBtnLayout"
+		android:layout_marginTop="20dp"
+         >
+
+         <ImageView
+             android:id="@+id/atlRegisterCenter"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentTop="true"
+             android:background="@color/white"
+             android:src="@drawable/atl_register_center_description" />
+        
+       </RelativeLayout>
+        
+         <RelativeLayout 
+         android:id="@+id/registerEditCellsLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/registerCenterLayout"
+		android:background="@drawable/atl_register_register_edit_cells"
+         >
+
+          <ImageButton
+              android:id="@+id/atlRegisterUserImageBtn"
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentTop="true"
+              android:background="#0000" />
+
+       
+        <EditText
+            android:id="@+id/atlRegisterEmailEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_below="@+id/atlRegisterUserImageBtn"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"
+            android:hint="@string/sign_in_email_address_hint"
+            android:ems="15"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/atlRegisterPasswordEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/atlRegisterEmailEditTxt"
+            android:layout_alignParentLeft="true"
+            
+            android:hint="@string/sign_in_password_hint"
+            android:textColor="@color/black"
+            android:ems="15"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/camerapreview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="13dp"
+              android:background="@color/transparent"
+            android:layout_above="@id/atlRegisterEmailEditTxt"
+            android:src="@drawable/avatar2x" />
+
+        <EditText
+            android:id="@+id/atlRegisterFirstNameEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/camerapreview"
+            android:layout_marginTop="11dp"
+            android:layout_toRightOf="@+id/camerapreview"
+            android:background="@color/transparent"
+            android:ems="10"
+            android:hint="@string/profile_edit_first_name_hint"
+            android:inputType="textPersonName"
+            android:textColor="@color/black" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/atlRegisterLastNameEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/atlRegisterUserImageBtn"
+            android:layout_alignRight="@+id/atlRegisterEmailEditTxt"
+            android:ems="10"
+            android:hint="@string/profile_edit_last_name_hint"
+            android:inputType="textPersonName"
+            android:textColor="@color/black" />
+        
+       </RelativeLayout>
+       
+        
+        
+       <!--  <ImageButton
+            android:id="@+id/atlRegisterUserImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/atlRegisterFBBtn"
+            android:layout_marginTop="99dp"
+           android:layout_alignParentLeft="true"
+           android:layout_marginLeft="17dp"
+            android:background="@color/white"
+            android:src="@drawable/atl_register_user_picture" />
+
+        <TextView
+            android:id="@+id/atlRegisterFirstNameEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/atlRegisterFBBtn"
+            android:layout_marginTop="64dp"
+            android:layout_toRightOf="@+id/atlRegisterUserImageBtn"
+            android:text="TextView" />
+
+        <EditText
+            android:id="@+id/atlRegisterFirstNameEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView1"
+            android:layout_alignTop="@+id/atlRegisterUserImageBtn"
+            android:ems="10"
+            android:inputType="textPersonName" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/atlRegisterUserImageBtn"
+            android:layout_alignLeft="@+id/editText1"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/atlRegisterUserImageBtn"
+            android:layout_below="@+id/atlRegisterUserImageBtn"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editText3"
+            android:layout_below="@+id/editText3"
+            android:ems="10"
+            android:inputType="textPassword" /> -->
+
+   <!--  </RelativeLayout> -->
+ <RelativeLayout 
+         android:id="@+id/atlRegisterBtnLayout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:layout_below="@id/registerEditCellsLayout"
+             android:layout_centerHorizontal="true"
+		
+         >
+         <ImageButton
+             android:id="@+id/atlRegisterBtn"
+             android:layout_width="150dp"
+            android:layout_height="100dp"
+             android:layout_centerHorizontal="true"
+             android:background="@color/white"
+             android:src="@drawable/register_login_btn_register" />
+ </RelativeLayout>
+
+<!--  <RelativeLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignLeft="@+id/registerEditCellsLayout"
+     android:layout_centerVertical="true" >
+ </RelativeLayout>
+
+ <RelativeLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBottom="@+id/registerEditCellsLayout"
+     android:layout_alignLeft="@+id/facebookBtnLayout" >
+ </RelativeLayout> -->
+    
+ </RelativeLayout>

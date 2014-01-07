@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<atlasapp.slidemenu.MenuScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+  <RelativeLayout 
+	android:layout_width="310dp"
+	android:layout_height="fill_parent"
+	android:background="@drawable/slide_menu_background" >
+	<RelativeLayout
+		android:id="@+id/cal_select_user_view"
+		android:layout_width="match_parent"
+		android:layout_height="45dp"
+		android:background="#0000" >
+		<ImageView
+			android:id="@+id/cal_select_user_avatar"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:contentDescription="@string/app_name" >
+		</ImageView>
+		<TextView
+			android:id="@+id/cal_select_user_name_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/cal_select_user_avatar"
+			android:text="@string/task_sort_user_name_text"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" >
+		</TextView>
+	</RelativeLayout>
+	<TextView
+		android:id="@+id/cal_select_bar"
+		android:layout_width="wrap_content"
+		android:layout_height="32dp"
+		android:layout_below="@+id/cal_select_user_view"
+		android:background="@drawable/alerts_titlebar_bg2x"
+		android:gravity="center_vertical"
+		android:paddingLeft="20dp"
+		android:text="@string/slide_menu_where_to"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		android:textStyle="bold" >
+	</TextView>
+	<ScrollView
+		android:id="@+id/slide_menu_where_scroll_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/cal_select_bar"
+		android:scrollbars="none" >
+		<TableLayout
+			android:id="@+id/slide_menu_table_view"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" >
+			<TableRow
+				android:id="@+id/slide_menu_table_row_today" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_today" />
+				<TextView
+					android:id="@+id/edit_task_what_text_new"
+					android:layout_width="fill_parent"
+					android:layout_height="50dp"
+					android:layout_marginLeft="3dp"
+					android:layout_marginRight="10dp"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_today_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" />
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+			<TableRow
+				android:id="@+id/slide_menu_table_row_calendars" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_calendars2x" />
+				<TextView
+					android:id="@+id/edit_task_who"
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_calendars_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+				<ImageButton
+					android:id="@+id/slide_menu_calendars_settings"
+					android:layout_width="120dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical|right"
+					android:background="@color/transparent"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_section_settings2x" />
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+			<TableRow
+				android:id="@+id/slide_menu_table_row_map_view" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_map2x" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_map_view_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+			<TableRow
+				android:id="@+id/slide_menu_table_row_tasks" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_tasks2x" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_task_list_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+				<ImageButton
+					android:id="@+id/slide_menu_tasks_settings"
+					android:layout_width="120dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="right|center_vertical"
+					android:background="@color/transparent"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_section_settings2x" />
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+			<TableRow
+				android:id="@+id/slide_menu_table_row_contacts" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_contacts2x" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_contacts_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+				<ImageButton
+					android:id="@+id/slide_menu_contacts_settings"
+					android:layout_width="120dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="right|center_vertical"
+					android:background="@color/transparent"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_section_settings2x" />
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+		</TableLayout>
+	</ScrollView>
+	<ScrollView
+		android:id="@+id/slide_menu_friends_settings_scroll_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/slide_menu_friends_settings_bar"
+		android:layout_alignParentBottom="true"
+		android:scrollbars="none" >
+		<TableLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" >
+			<TableRow
+				android:id="@+id/slide_menu_table_row_find_friends" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_find_friends2x" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_find_friends_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+			<TableRow
+				android:id="@+id/slide_menu_table_row_my_profile" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_my_profile2x" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_my_profile_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+			<TableRow
+				android:id="@+id/slide_menu_table_row_settings" >
+				<ImageView
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_settings2x" />
+				<TextView
+					android:layout_width="100dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="3dip"
+					android:gravity="left|center_vertical"
+					android:padding="3dip"
+					android:text="@string/slide_menu_settings_title"
+					android:textColor="@color/white"
+					android:textSize="18sp"
+					android:textStyle="bold" >
+				</TextView>
+				<ImageButton
+					android:id="@+id/slide_menu_settings_detailed"
+					android:layout_width="60dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="32dp"
+					android:background="@color/transparent"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/slide_menu_environment_dev" />
+			</TableRow>
+			<View
+				android:layout_height="1dip"
+				android:background="#FF909090" />
+		</TableLayout>
+	</ScrollView>
+	<TextView
+		android:id="@+id/slide_menu_friends_settings_bar"
+		android:layout_width="wrap_content"
+		android:layout_height="32dp"
+	
+		android:layout_below="@+id/slide_menu_where_scroll_view"
+		android:background="@drawable/alerts_titlebar_bg2x"
+		android:gravity="center_vertical"
+		android:paddingLeft="20dp"
+		android:text="@string/slide_menu_friends_settings"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		android:textStyle="bold" >
+	</TextView>
+</RelativeLayout>
+</atlasapp.slidemenu.MenuScrollView>

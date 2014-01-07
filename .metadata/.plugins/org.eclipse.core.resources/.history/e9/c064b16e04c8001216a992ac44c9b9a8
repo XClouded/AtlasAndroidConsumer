@@ -1,0 +1,36 @@
+package atlasapp.database;
+
+public class OutboundEmailProperties 
+{
+	
+	
+	public String body="";
+	public String from="";
+	public String fromName="";
+	public boolean hasError = false;
+	public boolean isPending = false;
+	public boolean isSent = false;
+	public String replyTo = "";
+	public String subject="";
+	public String to="";
+	
+	
+	
+	public OutboundEmailProperties()
+	{
+		
+	}
+			
+	public void setOutboundEmailProperties(
+			String setBody, String setFrom,
+			String setFromName, boolean setHasError,
+			boolean setIsPending,boolean setIsSent,
+			String setReplyTo , String setSubject, 
+			String setTo)
+	{
+		
+		
+	}
+	
+
+}

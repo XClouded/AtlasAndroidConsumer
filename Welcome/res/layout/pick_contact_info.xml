@@ -1,0 +1,206 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"   
+        
+        android:layout_height="fill_parent"
+            
+            android:background="@drawable/settings_bg" >
+ 
+ 
+ 
+  <RelativeLayout 
+    android:id="@+id/topBarMenu"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/navbar"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    >
+   
+    	<ImageButton 
+       		 	android:id="@+id/cancelBtn"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:layout_alignParentLeft="true"
+     			android:layout_centerVertical="true"
+        		android:src="@drawable/btn_cancel"
+        		android:background="#0000"
+        		/>
+    		<TextView 
+        		android:id="@+id/navbarTitle"
+        		android:layout_width="wrap_content"
+        		android:layout_height="35dp"
+        		android:textSize="25dp"
+        		android:textColor="#ffffff"
+        		android:layout_centerInParent="true"
+				android:text="Info"        
+        		/>
+     
+		</RelativeLayout>
+
+  
+  
+  <RelativeLayout 
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/topBarMenu"
+      >
+      <RelativeLayout 
+          android:id="@+id/contactHeaderLayout"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          >
+          <ImageView 
+             android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:id="@+id/contactImage"
+              android:layout_margin="20dp"
+              android:src="@drawable/pick_contact_pic"
+              
+              />
+
+          <TextView
+              android:id="@+id/contactName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="10dp"
+              android:textSize="20dp"
+              android:textColor="#000000"
+              android:layout_toRightOf="@+id/contactImage"
+              android:text="Contact" />
+          
+     </RelativeLayout>
+      
+      
+      <RelativeLayout 
+      		android:layout_width="fill_parent"
+      		android:layout_height="wrap_content"
+      		android:layout_below="@id/contactHeaderLayout"
+			android:id="@+id/atlasLayout"      
+      		>
+       	<ImageView
+    		android:id="@+id/atlasCell"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:src="@drawable/settings_cell_signout"
+      		android:layout_marginTop="10dp"
+          	android:layout_alignParentTop="true"
+      		android:background="#0000"
+       		android:layout_centerHorizontal="true"  />
+
+       <Button
+           android:id="@+id/atlasBtn"
+           android:layout_width="match_parent"
+           android:layout_height="25dp"
+           android:layout_alignBottom="@+id/atlasCell"
+           android:layout_alignLeft="@+id/atlasCell"
+           android:layout_alignRight="@+id/atlasCell"
+           android:layout_alignTop="@+id/atlasCell"
+           android:alpha="1"
+        
+           android:paddingLeft="10dp"
+           android:gravity="left|center_vertical"
+           android:background="#0000" />
+       
+       
+       <TextView
+           android:id="@+id/atlasTitle"
+           android:layout_centerInParent="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Atlas"
+           android:textSize="15dp"
+           android:paddingTop="12dp"
+           android:paddingBottom="5dp"
+           
+           />
+       
+       <ImageView
+           android:id="@+id/atlasIcon"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignLeft="@+id/atlasCell"
+           android:layout_alignBottom="@+id/atlasCell"
+           android:layout_alignTop="@+id/atlasCell"
+           android:paddingTop="12dp"
+           android:paddingBottom="5dp"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="10dp"
+           android:src="@drawable/icon" />
+
+       </RelativeLayout>
+      
+      
+      
+      
+      
+      
+      <RelativeLayout 
+      		android:layout_width="fill_parent"
+      		android:layout_height="wrap_content"
+      		android:layout_below="@id/atlasLayout"
+			android:id="@+id/mobileLayout"      
+      		>
+       	<ImageView
+    		android:id="@+id/mobileCell"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:src="@drawable/settings_cell_signout"
+      		android:layout_marginTop="10dp"
+          	android:layout_alignParentTop="true"
+      		android:background="#0000"
+       		android:layout_centerHorizontal="true"  />
+
+       <Button
+           android:id="@+id/mobileBtn"
+           android:layout_width="match_parent"
+           android:layout_height="25dp"
+           android:layout_alignBottom="@+id/mobileCell"
+           android:layout_alignLeft="@+id/mobileCell"
+           android:layout_alignRight="@+id/mobileCell"
+           android:layout_alignTop="@+id/mobileCell"
+           android:alpha="1"
+           android:paddingLeft="10dp"
+           android:gravity="left|center_vertical"
+           android:background="#0000" />
+
+       </RelativeLayout>
+       
+       
+      <RelativeLayout 
+      		android:layout_width="fill_parent"
+      		android:layout_height="wrap_content"
+			android:id="@+id/emailLayout"      
+      		android:layout_below="@id/mobileLayout"
+      		>
+     
+       	<ImageView
+    		android:id="@+id/emailCell"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:src="@drawable/settings_cell_signout"
+      		android:layout_marginTop="10dp"
+          	android:layout_alignParentTop="true"
+      		android:background="#0000"
+       		android:layout_centerHorizontal="true"  />
+
+       <Button
+           	android:id="@+id/emailBtn"
+          	android:layout_width="match_parent"
+           	android:layout_height="25dp"
+           	android:layout_alignBottom="@+id/emailCell"
+           	android:layout_alignLeft="@+id/emailCell"
+           	android:layout_alignRight="@+id/emailCell"
+           	android:layout_alignTop="@+id/emailCell"
+           	android:alpha="1"
+           	android:background="#0000"
+           	android:paddingLeft="10dp"
+           	android:gravity="left|center_vertical"
+            />
+    </RelativeLayout>   
+      
+      
+  </RelativeLayout>
+   
+</RelativeLayout>

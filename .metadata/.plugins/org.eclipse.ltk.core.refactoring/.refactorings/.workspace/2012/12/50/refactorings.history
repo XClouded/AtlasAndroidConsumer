@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;com.atlasapp.section_appentry.Welcome&apos; to &apos;Welcome&apos;&#x0A;- Original element: &apos;com.atlasapp.section_appentry.Welcome&apos;&#x0A;- Renamed element: &apos;com.atlasapp.section_appentry.Welcome&apos;&#x0A;- Update references to refactored element" description="Rename Java project &apos;com.atlasapp.section_appentry.Welcome&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=com.atlasapp.section_appentry.Welcome" name="Welcome" references="true" stamp="1355191578144" version="1.0"/>
+</session>

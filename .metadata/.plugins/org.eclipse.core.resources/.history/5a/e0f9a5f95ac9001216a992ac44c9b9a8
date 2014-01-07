@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@android:anim/slide_in_left"
+    android:animationOrder="normal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:delay="25%" 
+    android:background="@drawable/atl_verify_email_address_background">
+    <ImageView
+        android:id="@+id/atl_verify_email_address_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/atl_verify_email_address_calendar"
+        android:contentDescription="@string/app_name"
+         />
+    <ImageView
+        android:id="@+id/atl_verify_email_address_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/atl_verify_email_address_contacts"
+        android:contentDescription="@string/app_name" />
+</RelativeLayout>

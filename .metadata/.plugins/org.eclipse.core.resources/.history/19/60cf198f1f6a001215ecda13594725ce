@@ -1,0 +1,321 @@
+//  ==================================================================================================================
+//  AlertFragment.java
+//  AtlasConsumerAndroid
+//  Copyright (c) 2012 AtlasConsumerAndroid Apps. All rights reserved.
+//  ==================================================================================================================
+//
+//  ==================================================================================================================
+//  HISTORY
+//  YYYY-MM-DD NAME:    Description of changes
+//  ==================================================================================================================
+
+package com.atlasapp.section_alerts;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.atlasapp.atlas_database.AtlasServerConnect;
+import com.atlasapp.common.ATLConstants.AlertType;
+import com.atlasapp.common.ATLCurrentsUserAlerts;
+import com.atlasapp.common.ATLProtoMessConfig;
+import com.atlasapp.model.ATLAlertModel;
+import com.atlasapp.section_appentry.AtlasApplication;
+import com.atlasapp.section_appentry.R;
+import com.atlasapp.section_main.ATLMultiSectionListView;
+import com.parse.ParseObject;
+
+/**
+ * @author Ryan Tan
+ * 
+ */
+public class AlertFragment extends Fragment implements   
+		ATLAlertWebAccessCallBackInterface, OnClickListener {
+
+	LayoutInflater mInflater;
+	Context mContext;
+	View mLayout;
+	ATLMultiSectionListView alertsList;
+	ListView findFriendList;
+	ImageButton reloadBtn;
+	private FragmentActivity alertsActivity;
+	private int kAtlasWebAccessTimeOut = 10000;
+	private AtlasApplication applicationController;
+	private ATLCurrentsUserAlerts atlCurrentsUserAlerts;
+	private AlertCellList alertCellList;
+
+	public AlertFragment() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		////SHARON ADDINHGS
+		atlCurrentsUserAlerts =  ATLCurrentsUserAlerts.getSingletonObject(null);
+	//	atlCurrentsUserAlerts.refresAllUserAlerts();
+		/////
+		
+		
+		alertsActivity = getActivity();
+		mInflater = LayoutInflater.from(alertsActivity);
+		mLayout = (View) mInflater.inflate(R.layout.alerts, null);
+		initAttributes();
+		setListener();
+		bindingData();
+		
+		
+		
+	
+
+		return mLayout;
+	}
+
+	private void initAttributes() {
+		// TODO Auto-generated method stub
+		findFriendList = (ListView) mLayout
+				.findViewById(R.id.alert_find_friend_listView);
+		alertsList = (ATLMultiSectionListView) mLayout
+				.findViewById(R.id.listNotes);
+		alertsList.setPinnedHeaderView(LayoutInflater.from(alertsActivity)
+				.inflate(R.layout.listview_header, alertsList, false));
+
+		reloadBtn = (ImageButton) mLayout
+				.findViewById(R.id.alert_reload_imageButton);
+
+	}
+
+	private void bindingData() {
+		// TODO Auto-generated method stub
+		 alertCellList = new AlertCellList();
+		//alertCellList.load();
+		AlertListAdapter adaper = new AlertListAdapter(alertCellList,
+				alertsActivity);
+		alertsList.setAdapter(adaper);
+
+		findFriendList
+				.setAdapter(new ArrayAdapter<String>(getActivity(),
+						android.R.layout.simple_list_item_1, new String[] {
+								" Find Friends on Atlas",
+								" Invite Friends on Atlas" }));
+		//getNewAlertFromServer();
+		AlertsEventRequest.delegate = this; 
+	}
+
+	private void setListener() {
+		// TODO Auto-generated method stub
+		reloadBtn.setOnClickListener(this);
+	}
+
+	// ==================================================================================================================
+	// ==================================================================================================================
+	// BEGINE - ATLAlertWebAccessCallBackInterface
+	// ==================================================================================================================
+	// ==================================================================================================================
+
+	@Override
+	public void didGetDataFinish(String data, int type, String senderName) {
+		// TODO Auto-generated method stub
+		// Reload data
+		Toast.makeText(alertsActivity, senderName + "  " + type,
+				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void didPostDataFinish(String data, int type) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void didGetListEvents(List<ATLAlertModel> modelAlerts) {
+		// TODO Auto-generated method stub
+//		AlertsParseObjectParser.delegate = this;
+//		ArrayList<AlertCellData> newAlertList = AlertsParseObjectParser
+//				.toListAlertCellData(modelAlerts);
+//
+//		// if (newAlertList.size() > 0) {
+//		AlertCellList newAlertCellList = new AlertCellList();
+//		newAlertCellList.alertsListArray = newAlertList;
+//		AlertListAdapter adaper = new AlertListAdapter(newAlertCellList,
+//				alertsActivity);
+//		alertsList.setAdapter(adaper);
+//		// }
+
+	}
+
+	@Override
+	public void didGetSenderName() {
+		// TODO Auto-generated method stub
+		alertsList.getAdapter().notifyDataSetChanged();
+	}
+
+	@Override
+	public void postEventAcceptedSent(AlertType eventacceptedSent,
+			AlertCellData currentCellData) {
+		// TODO Auto-generated method stub
+		getEventsAccepted_Sent(eventacceptedSent, currentCellData);
+	}
+
+	// ==================================================================================================================
+	// ==================================================================================================================
+	// END - ATLAlertWebAccessCallBackInterface
+	// ==================================================================================================================
+	// ==================================================================================================================
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if (v == reloadBtn) {
+			// Load data from Parse
+			
+			
+			////SHARON COMMENTING 
+		//	getNewAlertFromServer();
+			//////SHRON ADDINGS
+			atlCurrentsUserAlerts.refresAllUserAlerts();
+			///////
+			
+		}
+	}
+
+	private void getNewAlertFromServer() {
+
+		/////SHARON ADDINGS
+		
+		
+		
+		/////END OF SHARON SECTION
+		
+		
+		
+//		getEventsInvitedRecieved();
+		// getEventsInvitedSent();
+		// getEventsAccepted_Recieved();
+		// getEventsAccepted_Sent();
+		// getEventsRejected_Recieved();
+		// getEventsRejected_Sent();
+	}
+
+	private void getEventsRejected_Sent() {
+		// TODO Auto-generated method stub
+		// Use Settings screen to register a username and email for testing!
+		// String email = ParseConnect.getParseUserUserEmail();
+		// ATLAlertWebAccess webAccess = new ATLAlertWebAccess();
+		// webAccess.getPage_AsyncWithType(AlertType.eventRejected_Received,
+		// null);
+	}
+
+	private void getEventsRejected_Recieved() {
+		// TODO Auto-generated method stub
+		// Use Settings screen to register a username and email for testing!
+		// String email = ParseConnect.getParseUserUserEmail();
+		// ATLAlertWebAccess webAccess = new ATLAlertWebAccess();
+		// webAccess.getPage_AsyncWithType(AlertType.eventRejected_Sent, null);
+	}
+
+	private void getEventsAccepted_Sent(AlertType eventacceptedSent,
+			AlertCellData currentCellData) {
+		// TODO Auto-generated method stub
+		ATLAlertWebAccess eventAcceptedWebAccess = new ATLAlertWebAccess();
+		eventAcceptedWebAccess.delegate = this;
+//		eventAcceptedWebAccess.getPage_AsyncWithType(
+//				AlertType.eventAccepted_Sent, currentCellData);
+	}
+
+	private void getEventsInvitedSent() {
+		// TODO Auto-generated method stub
+		// Use Settings screen to register a username and email for testing!
+		// String email = ParseConnect.getParseUserUserEmail();
+		// ATLAlertWebAccess webAccess = new ATLAlertWebAccess();
+		// webAccess.getPage_AsyncWithType(AlertType.eventInvited_Sent, null);
+	}
+
+	private void getEventsAccepted_Recieved() {
+		// TODO Auto-generated method stub
+		// Use Settings screen to register a username and email for testing!
+		String userID = AtlasServerConnect.getParseUserUserObjectId();
+
+		// ==================================================================================================================
+		// ==================================================================================================================
+		// Protomess: Get EventAccepted
+		// ==================================================================================================================
+		// ==================================================================================================================
+
+		// CHANGE THIS TO USE ACTUAL DATA:
+		ATLAlertWebAccess eventAcceptedWebAccess = new ATLAlertWebAccess();
+		eventAcceptedWebAccess.delegate = this;
+		String HeaderStringEventAccepted = "DoAction=GET&messtype=ACCEPTINVITE";
+		// http://ami.atlaspowered.com/protomess?DoAction=GET&messtype=ACCEPTINVITE&sendto=truongtnghia@gmail.com
+		// Use actual dates not these dummy dates
+		// Use webaccess webDatetimeToString to convert date to string
+		// Use webaccess webStringToDatetime to convert string back to date
+		// They convert and transmit properly
+
+		String SendStringEventAccepted = HeaderStringEventAccepted + "&sendto="
+				+ userID;
+		eventAcceptedWebAccess.baseURL = ATLProtoMessConfig.URL_PROTOMESS_BASE;
+		eventAcceptedWebAccess.argURL = SendStringEventAccepted;
+		eventAcceptedWebAccess.toID = userID;
+		eventAcceptedWebAccess.timeOut = kAtlasWebAccessTimeOut;
+//		eventAcceptedWebAccess.getPage_AsyncWithType(
+//				AlertType.eventAccepted_Received, null);
+
+		// ==================================================================================================================
+		// ==================================================================================================================
+		// Protomess: END Get EventAccepted
+		// ==================================================================================================================
+		// ==================================================================================================================
+	}
+
+	private void getEventsInvitedRecieved() {
+		// TODO Auto-generated method stub
+		// Use Settings screen to register a username and email for testing!
+		// String userID = ParseConnect.getParseUserUserObjectId();
+		String userID = "Akh1W7bG4z";// TAN: Hardcoded for testing
+		// ==================================================================================================================
+		// ==================================================================================================================
+		// Protomess: Get EventInvited
+		// ==================================================================================================================
+		// ==================================================================================================================
+//		ATLAlertWebAccess eventInviteWebAccess = new ATLAlertWebAccess();
+//		eventInviteWebAccess.delegate = this;
+//		String HeaderStringEventInvite = "DoAction=GET&messtype=EVENTINVITE";
+//
+//		// Use actual dates not these dummy dates
+//		// Use webaccess webDatetimeToString to convert date to string
+//		// Use webaccess webStringToDatetime to convert string back to date
+//		// They convert and transmit properly
+//
+//		String SendStringEventInvite = HeaderStringEventInvite + "&sendto="
+//				+ userID;
+//		eventInviteWebAccess.baseURL = ATLProtoMessConfig.URL_PROTOMESS_BASE;
+//		eventInviteWebAccess.argURL = SendStringEventInvite;
+//		// NSLog (@"eventInviteWebAccess %@",eventInviteWebAccess.fullURL) ;
+//		eventInviteWebAccess.timeOut = kAtlasWebAccessTimeOut;
+//		eventInviteWebAccess.toID = userID;
+//		eventInviteWebAccess.getPage_AsyncWithType(
+//				AlertType.eventInvited_Received, null);
+
+		// ==================================================================================================================
+		// ==================================================================================================================
+		// Protomess: END Get EventInvited
+		// ==================================================================================================================
+		// ==================================================================================================================
+
+	}
+
+}

@@ -1,0 +1,241 @@
+//  ==================================================================================================================
+//  ATLConstants.java
+//  AtlasConsumerAndroid
+//  Copyright (c) 2012 AtlasConsumerAndroid Apps. All rights reserved.
+//  ==================================================================================================================
+//
+//  ==================================================================================================================
+//  HISTORY
+//  YYYY-MM-DD NAME:    Description of changes
+//  ==================================================================================================================
+//  2012-10-21 TAN:    Init class
+//  2012-10-28 TAN:    Add TaskResponseType and TaskCellPriority enum
+//  ==================================================================================================================
+
+package atlasapp.common;
+
+public final class ATLConstants {
+
+	public static interface event_respondData {
+		public static final int event_respondData_title = 0;
+		public static final int event_respondData_location = 1;
+		public static final int event_respondData_duration = 2;
+		public static final int event_respondData_PREF = 3;
+		public static final int event_respondData_preferredDatetime = 4;
+		public static final int event_respondData_ALT1 = 5;
+		public static final int event_respondData_Alt1Datetime = 6;
+		public static final int event_respondData_ALT2 = 7;
+		public static final int event_respondData_Alt2Datetime = 8;
+		public static final int event_respondData_senderName = 9;
+		public static final int event_respondData_recieverId = 10;
+		public static final int event_respondData_recievername = 11;
+	}
+
+	public static interface AlertType {
+		public static final int eventInvited_Sent = 0;
+		public static final int eventInvited_Received = 1;
+		public static final int eventAccepted_Sent = 2;
+		public static final int eventAccepted_Received = 3;
+		public static final int eventRejected_Sent = 4;
+		public static final int eventRejected_Received = 5;
+		public static final int taskAssigned_Sent = 6;
+		public static final int taskAssigned_Received = 7;
+		public static final int taskAccepted_Sent = 8;
+		public static final int taskAccepted_Received = 9;
+		public static final int taskReject_Sent = 10;
+		public static final int taskReject_Receive = 11;
+		public static final int taskComplete_Sent = 12;
+		public static final int taskComplete_Received = 13;
+		public static final int notesShare_Sent = 14;
+		public static final int notesShare_Received = 15;
+	}
+
+//	public static interface EventResponseType {
+//		public static final int eventResponseType_None = 0;
+//		public static final int eventResponseType_NoAttendees = 1;
+//		public static final int eventResponseType_InvitesPending = 2;
+//		public static final int eventResponseType_AttendeeAccepted = 3;
+//		public static final int eventResponseType_AttendeeDecline = 4;
+//	}
+//	
+	public static interface TaskResponseType {
+		public static final int taskResponseType_None = 0;
+		public static final int taskResponseType_NoAssignees = 1;
+		public static final int taskResponseType_AssignmentsPending = 2;
+		public static final int taskResponseType_AssigneeAccepted = 3;
+		public static final int taskResponseType_AssigneeDeclined = 4;
+		public static final int taskResponseType_AssigneeCompleted = 5;
+	}
+	public static enum EventResponseType{
+		None,NoAttendees,Pending,
+		Accepted,Decline,
+		Deleted;
+		
+		public static EventResponseType getResponse(int order)
+		{
+			EventResponseType response = None;
+			
+			switch (order)
+			{
+			case 0:response =None;
+			break;
+			case 1:response = NoAttendees;
+			break;
+			case 2:response = Pending;
+			break;
+			case 3:response = Accepted;
+			break;
+			case 4:response = Decline;
+			break;
+			case 5:response = Deleted;
+			break;
+			
+			default: response = None;
+			break;
+			}
+
+			return response;
+		}
+	};
+	public enum TaskCellPriority {
+		priority_MustDo, priority_VeryImportant, priority_Important, priority_Complete
+	};
+
+	public enum TodayCellType {
+		calendar_Today_Type, task_Today_Type, notes_Today_Type
+	};
+
+	public final static String STRING_SORTTASKSBY_PRIORITY = "Priority";
+	public final static String STRING_SORTTASKSBY_DUEDATE = "Due Date";
+	public final static String STRING_SORTTASKSBY_CALENDAR = "Calendar";
+	public final static String STRING_SORTTASKSBY_DELEGATED = "Delegated";
+	public final static String STRING_SORTTASKSBY_COMPLETED = "Completed";
+
+	// pragma mark - AtlasEZ
+
+	public final static String kAtlasEZEventInviteReadClassKey = "EventInviteRead";
+	public final static String kAtlasEZEventAcceptReadClassKey = "EventAcceptRead";
+
+	// EventInviteNew Class
+	public final static String kAtlasEZEventInviteNewClassKey = "EventInviteNew";
+
+	public final static String kAtlasEZEventInviteFromEmailKey = "fromEmail";
+	public final static String kAtlasEZEventInviteToEmailKey = "toEmail";
+	public final static String kAtlasEZEventInviteFromIDKey = "inviter";
+	public final static String kAtlasEZEventInviteToIDKey = "invitee";
+	public final static String kAtlasEZEventInviteTypeKey = "type";
+	public final static String kAtlasEZEventInviteMessageKey = "message";
+	public final static String kAtlasEZEventInviteIsReadKey = "isRead";
+
+	// EventAcceptNew Class
+	public final static String kAtlasEZEventAcceptNewClassKey = "EventAcceptNew";
+
+	public final static String kAtlasEZEventAcceptFromEmailKey = "fromEmail";
+	public final static String kAtlasEZEventAcceptInviterKey = "inviter";
+	public final static String kAtlasEZEventAcceptInviteeKey = "invitee";
+	public final static String kAtlasEZEventAcceptTypeKey = "type";
+	public final static String kAtlasEZEventAcceptMessageKey = "message";
+	public final static String kAtlasEZEventAcceptIsReadKey = "isRead";
+
+	// TaskAssignNew Class
+	public final static String kAtlasEZTaskAssignNewClassKey = "TaskAssignNew";
+
+	public final static String kAtlasEZTaskAssignInviterKey = "inviter";
+	public final static String kAtlasEZTaskAssignInviteeKey = "invitee";
+	public final static String kAtlasEZTaskAssignFromIDKey = "fromID";
+	public final static String kAtlasEZTaskAssignToIDKey = "toID";
+	public final static String kAtlasEZTaskAssignFromEmailKey = "fromEmail";
+	public final static String kAtlasEZTaskAssignToEmailKey = "toEmail";
+	public final static String kAtlasEZTaskAssignTypeKey = "type";
+	public final static String kAtlasEZTaskAssignMessageKey = "message";
+	public final static String kAtlasEZTaskAssignIsReadKey = "isRead";
+
+	// TaskAcceptNew Class
+	public final static String kAtlasEZTaskAcceptNewClassKey = "TaskAcceptNew";
+
+	public final static String kAtlasEZTaskAcceptFromEmailKey = "fromEmail";
+	public final static String kAtlasEZTaskAcceptToEmailKey = "toEmail";
+	public final static String kAtlasEZTaskAcceptInviteeKey = "invitee";
+	public final static String kAtlasEZTaskAcceptInviterKey = "inviter";
+	public final static String kAtlasEZTaskAcceptTypeKey = "type";
+	public final static String kAtlasEZTaskAcceptMessageKey = "message";
+	public final static String kAtlasEZTaskAcceptIsReadKey = "isRead";
+
+	// TaskCompleteNew Class
+	public final static String kAtlasEZTaskCompleteNewClassKey = "TaskCompleteNew";
+
+	public final static String kAtlasEZTaskCompleteFromEmailKey = "fromEmail";
+	public final static String kAtlasEZTaskCompleteToEmailKey = "toEmail";
+	public final static String kAtlasEZTaskCompleteTypeKey = "type";
+	public final static String kAtlasEZTaskCompleteMessageKey = "message";
+	public final static String kAtlasEZTaskCompleteIsReadKey = "isRead";
+
+	// Notes Class
+	public final static String kAtlasEZNotesShareClassKey = "NotesShare";
+
+	public final static String kAtlasEZNotesShareFromEmailKey = "fromEmail";
+	public final static String kAtlasEZNotesShareToEmailKey = "toEmail";
+	public final static String kAtlasEZNotesShareTypeKey = "type";
+	public final static String kAtlasEZNotesShareMessageKey = "message";
+	public final static String kAtlasEZNotesShareIsReadKey = "isRead";
+
+	// _User Class
+	public final static String kAtlasEZUserClassKey = "_User";
+
+	public final static String kAtlasEZUserObjectIdKey = "objectId";
+	public final static String kAtlasEZUserUserNameKey = "username";
+	public final static String kAtlasEZUserPasswordKey = "password";
+	public final static String kAtlasEZUserPictureKey = "picture";
+	public final static String kAtlasEZUserPictureFileNameKey = "image.png";
+	public final static String kAtlasEZUserEmailKey = "email";
+	public final static String kAtlasEZUserDisplayNameKey = "displayname";
+	public final static String kAtlasEZUserCreateAtKey = "createAt";
+	public final static String kAtlasEZUserUpdateAtKey = "updateAt";
+
+	// pragma mark - NSUserDefaults
+
+	public final static String kUserDefaultsUsername = "username";
+	public final static String kUserDefaultsPassword = "password";
+	public final static String kUserDefaultsEmail = "email";
+	public final static String kUserDefaultsDisplayName = "displayname";
+	public final static String kUserDefaultsPicture = "picture";
+
+	// pragma mark - Create Note String
+
+	public final static String kAtlasCreateNoteUnSelectedStarImage = "notesCreate_quickBar_starUnselected.png";
+	public final static String kAtlasCreateNoteSelectedStarImage = "notesCreate_quickBar_star.png";
+
+	// pragma mark - EDIT CELL
+	public final static int kAtlasEditCellAlarmOff = 999999;
+	public final static int kAtlasEditCellDefaultDuration = 15;
+
+	// pragma mark - TASK CELL
+	public final static String kAtlasTaskPriorityHigh = "High";
+	public final static String kAtlasTaskPriorityMedium = "Medium";
+	public final static String kAtlasTaskPriorityLow = "Low";
+	// pragma mark - NOTIFICATION KEY
+	public final static String kAtlasRetrieveWaitingAlertKey = "kAtlasRetrieveWaitingAlertKey";
+
+	// / Task constatnt
+	public enum TASK_CATEGORY {
+		Low, Medium, High
+	}
+	public static String ATL_WEB_SITE = "getatlas.com";
+	public enum EmailTemplateType {EmailTemplateInvitation, EmailTemplateCounterOffer,EmailTemplateCancelled,
+		EmailTemplateDeclined, EmailTemplateBooked,}
+	
+	public enum ATL_ENVIRONMENT { QA("qa"), DEV("dev"), DEMO("demo"),
+		BETA("beta"), ATLAS("www"), ANDROID("www");
+	
+	private final String environment;  
+	  
+	private ATL_ENVIRONMENT(String environment) {    
+		this.environment = environment;  
+	}  
+
+	public String getEventTypeName() {  
+		return environment;  
+	}
+}
+	}
+}

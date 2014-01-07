@@ -1,0 +1,858 @@
+package atlasapp.section_settings;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.ImageView.ScaleType;
+import atlasapp.common.ATLAnimationUtils;
+import atlasapp.common.ATLDragAndDropView;
+import atlasapp.common.ATLUser;
+import atlasapp.common.OnHeadlineSelectedListener;
+import atlasapp.common.SlideOutActivity;
+import atlasapp.common.UtilitiesProject;
+import atlasapp.database.DatabaseConstants.SIGN_NEW_USERS_CALLER;
+import atlasapp.database.AtlasServerConnect;
+import atlasapp.database.DatabaseConstants;
+import atlasapp.database.ParseDBCallBackInterface;
+import atlasapp.database.UserDelagateInterface;
+import atlasapp.facebook.FacebookUtilities;
+import atlasapp.facebook.ProfilePictureView;
+import atlasapp.model.ATLContactModel;
+import atlasapp.section_alerts.ATLAlertFragment_2;
+import atlasapp.section_appentry.ATLWelcome;
+import atlasapp.section_appentry.AtlasApplication;
+import atlasapp.section_appentry.R;
+import atlasapp.slidemenu.ATLSlideMenuFragment;
+
+public class ATLMyProfile extends FragmentActivity implements OnHeadlineSelectedListener , UserDelagateInterface,ParseDBCallBackInterface{
+
+	private  byte[] profilePic;  
+	private  String encodedImage="";
+	private static final int CAMERA_REQUEST = 1337; 
+    private static ImageView imageView;
+    private int picTypePicker = 3;// cancel default
+    private static ImageButton btnCamera;
+    private  Bitmap currentPhoto = null;
+	private static ImageView myImage;
+    static final int INTENT_REQUEST_CODE_BROWSE_PICTURE = 1;
+   
+	private ArrayList<String> emailAddressAdded;
+	
+	private final int PASSWORD_LENGTH = 2; 
+//	private ProfilePictureView profilePictureView;
+	public static enum SERVER_MESSAGE {
+		   FAIL, LOGGED_OUT, EMAIL_OR_USER_NAME_INVALID, SUCCESS, LOGGED_IN
+		 }
+	
+	
+	
+	LayoutInflater mInflater;
+	Context mContext;
+	ViewGroup mLayout;
+    
+	public static final String PREFS_NAME = "AtlasProfileLogin";
+    private AtlasServerConnect parseConnect;
+	private AtlasApplication applicationController;
+
+	private static  ImageButton btnSave;
+	private static ImageButton btnSettings;
+	private static EditText emailEdit;
+	private static EditText userNameFirstNameEdit;
+	private static EditText userNameLastNameEdit;
+	private static EditText userPasswordEdit;
+	private static EditText userPasswordVerifyEdit;
+
+	
+
+
+	private String email;
+	private String passwordVerify;
+	private String password;
+	
+	
+	
+	private ScrollView registerScroll;
+	private RelativeLayout linearLayout2;
+	public ImageButton sortBtn;
+	public ImageButton alertBtn;
+	public ATLDragAndDropView editProfileHolderView;
+	public ViewGroup alertHolderView;
+	public ViewGroup selectCalendarHolderView;
+	public View editProfileViewCover;
+	public int topMenuBarHeight;
+	public ATLSlideMenuFragment slideMenuFragment;
+	public ATLAlertFragment_2 alertFragment;
+	public boolean isFragmentShowing;
+
+
+	@Override 
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		mInflater = LayoutInflater.from(this);
+		mLayout = (ViewGroup) mInflater.inflate(R.layout.atl_my_profile, null);
+
+		setContentView(mLayout);
+
+		parseConnect =   AtlasServerConnect.getSingletonObject(this);
+
+		applicationController = (AtlasApplication)getApplicationContext();
+
+		emailAddressAdded = new ArrayList<String>();
+		
+	    registerScroll = (ScrollView)findViewById(R.id.editProfileScroll);
+		registerScroll.setScrollContainer(false);
+
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			this.picTypePicker = extras.getInt("picture_from");
+			if (extras.getString("profile_path")!=null && !extras.getString("profile_path").equals(""))
+			{
+				encodedImage = extras.getString("profile_path");
+
+				profilePic = Base64.decode(encodedImage, Base64.DEFAULT);
+				currentPhoto = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+				myImage = (ImageView) findViewById(R.id.camerapreview);
+
+				myImage.setImageBitmap(currentPhoto);
+
+			}
+		}
+
+
+		avatarPictureSettings();
+		
+		userInputFieldsSettings();
+		
+		topMenuButtonsSettings();
+
+	}
+	private void topMenuButtonsSettings() 
+	{
+//        2013-02-23 TAN: comment out to implement swipe left/right #END
+	sortBtn = (ImageButton) findViewById(R.id.sortBtn);
+	alertBtn = (ImageButton) findViewById(R.id.alertBtn);
+	//==========================================================
+	// 2013-02-21 TAN: new slide out # START
+	//==========================================================
+	editProfileHolderView = (ATLDragAndDropView)mLayout.findViewById(R.id.editProfileContent);
+	alertHolderView = (ViewGroup)mLayout.findViewById(R.id.calendar_day_view_alert_fragment);
+	selectCalendarHolderView = (ViewGroup)mLayout.findViewById(R.id.calendar_day_view_cal_selects_fragment);
+	editProfileViewCover = (View)mLayout.findViewById(R.id.calendar_day_view_cover_view);
+	editProfileViewCover.setOnTouchListener(editProfileHolderView);
+	// top menu bar height
+	topMenuBarHeight = (int) Math.ceil(50 * this.getResources().getDisplayMetrics().density);
+
+	//	   		 if (editProfileHolderView instanceof ATLDragAndDropView) {
+	//	   			 ATLDragAndDropView.topMenuBarHeight = topMenuBarHeight;
+	//	   			 editProfileHolderView.setDropListener(mDropListener);
+	//	   			 editProfileHolderView.setDragListener(mDragListener);
+	//	   	     }
+
+	slideMenuFragment = new ATLSlideMenuFragment();
+	getSupportFragmentManager().beginTransaction()
+	.add(R.id.calendar_day_view_cal_selects_fragment, slideMenuFragment).commit();
+	alertFragment = ATLAlertFragment_2.getInstance();
+	getSupportFragmentManager().beginTransaction()
+	.add(R.id.calendar_day_view_alert_fragment, alertFragment).commit();
+	//==========================================================
+	// 2013-02-21 TAN: new slide out # END
+	//==========================================================    
+	sortBtn.setOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if(!isFragmentShowing){
+				alertHolderView.setVisibility(View.GONE);
+				selectCalendarHolderView.setVisibility(View.VISIBLE);
+				editProfileViewCover.setVisibility(View.VISIBLE);
+				editProfileHolderView.setX(editProfileHolderView.LEFTRIGHT_WINDOW_WIDTH);
+				ATLDragAndDropView.topMenuBarHeight = editProfileHolderView.getHeight();
+				ATLDragAndDropView.isAtRight = true;
+				ATLDragAndDropView.isAtLeft = false;
+				editProfileHolderView.startAnimation(ATLAnimationUtils.mainFragmentMoveRight(editProfileHolderView.LEFTRIGHT_WINDOW_WIDTH));
+				isFragmentShowing = true;
+			}
+			else{
+				editProfileViewCover.setVisibility(View.GONE);
+				editProfileHolderView.setX(0);
+				ATLDragAndDropView.topMenuBarHeight = topMenuBarHeight;
+				ATLDragAndDropView.isAtRight = false;
+				ATLDragAndDropView.isAtLeft = false;
+				editProfileHolderView.startAnimation(ATLAnimationUtils.mainFragmentBackFromRight(editProfileHolderView.LEFTRIGHT_WINDOW_WIDTH));
+				isFragmentShowing = false;
+				onResume();
+			}
+			// 2013-02-03 TAN: new slide out # END
+		}
+	});
+
+	alertBtn.setOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if(!isFragmentShowing){
+				alertHolderView.setVisibility(View.VISIBLE);
+				selectCalendarHolderView.setVisibility(View.GONE);
+				editProfileViewCover.setVisibility(View.VISIBLE);
+				ATLDragAndDropView.topMenuBarHeight = editProfileHolderView.getHeight();
+				editProfileHolderView.setX(-editProfileHolderView.LEFTRIGHT_WINDOW_WIDTH);
+				editProfileHolderView.startAnimation(ATLAnimationUtils.mainFragmentMoveLeft(editProfileHolderView.LEFTRIGHT_WINDOW_WIDTH));
+				alertFragment.onResume();// Reload view data
+				isFragmentShowing = true;
+				ATLDragAndDropView.isAtRight = false;
+				ATLDragAndDropView.isAtLeft = true;
+			}
+			else{
+				ATLDragAndDropView.topMenuBarHeight = topMenuBarHeight;
+				editProfileViewCover.setVisibility(View.GONE);
+				editProfileHolderView.setX(0);
+				editProfileHolderView.startAnimation(ATLAnimationUtils.mainFragmentBackFromLeft());
+				isFragmentShowing = false;
+				ATLDragAndDropView.isAtRight = false;
+				ATLDragAndDropView.isAtLeft = false;
+			}
+
+		}
+	});
+		
+	}
+	private void userInputFieldsSettings() 
+	{
+		
+		/// First Name field
+		userNameFirstNameEdit = (EditText)findViewById(R.id.firstNameEditText);
+		userNameFirstNameEdit.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				registerScroll.setScrollContainer(true);
+			}
+		});
+
+		String userNameFirstNameHint  =(ATLUser.getUserFirstName() == null||  ATLUser.getUserFirstName().equals(""))?  (String)userNameFirstNameEdit.getHint() : ATLUser.getUserFirstName();
+		userNameFirstNameEdit.setHint(userNameFirstNameHint);
+		
+		//// Last Name field
+		userNameLastNameEdit = (EditText)findViewById(R.id.lastNameEditText);
+		userNameLastNameEdit.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				registerScroll.setScrollContainer(true);
+			}
+		});
+
+		String userNameLastNameHint  =(ATLUser.getUserLastName() == null||  ATLUser.getUserLastName().equals(""))?  (String)userNameLastNameEdit.getHint() : ATLUser.getUserLastName();
+		userNameLastNameEdit.setHint(userNameLastNameHint);
+		
+		
+		
+		/// Camera image picker button settings
+		btnCamera = (ImageButton)findViewById(R.id.editProfileCameraBtn);
+		btnCamera.setOnClickListener( new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
+				SlideOutActivity.prepare(ATLMyProfile.this, R.id.editProfileContent, width);
+				Intent intent = new Intent(ATLMyProfile.this,
+						GetProfilePic.class);
+				intent.putExtra("from", "atl_my_profile");
+				if (!encodedImage.equals(""))
+
+					intent.putExtra("profile_path", encodedImage);
+				startActivity(intent);
+				overridePendingTransition(0, 0);
+			}
+		});
+
+		/// Email fields init
+		emailEdit = (EditText)findViewById(R.id.emailEdit);
+		String emailHint  =(ATLUser.getEmail() == null || ATLUser.getEmail().equals(""))?  (String)emailEdit.getHint() : ATLUser.getEmail();
+		emailEdit.setHint(emailHint);
+
+
+		final LinearLayout mainLinearLayout = (LinearLayout) findViewById(R.id.my_profile_email_list_view);
+		final RelativeLayout linearLayout2 = (RelativeLayout) View.inflate(this,
+				R.layout.custom_edit_text_cell, null);
+		linearLayout2.setId(mainLinearLayout.getChildCount()+1);
+		mainLinearLayout.addView(linearLayout2);
+		final EditText editEmail = ((EditText) linearLayout2
+				.findViewById(R.id.customTopEdgesEditText));
+		editEmail.addTextChangedListener(new TextWatcher(){
+			public void afterTextChanged(Editable s) {
+
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+			public void onTextChanged(CharSequence s, int start, int before, int count){
+
+				editEmailString = s.toString();
+			}
+		});
+		editEmail.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				String emailAddress = editEmail.getText().toString();
+				if (editEmail.getHint().toString().equals("done"))
+				{
+					alertUser("Delete email address?");
+				}else
+					if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) 
+					{
+
+						if (emailAddress!=null && isValidEmail(emailAddress))
+						{
+
+							if (!editEmail.getHint().toString().equals("done"))
+							{
+								if (!emailAddressAdded.contains(emailAddress))
+								{
+									editEmail.setHint("done");
+									((ImageView)linearLayout2.
+											findViewById(R.id.oneRowWithTopEdgesImg)).setBackgroundResource(R.drawable.one_row_with_edges);
+
+									emailAddressAdded.add(emailAddress);
+									inflateAnotherEmail();
+								}else
+								{
+									alertUser("Email Address already exsited ");
+								}
+							}
+
+						}
+						else
+						{
+							alertUser("Invalid Email Address");
+
+						}
+
+						// Toast.makeText(HelloFormStuff.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+						return true;
+					}else
+					{
+						if (editEmail.getHint().toString().equals("done"))
+						{
+							alertUser("Delete email address?");
+						}
+
+					}
+				return false;
+			}
+		}
+				);
+
+
+		// Save button 
+		btnSave = (ImageButton)findViewById(R.id.editProfileSaveBtn);
+		btnSave.setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+						editMyProfile();
+
+
+
+
+
+					}
+				}
+
+
+				);
+
+	}
+	private void avatarPictureSettings()
+	{
+		ProfilePictureView profilePictureView = (ProfilePictureView) findViewById(R.id.selection_profile_pic);
+
+		if (!setProfilePic())  
+
+
+			if (!ATLUser.getfbID().equals("")  )
+			{
+				// Find the user's profile picture custom view
+
+				profilePictureView.setCropped(true);
+				profilePictureView.setUserId(ATLUser.getfbID());
+				ImageButton cameraBtn = (ImageButton)findViewById(R.id.editProfileCameraBtn);
+				cameraBtn.setAlpha(0);
+			}
+		if (picTypePicker==1)
+			chooseFromLibrary();
+		else
+			if (picTypePicker==2)
+				takeAPhoto();
+
+	}
+	protected void editMyProfile() 
+	{
+
+		passwordVerify = passwordVerifyEdit.getText().toString();
+		password = passwordEdit.getText().toString();
+		userNameFirstName = userNameFirstNameEdit.getText().toString();
+		userNameLastName = userNameLastNameEdit.getText().toString();
+
+
+
+		if ((userNameFirstName!=null && !userNameFirstName.equals(""))||
+				(userNameLastName!=null && !userNameLastName.equals(""))
+				profilePic!=null ||
+				(passwordVerify!=null && password!=null &&
+				!passwordVerify.equals("") && !password.equals("")))
+		{ 
+			//User can only Edit Profile while sign on...
+
+			DatabaseConstants.SERVER_MESSAGE serverMessageBack;
+			AtlasServerConnect.signInCurrentParseUser(ATLUser.getEmail(), ATLUser.getAtlasPassword(),this);
+
+		}
+
+
+
+	}
+	public final static boolean isValidEmail(CharSequence target) {
+	    if (target == null) {
+	        return false;
+	    } else {
+	        return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+	    }
+	}
+	 boolean validPreviousEmail=false;
+	 String editEmailString;
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
+	{
+		if(keyCode == KeyEvent.KEYCODE_BACK)
+		{
+			//            
+			Intent intent = new Intent(getBaseContext(), ATLMyProfile.class);// Tan point to CalendarView
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			//             		//intent.putExtra("EXTRA_SESSION_ID", sessionId);
+			startActivity(intent);
+			this.overridePendingTransition(R.anim.enter,R.anim.leave);
+
+			return true;
+		}
+		return false;
+	}
+	private void inflateAnotherEmail()
+	{
+		final LinearLayout mainLinearLayout = (LinearLayout) findViewById(R.id.my_profile_email_list_view);
+
+
+		final RelativeLayout linearLayout3 = (RelativeLayout) View.inflate(this,
+				R.layout.custom_edit_text_cell, null);
+
+		
+		mainLinearLayout.addView(linearLayout3);
+		
+		
+		       
+		final EditText editEmail = ((EditText) linearLayout3
+				.findViewById(R.id.customTopEdgesEditText));
+		
+		editEmail.requestFocus();
+		editEmail.setOnKeyListener(new View.OnKeyListener() {
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		    	String emailAddress = editEmail.getText().toString();
+		    	if (editEmail.getHint().toString().equals("done"))
+        		{
+		    		alertUser("Delete email address?");
+        		}else
+        			
+		    	if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) 
+		        {
+		         
+		        	if (emailAddress!=null && isValidEmail(emailAddress))
+		        	{
+
+		        		if (!editEmail.getHint().toString().equals("done"))
+		        		{
+
+
+		        			
+		        			if (!emailAddressAdded.contains(emailAddress))
+		        			{
+		        				editEmail.setHint("done");
+		        				((ImageView)linearLayout3.
+		        						findViewById(R.id.oneRowWithTopEdgesImg)).setBackgroundResource(R.drawable.one_row_with_edges);
+
+		        				emailAddressAdded.add(emailAddress);
+		        				inflateAnotherEmail();
+		        			}else
+		        			{
+		        				alertUser("Email Address already exsited ");
+		        			}
+		        		}
+		        	
+		        	}
+		        	else
+		        	{
+		        		alertUser("Invalid Email Address");
+
+		        	}
+
+		        	// Toast.makeText(HelloFormStuff.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+		        	return true;
+		        }else
+		        {
+		        	if (editEmail.getHint().toString().equals("done"))
+		        	{
+		        		alertUser("Delete email address?");
+		    	  }
+		    	  
+		      }
+		    return false;
+		 }
+		}
+		    );
+		editEmail.addTextChangedListener(new TextWatcher(){
+			
+			
+			public void afterTextChanged(Editable s) {
+
+				
+			
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after)
+			{
+			}
+			public void onTextChanged(CharSequence s, int start, int before, int count){
+
+					editEmailString = s.toString();
+			}
+		});
+
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+	}
+
+	private void alertUser(String message)
+	{
+		UtilitiesProject.alertUser("", message, this);
+
+	}
+	/**
+	 * Setting the profile picture on the camera view image 
+	 * from the current set photo URI and use the stored profile picture
+	 * from /Android/data/com.atlastpowered/files/Pictures/profile_pic.png
+	 * as a default (if exists)
+	 * 
+	 * 
+	 * return true if an image was set
+	 *
+	 */
+	private boolean setProfilePic()
+	{
+		Bitmap currentBitmap ;
+		Bitmap storedBitmap = null;
+		File imgFile = applicationController.PROFILE_PIC_PATH;
+		if(imgFile.exists())
+
+			storedBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+		currentBitmap  = (currentPhoto!=null)? currentPhoto : storedBitmap;
+
+		if (currentBitmap!=null){
+
+			myImage = (ImageView) findViewById(R.id.camerapreview);
+			myImage.setImageBitmap(currentBitmap);
+		}
+
+
+		return currentBitmap!=null;
+
+	} 
+
+
+	private void chooseFromLibrary()
+	{
+		///// Chose From Libraray option
+
+		Intent intent = new Intent(Intent.ACTION_PICK,
+				(MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+		startActivityForResult(intent,
+				INTENT_REQUEST_CODE_BROWSE_PICTURE);
+
+
+
+	}
+	private void takeAPhoto()
+	{
+		/////// Take A Picture option....
+		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
+		startActivityForResult(cameraIntent, CAMERA_REQUEST); 
+	}
+
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+
+		//  String  encodedImage="";
+		switch (requestCode) {
+		case INTENT_REQUEST_CODE_BROWSE_PICTURE:
+			if( resultCode == Activity.RESULT_OK ){
+
+				Uri currentPhotoURI = data.getData();
+				if (currentPhotoURI != null) {
+					try {
+						Bundle params = new Bundle();
+						params.putByteArray("photo",
+								FacebookUtilities.scaleImage(getApplicationContext(), currentPhotoURI));
+
+						profilePic = params.getByteArray("photo");
+						//						  ImageView profPic = (ImageView)findViewById(R.id.camerapreview);
+						currentPhoto = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length);
+						//						  profPic.setImageBitmap(bitmap);
+						//						   encodedImage = Base64.encodeToString(profilePic, Base64.DEFAULT);
+						//						  
+						//applicationController.storePicture("image", currentPhoto);  
+						setProfilePic();
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			break;
+
+		case CAMERA_REQUEST: 
+			if (resultCode == RESULT_OK)
+			{  
+
+				//finish();
+				Bitmap photo = (Bitmap) data.getExtras().get("data"); 
+				//  imageView.setImageBitmap(photo);
+
+				ImageView profPic = (ImageView)findViewById(R.id.camerapreview);
+				profPic.setImageBitmap(photo);
+				profPic.setScaleType(ScaleType.FIT_XY);
+				//			            
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				photo.compress(Bitmap.CompressFormat.PNG, 100, baos);   
+				byte[] b = baos.toByteArray(); 
+
+				encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+			}
+			break;
+
+
+		}
+
+
+	} 
+
+
+
+	@Override
+	public void getFindQueryCallBack(List<ParseObject> foundQueryList,
+			boolean found) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getSaveCallBack(boolean saved, ParseObject parseObjectSaved) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getObjectIdCallBack(ParseObject retreivedObjectId,
+			boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getDataCallBack(byte[] fileRetreived, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getSuccessCallBack(boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void saveFileCallBack(boolean success, ParseObject psrseObjectSaved) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getFriendEmailOnParseCallBack(
+			List<ParseObject> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getFacebookFriendIdOnParseCallBack(
+			List<ParseObject> findResult, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getAllAtlasUsersCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getAllFBAtlasUsersFriendsCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void friendSignInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getAtlasNewFriendsByEmailCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void signInNewFriendUserSuccess(boolean success, ParseUser user) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getSignNonAtlasUsersCallBack(SIGN_NEW_USERS_CALLER caller,
+			boolean success,
+			HashMap<String, ATLContactModel> newCurrentNonAtlasUserToSign) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getFriendEmailOnParse(
+			ATLContactModel friendsPropertiesOnParseByEmail, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void registerSuccess(boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void signInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getUserEmailOnParseCallBack(
+			HashMap<String, String> userParseLogin, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getFacebookFriendIdOnParse(ATLContactModel facebookAtlasFriend,
+			boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getAllFBAtlasUsersCallBack(
+			ArrayList<ATLContactModel> allFacebookAtlasUsers, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getAllFBAtlasUsersFriendsCallBack(
+			ArrayList<ATLContactModel> allFacebookAtlasUsers, boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void saveCallBack(boolean saved) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getAtlasNewFriendsByEmailCallBack(
+			ArrayList<ATLContactModel> allCommonAtlasUsers) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getUpateCallBack(boolean success) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resetPasswordCallBack(boolean emailSuccessfullySent,
+			String parseMessage) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onArticleSelected(int position) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

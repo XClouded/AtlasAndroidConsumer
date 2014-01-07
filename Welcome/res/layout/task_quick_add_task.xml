@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true" >
+
+    <RelativeLayout
+        android:id="@+id/task_quick_add_bottom_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/cal_quick_add_event_bottom_bar_bg" >
+
+        <ImageButton
+            android:id="@+id/task_quick_add_bottom_bar_btn_allies"
+            android:layout_width="44dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/cal_quick_add_bottom_bar_btn_allies2x"
+            android:contentDescription="@string/month_btn" />
+
+        <ImageButton
+            android:id="@+id/task_quick_add_bottom_bar_btn_blank1"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/task_quick_add_bottom_bar_btn_allies"
+            android:background="@drawable/cal_quick_add_bottom_bar_blank2x"
+            android:contentDescription="@string/month_btn" />
+
+        <ImageButton
+            android:id="@+id/task_quick_add_bottom_bar_btn_more2x"
+            android:layout_width="44dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/cal_quick_add_bottom_bar_btn_more2x"
+            android:contentDescription="@string/month_btn" />
+
+        <RelativeLayout
+            android:id="@+id/task_quick_add_calendars_holder"
+            android:layout_width="140dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/task_quick_add_bottom_bar_btn_blank1"
+            android:background="@drawable/calendar_box" >
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/task_quick_add_bottom_bar_calendars"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/calendar_editevent_time_box_up_arrow2x" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/task_quick_add_bottom_bar_btn_more2x"
+            android:layout_toRightOf="@+id/task_quick_add_calendars_holder"
+            android:background="@drawable/calendar_box" >
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/task_quick_add_priority_wheel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/calendar_editevent_time_box_up_arrow2x" />
+        </RelativeLayout>
+        <!--
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/task_quick_add_bottom_bar_calendars"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/task_quick_add_bottom_bar_btn_more2x"
+            android:layout_toRightOf="@+id/task_quick_add_priority_wheel_btn_blank2" />
+        -->
+
+
+        <!--
+        <include
+            android:id="@+id/tabBarIncludeLayout"
+            android:layout_alignParentTop="true"
+            layout="@layout/bottom_tab_bar" />
+        -->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/task_quick_add_event_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/task_quick_add_bottom_menu"
+        android:background="@drawable/bk_gray" >
+
+        <RelativeLayout
+            android:id="@+id/task_cell_left_view"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
+            android:background="@color/white" >
+
+            <ImageView
+                android:id="@+id/task_quick_add_task_color_img"
+                android:layout_width="10dip"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/task_quick_add_priority_cell_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/task_quick_add_task_color_img"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/tasks_flame_blue" />
+
+            <CheckBox
+                android:id="@+id/task_cell_is_complete_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/task_quick_add_task_color_img" />
+
+            <ImageView
+                android:layout_width="1dip"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:src="@android:color/darker_gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/task_cell_right_view"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_toRightOf="@+id/task_cell_left_view"
+            android:background="@color/white" >
+
+            <com.atlasapp.common.ATLActionEditText
+                android:id="@+id/task_quick_add_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="#0000"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="@string/calendar_edit_event_what_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textAutoCorrect|textCapSentences|textMultiLine" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

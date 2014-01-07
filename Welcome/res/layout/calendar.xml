@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bk_gray" >
+
+    <com.atlaspowered20120608DEV.atlas.views.ATLTopbar
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+    </com.atlaspowered20120608DEV.atlas.views.ATLTopbar>
+
+    <!--
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/topMenuBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tab_bar_background_tab_bar" >
+
+        <ImageButton
+            android:id="@+id/sortButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_sort" />
+
+        <ImageButton
+            android:id="@+id/btnMonthImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sortButton"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:layout_toRightOf="@+id/sortButton"
+            android:background="@android:color/transparent"
+            android:src="@drawable/calendarview_topbar_btnmonthimage" />
+
+        <ImageView
+            android:id="@+id/title_cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnMonthImage"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/title_cal" />
+
+        <ImageButton
+            android:id="@+id/addbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@+id/alliesbtn"
+            android:background="@android:color/transparent"
+            android:src="@drawable/calendarview_topbar_addbtn" />
+
+        <ImageButton
+            android:id="@+id/alliesbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_allies" />
+    </RelativeLayout>
+    -->
+
+    <RelativeLayout
+        android:id="@+id/dateTimeBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topBarMenu" 
+        android:background="@android:color/darker_gray">
+
+        <ImageButton
+            android:id="@+id/backArrowBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_left_arrow" />
+
+        <ImageButton
+            android:id="@+id/forwardArrowBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/backArrowBtn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/btn_right_arrow" />
+
+        <TextView
+            android:id="@+id/dataTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="January 1, 2012"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20dip"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    
+    
+
+    <RelativeLayout
+        android:id="@+id/bottomBarCal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <include
+            android:id="@+id/tabBarIncludeLayout"
+            layout="@layout/bottom_tab_bar" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/dateTimeBar" 
+        android:layout_above="@+id/bottomBarCal">
+    </ListView>
+
+</RelativeLayout>

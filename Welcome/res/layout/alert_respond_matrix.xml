@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bk_gray"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageButton
+			android:id="@+id/closeBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/month_btn"
+			android:src="@drawable/btn_close" />
+		<TextView
+			android:id="@+id/navbarTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/alert_event_respond_matrix_title"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" />
+	</RelativeLayout>
+	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/calendarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="45dp"
+		android:layout_below="@id/topBarMenu"
+		android:background="@color/grey"
+		android:gravity="right|center_vertical" >
+		<LinearLayout
+			android:id="@+id/preferImg1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="7dp"
+			android:contentDescription="@string/app_title"
+			android:orientation="vertical"
+			android:src="@drawable/calendar_editevent_alttimes_select_btn" >
+			<TextView
+				android:id="@+id/preferHour1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:text="@string/calendar_edit_event_when_hour"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/preferDay1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:text="@string/calendar_edit_event_when_day"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="11sp" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/alt2_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="7dp"
+			android:contentDescription="@string/app_title"
+			android:orientation="vertical"
+			android:src="@drawable/calendar_editevent_alttimes_unselect_btn" >
+			<TextView
+				android:id="@+id/alt2Hour1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_atl1_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt2Day1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_select_time_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="11sp" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/alt3_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="7dp"
+			android:contentDescription="@string/app_title"
+			android:orientation="vertical"
+			android:src="@drawable/calendar_editevent_alttimes_unselect_btn" >
+			<TextView
+				android:id="@+id/alt3Hour1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_atl2_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt3Day1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_select_time_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="11sp" />
+		</LinearLayout>
+	</LinearLayout>
+	<ListView
+		android:id="@+id/calendarList"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/bottomBarMenu"
+		android:layout_below="@+id/calendarMenu" >
+	</ListView>
+	<RelativeLayout
+		android:id="@+id/bottomBarMenu"
+		android:layout_width="match_parent"
+		android:layout_height="56dp"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/alerts_invite_box_bg" >
+		<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" >
+			<ImageView
+				android:id="@+id/confirmed_and_booked_img"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/preferImg"
+				android:layout_marginRight="7dp"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/btn_confirm_book" />
+			<ImageView
+				android:id="@+id/preferImg"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="10dp"
+				android:layout_toRightOf="@+id/confirmed_and_booked_img"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/calendar_editevent_alttimes_select_btn" />
+			<TextView
+				android:id="@+id/preferHour"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/preferImg"
+				android:layout_alignRight="@+id/preferImg"
+				android:layout_alignTop="@+id/preferImg"
+				android:gravity="center"
+				android:text="@string/calendar_edit_event_when_hour"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/preferDay"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/preferImg"
+				android:layout_alignLeft="@+id/preferImg"
+				android:layout_alignRight="@+id/preferImg"
+				android:gravity="center"
+				android:text="@string/calendar_edit_event_when_day"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="11sp" />
+			<ImageView
+				android:id="@+id/alt2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/preferImg"
+				android:layout_marginLeft="7dp"
+				android:layout_toRightOf="@+id/preferImg"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/calendar_editevent_alttimes_unselect_btn" />
+			<TextView
+				android:id="@+id/alt2Hour"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/alt2"
+				android:layout_alignRight="@+id/alt2"
+				android:layout_alignTop="@+id/alt2"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_atl1_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt2Day"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt2"
+				android:layout_alignLeft="@+id/alt2"
+				android:layout_alignRight="@+id/alt2"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_select_time_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="11sp" />
+			<ImageView
+				android:id="@+id/alt3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/preferImg"
+				android:layout_marginLeft="7dp"
+				android:layout_toRightOf="@+id/alt2"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/calendar_editevent_alttimes_unselect_btn" />
+			<TextView
+				android:id="@+id/alt3Hour"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/alt3"
+				android:layout_alignRight="@+id/alt3"
+				android:layout_alignTop="@+id/alt3"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_atl2_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt3Day"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt3"
+				android:layout_alignLeft="@+id/alt3"
+				android:layout_alignRight="@+id/alt3"
+				android:gravity="center"
+				android:text="@string/calendar_edit_atl_select_time_lable"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="11sp" />
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>

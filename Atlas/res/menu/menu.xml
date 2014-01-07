@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+      <item
+        android:id="@+id/profile"
+        android:showAsAction="never|withText"
+        android:title="Profile"/>
+   
+    <item
+        android:id="@+id/feedback"
+        android:showAsAction="never|withText"
+        android:title="Feedback"/>
+     <item
+        android:id="@+id/share"
+        android:showAsAction="never|withText"
+        android:title="Share"/>
+      <item
+        android:id="@+id/settings"
+        android:showAsAction="never|withText"
+        android:title="Settings"/>
+ 
+
+</menu>

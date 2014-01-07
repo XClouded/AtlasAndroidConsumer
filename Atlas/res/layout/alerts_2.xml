@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+//  ==================================================================================================================
+//  AndroidMainifest.xml
+//  AtlasConsumerAndroid
+//  Copyright (c) 2012 AtlasConsumerAndroid Apps. All rights reserved.
+//  ==================================================================================================================
+//
+//  ==================================================================================================================
+//  HISTORY
+//  YYYY-MM-DD NAME:    Description of changes
+//  ==================================================================================================================
+//  2013-03-02 TAN:     Create this layout
+//  ==================================================================================================================
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="310dp"
+	android:layout_height="match_parent"
+	android:layout_gravity="right"
+	android:background="@drawable/slide_menu_background" >
+	<eu.erikw.PullToRefreshListView
+		android:id="@+id/pull_to_refresh_listview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="83dp"
+		android:background="@color/transparent" >
+	</eu.erikw.PullToRefreshListView>
+	<RelativeLayout
+		android:id="@+id/alert_find_friend_view"
+		android:layout_width="match_parent"
+		android:layout_height="45dp"
+		android:background="#0000"
+		android:visibility="gone" >
+		<TextView
+			android:id="@+id/cal_select_user_name_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="50dp"
+			android:text="@string/alerts_find_friend_on_atlas_text"
+			android:textColor="@color/white"
+			android:textSize="20sp"
+			android:textStyle="bold" >
+		</TextView>
+		<ImageView
+			android:id="@+id/cal_select_user_avatar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/right_arrow" >
+		</ImageView>
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/alert_header_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/nav_black" >
+		<TextView
+			android:id="@+id/alert_header_imageView"
+			android:layout_width="fill_parent"
+			android:layout_height="44dp"
+			android:background="@color/transparent"
+			android:gravity="center"
+			android:text="@string/alerts_titlebar_notifications"
+			android:textColor="@color/white"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+		<ProgressBar
+			android:id="@+id/progressBar"
+			style="?android:attr/progressBarStyleSmall"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="7dp"
+			android:visibility="invisible" />
+	</RelativeLayout>
+	<View
+		android:id="@+id/line"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_below="@+id/alert_header_layout"
+		android:background="#494949" />
+	<LinearLayout
+		android:id="@+id/alert_header_sections"
+		android:layout_width="match_parent"
+		android:layout_height="38dp"
+		android:layout_below="@+id/line"
+		android:background="@drawable/bk_notification_dark" >
+		<TextView
+			android:id="@+id/alert_header_sections_yourmove_view"
+			android:layout_width="102.5dp"
+			android:layout_height="34dp"
+			android:layout_gravity="center_vertical"
+			android:background="@drawable/alerts_segmented_controls_red"
+			android:contentDescription="@string/app_name"
+			android:gravity="center"
+			android:text="@string/alert_header_sections_yourmove_text"
+			android:textColor="@color/black"
+			android:textSize="16sp"
+			android:textStyle="bold" />
+		<View
+			android:layout_width="1dp"
+			android:layout_height="20dp"
+			android:layout_gravity="center_vertical"
+			android:background="#494949" />
+		<TextView
+			android:id="@+id/alert_header_sections_pending_view"
+			android:layout_width="103dp"
+			android:layout_height="34dp"
+			android:layout_gravity="center_vertical"
+			android:background="@drawable/alerts_segmented_controls_yellow"
+			android:contentDescription="@string/app_name"
+			android:gravity="center"
+			android:text="@string/alert_header_sections_pending_text"
+			android:textColor="@color/black"
+			android:textSize="16sp"
+			android:textStyle="bold" />
+		<View
+			android:layout_width="1dp"
+			android:layout_height="20dp"
+			android:layout_gravity="center_vertical"
+			android:background="#494949" />
+		<TextView
+			android:id="@+id/alert_header_sections_booked_view"
+			android:layout_width="102.5dp"
+			android:layout_height="34dp"
+			android:layout_gravity="center_vertical"
+			android:background="@drawable/alerts_segmented_controls_green"
+			android:contentDescription="@string/app_name"
+			android:gravity="center"
+			android:text="@string/alert_header_sections_booked_text"
+			android:textColor="@color/black"
+			android:textSize="16sp"
+			android:textStyle="bold" />
+	</LinearLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_below="@+id/alert_header_sections"
+		android:background="#494949" />
+	<ImageButton
+		android:id="@+id/alert_reload_imageButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/alerts_sync_icon"
+		android:visibility="gone" />
+</RelativeLayout>

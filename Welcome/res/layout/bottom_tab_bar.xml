@@ -1,0 +1,67 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+<RadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_btns_group"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/tabbar"
+    
+    android:orientation="horizontal" 
+     >
+ 
+    <RadioButton 
+      
+        android:id="@+id/btnToday"
+        style="@style/navbar_button"
+        android:layout_width="64dp"
+        
+        android:drawableTop="@drawable/navbar_todayselector"
+         android:layout_marginLeft="15dp"
+        android:text="Contacts" 
+          android:gravity="center" android:layout_gravity="center"
+      
+        />
+
+    <RadioButton
+      android:id="@+id/btnCal"
+     android:gravity="center" android:layout_gravity="center"
+      style="@style/navbar_button"
+ 		android:layout_width="64dp"
+      android:drawableTop="@drawable/navbar_calendarselector"
+     android:text="Calendar"
+    
+    />
+    <RadioButton
+      android:id="@+id/btnToDo" 
+      style="@style/navbar_button"
+    	android:layout_width="64dp"
+      android:drawableTop="@drawable/navbar_todoselector"
+ 	 android:text="Tasks"
+     android:gravity="center" android:layout_gravity="center"
+    />
+
+    <RadioButton
+        android:id="@+id/btnNotes"
+        style="@style/navbar_button"
+       
+       android:layout_width="64dp"
+          android:drawableTop="@drawable/navbar_notesselector"
+      android:gravity="center" android:layout_gravity="center"
+        android:text="Notes" />
+
+    <RadioButton
+        android:id="@+id/btnSettings"
+        style="@style/navbar_button"
+        android:layout_width="64dp"
+     
+        android:drawableTop="@drawable/navbar_settingsselector"
+         android:gravity="center" android:layout_gravity="center"
+        android:text="Settings"
+        android:textStyle="bold" 
+        />
+
+    </RadioGroup>
+     </merge>
+

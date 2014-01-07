@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="#0000" >  
+
+	<RelativeLayout
+	    android:id="@+id/imageLayout"
+	    android:layout_width="60dp"
+	    android:layout_height="55dip"
+	    android:layout_alignParentLeft="true"
+	    android:background="#0000" >
+
+	   
+
+	    <ImageView
+	        android:id="@+id/inviteeImage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="55dip"
+	        android:layout_centerInParent="true"
+	        android:layout_marginLeft="3dp"
+	        android:contentDescription="@string/app_name"
+	        android:src="@drawable/avatar2x" />
+	   
+ 
+	</RelativeLayout>
+	<RelativeLayout
+	    android:id="@+id/nameLayout"
+	    android:layout_width="wrap_content"
+	    android:layout_height="55dip"
+	     android:layout_marginLeft="5dp"
+	    android:layout_toRightOf="@id/imageLayout"
+	    android:background="#0000" >
+	
+	 <TextView 
+	         android:id="@+id/inviteeName"
+	        android:layout_width="wrap_content"
+	        android:layout_height="55dip"
+	        
+	       
+	        android:contentDescription="@string/app_name"
+	        android:text="Name"
+	        
+	        />
+	 </RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/altHoursPickImagesLayout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" >
+	    <ImageView
+			android:id="@+id/altThreeImage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_marginTop="25dp"
+			android:layout_marginRight="25dp"
+			android:src="@drawable/respond_matrix_decide_ok"
+			 />
+	    <ImageView
+			android:id="@+id/altTwoImgage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toLeftOf="@id/altThreeImage"
+			android:layout_marginTop="25dp"
+			android:layout_marginRight="25dp"
+			android:src="@drawable/respond_matrix_decide_ok" />
+		<ImageView
+			android:id="@+id/altOneImage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="25dp"
+			android:layout_toLeftOf="@id/altTwoImgage"
+			android:layout_marginRight="25dp"
+			android:src="@drawable/respond_matrix_decide_ok" />
+		
+		
+	</RelativeLayout>
+</RelativeLayout>

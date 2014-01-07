@@ -1,0 +1,17 @@
+package atlasapp.section_appentry;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.ViewSwitcher.ViewFactory;
+import atlasapp.database.EmailAddressCallBackInterface;
+import atlasapp.database.ParseDBCallBackInterface;
+import atlasapp.database.UserDelagateInterface;
+
+public class ATLVerifyEmailAddress extends Activity implements ViewFactory{
+	 @Override
+	    public void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.atl_verify_email_address);
+       	 	switchImages();
+	 }
+}

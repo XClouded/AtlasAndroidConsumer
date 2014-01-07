@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/note_sort_user_view"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginRight="40dp"
+        android:background="#0000" >
+
+        <TextView
+            android:id="@+id/note_sort_user_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/note_sort_user_name_text"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            android:textStyle="bold" >
+        </TextView>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/note_sort_user_avatar"
+        android:layout_width="320dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/note_sort_user_view"
+        android:background="@drawable/note_sort_title_bar"
+        android:contentDescription="@string/app_name" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/note_sort_title_bar_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="58dp"
+        android:text="@string/note_sort_title_bar_text"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <com.ericharlow.DragNDrop.DragNDropListView
+        android:id="@+id/note_sort_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/note_sort_user_avatar"
+        android:layout_marginRight="40dp"
+        android:background="#0000" >
+    </com.ericharlow.DragNDrop.DragNDropListView>
+
+</RelativeLayout>

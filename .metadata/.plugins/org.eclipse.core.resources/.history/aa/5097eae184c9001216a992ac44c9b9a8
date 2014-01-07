@@ -1,0 +1,73 @@
+package atlasapp.section_appentry;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.ViewSwitcher.ViewFactory;
+import atlasapp.database.EmailAddressCallBackInterface;
+import atlasapp.database.ParseDBCallBackInterface;
+import atlasapp.database.UserDelagateInterface;
+import atlasapp.slidemenu.ATLSlideMenu;
+
+public class ATLVerifyEmailAddress extends ATLSlideMenu implements ViewFactory{
+	 @Override
+	    public void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.atl_verify_email_address);
+       	 	switchImages();
+	 }
+	 private void switchImages()
+	 {
+		 final Integer[] imageIDs = { 
+     			R.drawable.atl_verify_email_address_calendar,
+     			R.drawable.atl_verify_email_address_contacts,
+                 R.drawable.atl_verify_email_address_tasks ,
+                 R.drawable.atl_verify_email_address_push};
+     	final Animation out = AnimationUtils.loadAnimation(this,
+                  android.R.anim.slide_out_right);
+     	 final Animation in = AnimationUtils.loadAnimation(this,
+                  android.R.anim.slide_in_left);
+     	 in.setStartOffset(1000);
+     	 out.setStartOffset(1000);
+          final ImageSwitcher imageSwitcher = (ImageSwitcher) findViewById(R.id.switcher1);
+          imageSwitcher.setFactory(this);
+          imageSwitcher.setInAnimation(in);
+          imageSwitcher.setOutAnimation(out);
+          imageSwitcher.postDelayed(new Runnable() {
+              int i = 0;
+              public void run() {
+            	  i++;  
+            	  int res=-1;   
+            	  res =   (i% 4 == 0 )?
+        			  R.drawable.atl_verify_email_address_calendar :
+                    	  (i%4==1)?
+                      R.drawable.atl_verify_email_address_contacts:
+                    	  (i%4==2)?
+                    	  R.drawable.atl_verify_email_address_tasks :
+                    		  R.drawable.atl_verify_email_address_push;
+                  imageSwitcher.setImageResource(res );
+                  imageSwitcher.setInAnimation(in);
+                  imageSwitcher.setOutAnimation(out);
+                  imageSwitcher.postDelayed(this, 3000);
+              }
+          }, 1000);
+//		
+	 }
+	 
+	 
+	 
+	 @Override
+		public View makeView() {
+			 ImageView imageView = new ImageView(ATLVerifyEmailAddress.this);
+//	        TouchImageView imageView = new TouchImageView(ATLWelcome.this);
+//	        imageView.setBackgroundColor(0xFF000000);
+	        imageView.setScaleType(ImageView.ScaleType.CENTER);
+	        imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
+	                ImageSwitcher.LayoutParams.FILL_PARENT, ImageSwitcher.LayoutParams.FILL_PARENT));
+	        return imageView;
+		}
+}

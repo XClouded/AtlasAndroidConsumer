@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/calendar_cell_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/transparent" >
+	<include
+		android:id="@+id/header"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		layout="@layout/listview_header" />
+	<RelativeLayout
+		android:id="@+id/cal_cell_left_view"
+		android:layout_width="75dp"
+		android:layout_height="55dip"
+		android:layout_below="@+id/header" >
+		<ImageView
+			android:id="@+id/imageCalendarColor"
+			android:layout_width="10dip"
+			android:layout_height="fill_parent"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:background="@color/orange"
+			android:contentDescription="@string/app_name" />
+		<TextView
+			android:id="@+id/textEventTime"
+			android:layout_width="32dip"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@+id/imageCalendarColor"
+			android:gravity="right"
+			android:text="@string/calendar_cell_example_hour"
+			android:textColor="@android:color/black"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textAMPM"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="17dp"
+			android:layout_toRightOf="@+id/textEventTime"
+			android:text="@string/calendar_cell_am_pm"
+			android:textColor="@android:color/darker_gray"
+			android:textSize="10sp"
+			android:textStyle="bold" />
+		<ImageView
+			android:layout_width="1dip"
+			android:layout_height="55dip"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:contentDescription="@string/app_name"
+			android:src="@android:color/darker_gray" />
+		<TextView
+			android:id="@+id/calendar_cell_until_text"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/textEventTime"
+			android:layout_toRightOf="@+id/imageCalendarColor"
+			android:gravity="center"
+			android:text="@string/calendar_cell_until"
+			android:textColor="@color/black"
+			android:textSize="10sp" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/cal_cell_right_view"
+		android:layout_width="fill_parent"
+		android:layout_height="55dip"
+		android:layout_below="@+id/header"
+		android:layout_toRightOf="@+id/cal_cell_left_view" >
+		<TextView
+			android:id="@+id/textEventTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/cal_cell_left_view"
+			android:text="@string/alerts_events_title"
+			android:textColor="@android:color/black"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/calendar_cell_event_location_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/textEventTitle"
+			android:layout_marginLeft="10dp"
+			android:text="@string/calendar_cell_event_location_text"
+			android:textColor="@android:color/black"
+			android:textSize="10sp" />
+		<ImageView
+			android:id="@+id/calendarCellInviterImage"
+			android:layout_width="60dp"
+			android:layout_height="31dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:contentDescription="@string/app_name" />
+		<ImageButton
+			android:id="@+id/calendarCellConfirmBtn"
+			android:layout_width="60dp"
+			android:layout_height="31dp"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:layout_toLeftOf="@+id/calendarCellInviterImage"
+			android:background="@drawable/atl_event_respond_btn_confirm"
+			android:contentDescription="@string/app_name" />
+	</RelativeLayout>
+</RelativeLayout>

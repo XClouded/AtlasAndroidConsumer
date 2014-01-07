@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.atlasapp.common.ATLEventModel&apos; to &apos;ATLEventCalendarModel&apos;&#x0A;- Original project: &apos;Welcome&apos;&#x0A;- Original element: &apos;com.atlasapp.common.ATLEventModel&apos;&#x0A;- Renamed element: &apos;com.atlasapp.common.ATLEventCalendarModel&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ATLEventModel&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.atlasapp.common{ATLEventModel.java[ATLEventModel" matchStrategy="1" name="ATLEventCalendarModel" qualified="false" references="true" similarDeclarations="false" stamp="1360500331762" textual="false" version="1.0"/>
+</session>

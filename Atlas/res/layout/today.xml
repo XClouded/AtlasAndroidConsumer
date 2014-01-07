@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bk_gray"
+    android:id="@+id/today_content"
+    
+    >
+    
+    
+     
+     
+    <!-- <RelativeLayout
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:background="#0000"
+        android:layout_alignParentTop="true">
+        
+          <include android:id="@+id/tabBarIncludeLayout" layout="@layout/top_menu_bar" android:layout_alignParentTop="true" /> 
+        
+    </RelativeLayout> -->
+  
+    <RelativeLayout 
+    android:id="@+id/topBarMenu"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/navbar"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    
+    
+    >
+   
+    <ImageButton 
+        android:id="@+id/sortBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+     android:layout_centerVertical="true"
+       
+        
+        android:src="@drawable/btn_sort"
+        android:background="#0000"
+       
+        
+        
+        
+        />
+    <ImageButton 
+        android:id="@+id/monthBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+     android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/sortBtn"
+        android:src="@drawable/btn_month"  
+        android:background="#0000"
+       
+        
+        
+        
+        />
+    
+    <ImageView 
+        android:id="@+id/navbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/today_title_bar_title"
+        
+        
+        
+        />
+    
+    <ImageButton 
+        android:id="@+id/alliesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+     android:layout_centerVertical="true"
+       
+     
+        android:src="@drawable/btn_allies"
+        android:background="#0000"
+       
+        
+        
+        
+        />
+   <!--  <ImageButton 
+        android:id="@+id/plusBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+     android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@id/alliesBtn"
+        android:src="@drawable/btn_sort"
+        android:background="#0000"
+       
+        
+        
+        
+        /> -->
+    
+    
+    
+
+</RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/todaysTasksContent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBarMenu"
+        >
+        <TextView
+        	android:id="@+id/todaysLabelDate"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:textSize="24px"
+        	
+        	android:textColor="#0000ff"
+        />
+        
+        
+        
+        
+    </RelativeLayout>
+    
+    
+    
+    
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        
+        
+         >
+         <include android:id="@+id/tabBarIncludeLayout" layout="@layout/bottom_tab_bar" android:layout_alignParentTop="true" /> 
+        
+        
+        
+    </RelativeLayout>
+    
+    
+</RelativeLayout>

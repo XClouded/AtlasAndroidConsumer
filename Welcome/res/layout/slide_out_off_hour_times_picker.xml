@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/slide_out_off_times_picker"
+	android:layout_width="fill_parent"
+	android:layout_height="55dp"
+	android:background="@drawable/off_hour_bk" >
+	<RelativeLayout
+		android:id="@+id/off_hour_left_frame"
+		android:layout_width="75dp"
+		android:layout_height="fill_parent"
+		android:layout_centerVertical="true"
+		android:background="@color/white" >
+		<ImageView
+			android:id="@+id/imageCalendarColor"
+			android:layout_width="10dip"
+			android:layout_height="fill_parent"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name" />
+		<TextView
+			android:id="@+id/textEventTime"
+			android:layout_width="30dp"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@+id/imageCalendarColor"
+			android:gravity="right"
+			android:text="@string/calendar_cell_example_hour"
+			android:textColor="@android:color/black"
+			android:textSize="26dp"
+			android:textStyle="bold" />
+		<ImageView
+			android:layout_width="1dip"
+			android:layout_height="55dip"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:src="@android:color/darker_gray" />
+		<TextView
+			android:id="@+id/textAMPM"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/textEventTime"
+			android:layout_marginTop="5.5dp"
+			android:layout_toRightOf="@+id/textEventTime"
+			android:text="@string/calendar_cell_am_pm"
+			android:textColor="@android:color/darker_gray"
+			android:textSize="10dp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/textMinute"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/textEventTime"
+			android:layout_marginBottom="4.5dp"
+			android:layout_toRightOf="@+id/textEventTime"
+			android:text="@string/calendar_cell_am_pm"
+			android:textColor="@android:color/darker_gray"
+			android:textSize="10dp"
+			android:textStyle="bold" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/off_hour_right_frame"
+		android:layout_width="280dp"
+		android:layout_height="37dp"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@+id/off_hour_left_frame"
+		android:background="@drawable/off_hour_frame" >
+		<TextView
+			android:id="@+id/off_hour_at_45minute"
+			android:layout_width="65dp"
+			android:layout_height="fill_parent"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="2dp"
+			android:gravity="center"
+			android:text="@string/off_hour_at_45minute"
+			android:textColor="@color/black"
+			android:textSize="26dp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/off_hour_at_30minute"
+			android:layout_width="63dp"
+			android:layout_height="fill_parent"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/off_hour_at_45minute"
+			android:gravity="center"
+			android:text="@string/off_hour_at_30minute"
+			android:textColor="@color/black"
+			android:textSize="26dp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/off_hour_at_15minute"
+			android:layout_width="62dp"
+			android:layout_height="fill_parent"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/off_hour_at_30minute"
+			android:gravity="center"
+			android:text="@string/off_hour_at_15minute"
+			android:textColor="@color/black"
+			android:textSize="26dp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/off_hour_at_00minute"
+			android:layout_width="60dp"
+			android:layout_height="fill_parent"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/off_hour_at_15minute"
+			android:gravity="center"
+			android:text="@string/off_hour_at_00minute"
+			android:textColor="@color/black"
+			android:textSize="26dp"
+			android:textStyle="bold" />
+	</RelativeLayout>
+</RelativeLayout>

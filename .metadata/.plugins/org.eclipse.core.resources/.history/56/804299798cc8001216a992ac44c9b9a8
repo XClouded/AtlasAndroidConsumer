@@ -1,0 +1,5 @@
+package atlasapp.database;
+
+public interface ATLOutboundEmailCallBackInterface {
+
+}

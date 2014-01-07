@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bk_gray"
+    android:id="@+id/tasks_content"
+    
+    >
+    
+    
+    
+    
+    <!-- <RelativeLayout
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_alignParentTop="true">
+        
+          <include android:id="@+id/tabBarIncludeLayout" layout="@layout/top_menu_bar" />
+        
+    </RelativeLayout> -->
+    
+    
+    <RelativeLayout 
+    android:id="@+id/topBarMenu"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/navbar"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    
+    
+    >
+   
+    <ImageButton 
+        android:id="@+id/sortBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+     android:layout_centerVertical="true"
+       
+        
+        android:src="@drawable/btn_sort"
+        android:background="#0000"
+       
+        
+        
+        
+        />
+    <ImageButton 
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+     android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/sortBtn"
+        android:src="@drawable/btn_add"  
+        android:background="#0000"
+       
+        
+        
+        
+        />
+    
+    <ImageView 
+        android:id="@+id/navbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/tasks_title_tasks"
+        
+        
+        
+        />
+    
+    <ImageButton 
+        android:id="@+id/alliesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+     android:layout_centerVertical="true"
+       
+     
+        android:src="@drawable/btn_allies"
+        android:background="#0000"
+       
+        
+        
+        
+        />
+ 
+    
+    
+    
+
+</RelativeLayout>
+    
+    
+    
+    
+    
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        
+        
+         >
+         <include android:id="@+id/tabBarIncludeLayout" layout="@layout/bottom_tab_bar" />
+        
+        
+        
+    </RelativeLayout>
+    
+    
+</RelativeLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/my_profile_email_row_view"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/one_row_with_edges2x" >
+	<ImageView
+		android:id="@+id/calendar_select_color_img"
+		android:layout_width="15dip"
+		android:layout_height="45dp"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:contentDescription="@string/app_name" />
+	<TextView
+		android:id="@+id/my_profile_email_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@+id/calendar_select_color_img"
+		android:text="@string/task_sort_show_competed_text"
+		android:textColor="@color/black"
+		android:textSize="18sp"
+		android:textStyle="bold" >
+	</TextView>
+	<EditText
+		android:id="@+id/my_profile_email_edittext"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@+id/calendar_select_color_img"
+		android:background="@color/transparent"
+		android:hint="@string/profile_edit_add_email_hint"
+		android:inputType="textEmailSubject"
+		android:textColor="@color/black"
+		android:textSize="18sp"
+		android:textStyle="bold"
+		android:visibility="invisible" >
+	</EditText>
+</RelativeLayout>

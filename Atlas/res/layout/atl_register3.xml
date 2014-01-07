@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/atlRegisterLayout"
+    android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/white"   
+	 >
+
+    <RelativeLayout
+        android:id="@+id/atlRegisterLayoutBackgroud"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/atl_register_register_background_new" >
+
+       
+		
+    	 
+
+        <ImageButton
+            android:id="@+id/atlRegisterBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="22dp"
+            android:background="@color/white"   
+            android:src="@drawable/atl_register_register_button" />
+
+        <ImageButton
+            android:id="@+id/atlRegisterUserImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fbauthButton"
+            android:layout_marginTop="99dp"
+           android:layout_alignParentLeft="true"
+           android:layout_marginLeft="17dp"
+            android:background="@color/white"
+            android:src="@drawable/atl_register_user_picture" />
+
+        <TextView
+            android:id="@+id/atlRegisterNameTxtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/fbauthButton"
+            android:layout_marginTop="64dp"
+            android:layout_toRightOf="@+id/atlRegisterUserImageBtn"
+            android:text="TextView" />
+
+        <EditText
+            android:id="@+id/atlRegisterEmailEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/atlRegisterUserImageBtn"
+            android:layout_below="@+id/atlRegisterUserImageBtn"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/atlRegisterPasswordEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/atlRegisterEmailEditTxt"
+            android:layout_below="@+id/atlRegisterEmailEditTxt"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/atlRegisterLastNameEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/atlRegisterFirstNameEditTxt"
+            android:layout_toRightOf="@+id/atlRegisterUserImageBtn"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/atlRegisterFirstNameEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/atlRegisterLastNameEditTxt"
+            android:layout_alignTop="@+id/atlRegisterUserImageBtn"
+            android:ems="8"
+            android:inputType="textPersonName" />
+
+    </RelativeLayout>
+ </RelativeLayout>
+
+
+
+

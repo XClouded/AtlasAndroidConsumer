@@ -1,0 +1,747 @@
+//  ==================================================================================================================
+//  ATLContactListActivity.java
+//  AtlasConsumerAndroid
+//  Copyright (c) 2012 AtlasConsumerAndroid Apps. All rights reserved.
+//  ==================================================================================================================
+//
+//  ==================================================================================================================
+//  HISTORY
+//  YYYY-MM-DD NAME:    Description of changes
+//  ==================================================================================================================
+//  2012-11-14 HARRIS:    Created Class
+//  ==================================================================================================================
+
+package com.atlasapp.section_contacts;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.GroupMembership;
+import android.provider.ContactsContract.CommonDataKinds.Note;
+import android.provider.ContactsContract.CommonDataKinds.Organization;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
+import android.provider.ContactsContract.CommonDataKinds.Website;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.atlasapp.common.ATLTabbarView;
+import com.atlasapp.common.ATLTabbarViewDelegete;
+import com.atlasapp.common.CurrentSessionFriendsList;
+import com.atlasapp.common.Utilities;
+import com.atlasapp.model.ATLContactModel;
+import com.atlasapp.model.ATLFriendModel;
+import com.atlasapp.section_appentry.R;
+import com.atlasapp.section_calendar.CalendarDayView;
+import com.atlasapp.section_calendar.CalendarEditView;
+import com.atlasapp.section_main.ATLMainTabbarActivity;
+import com.atlasapp.section_main.ATLMultiSectionListView;
+import com.atlasapp.section_main.ATLTopbar;
+import com.atlasapp.section_notes.ATLNoteListActivity;
+import com.atlasapp.section_settings.Settings;
+import com.atlasapp.section_tasks.ATLTaskListActivity;
+import com.atlasapp.section_tasks.EditTask;
+import com.atlasapp.section_tasks.Tasks;
+
+public class ATLContactListActivity extends Activity implements ATLTabbarViewDelegete {
+	LayoutInflater mInflater;
+	Context mContext;
+	ViewGroup mLayout;
+	ATLTopbar mTopBar;
+	ATLMultiSectionListView listContacts;
+	int mode;
+	private CurrentSessionFriendsList currentSessionFriendsList;
+	private ATLTabbarView tabbar;
+	private ArrayList<ATLContactModel> unsortedFriendA;
+	private String from;
+	private String sort;
+	private static final int EMAIL_TYPE_HOME = 1;
+	private static final int EMAIL_TYPE_WORK = 2;
+	private static final int PHONE_TYPE_MOBILE = 2;
+	private static final int PHONE_TYPE_WORK = 3;
+	private static final int ADDRESS_TYPE_HOME = 1;
+	
+	public static final int MODE_PICKER = 10000;
+	public static final int MODE_EDITOR = 2000;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState); 
+		mInflater = LayoutInflater.from(this);
+		mLayout = (ViewGroup) mInflater.inflate(R.layout.contact_list, null);
+		setContentView(mLayout);  
+		
+		 currentSessionFriendsList = CurrentSessionFriendsList.getSingletonObject();
+		 from  = "";
+		 sort = "all";
+		unsortedFriendA = currentSessionFriendsList.getCurentSessionFriendsList();
+  
+			Bundle extras = getIntent().getExtras();
+			if (extras != null) {
+				mode = extras.getInt("mode");
+				 sort = extras.getString("sort");
+				 from = extras.getString("from");
+				 from = (from==null)? "" :from;
+				 sort = (sort==null)? "":sort;
+				
+				if (sort!=null && !sort.equals(""))
+				unsortedFriendA =(sort.equals("all"))? currentSessionFriendsList.getCurentSessionFriendsList()
+						: currentSessionFriendsList.getCurentATLSessionFriendsList();
+			} else {
+				unsortedFriendA = currentSessionFriendsList.getCurentSessionFriendsList();
+				mode = MODE_EDITOR;
+			}
+			    
+
+		initAttributes();
+		setListener();
+		 
+		bindingData();
+		
+	
+		
+		if (!currentSessionFriendsList.isFriendUpdateComplete())
+			Toast.makeText(getApplicationContext(), "Retreiving new contacts...", Toast.LENGTH_LONG).show();
+		//setMainMenuListener();
+		
+	}
+  
+	private void initAttributes() {
+		// TODO Auto-generated method stub
+		mTopBar = (ATLTopbar) findViewById(R.id.topBarMenu);
+	//	mTopBar.setType(ATLMainTabbarActivity.TAB_CONTACTS);
+		listContacts = (ATLMultiSectionListView) findViewById(R.id.listContacts);
+//		listContacts.setPinnedHeaderView(LayoutInflater.from(this).inflate(
+//				R.layout.listview_header, listContacts, false));
+//		   
+		tabbar = new ATLTabbarView(this);
+	    tabbar.delegate = this;
+	    mLayout.addView(tabbar);
+	    	
+	    tabbar.setVisibility(View.VISIBLE);
+	    
+	    
+	    Button allContactBtn = (Button)findViewById(R.id.all_contacts_btn);
+	    allContactBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intenAllSort = new Intent(getBaseContext(),
+						ATLContactListActivity.class);
+				 intenAllSort.putExtra("sort", "all");
+				 //intenAllSort.putExtra("mode", mode);
+				 intenAllSort.putExtra("from", from);
+
+				intenAllSort.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				startActivity(intenAllSort);
+			}
+		});
+	
+	    Button atlContactBtn = (Button)findViewById(R.id.atlas_contacts_btn);
+	    atlContactBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intenAllSort = new Intent(getBaseContext(),
+						ATLContactListActivity.class);
+				 intenAllSort.putExtra("sort", "atl");
+				// intenAllSort.putExtra("mode", mode);
+				 intenAllSort.putExtra("from", from);
+				intenAllSort.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				startActivity(intenAllSort);
+			}
+		});
+	    	
+	}
+
+	private void bindingData() {
+		// ATLFriendModel testFriend = new ATLFriendModel();
+		// testFriend.setFirstname("testFirst");
+		// testFriend.setLastname("testLast");
+		// testFriend.setPhoneNumber("testPhone");
+		// testFriend.setEmailAddress("testEmail");
+		// testFriend.setPicPath("testPicPath");
+		// testFriend.setFromFacebook(true);
+		// testFriend.setAtlasId("testAtlasId");
+		// testFriend.write();
+
+		Log.i("harris","contactList");
+		//HARRIS:
+	//	ArrayList<ATLFriendModel> unsortedFriendA = ATLFriendModel.readAll();
+	///
+		///sharon
+		/////
+		
+		
+		
+		if (unsortedFriendA!=null && unsortedFriendA.size()>0){
+		ArrayList<ATLContactModel> contactA = new ArrayList<ATLContactModel>(
+				unsortedFriendA.size());
+		
+		
+		for (ATLFriendModel friend : unsortedFriendA) {
+			contactA.add(new ATLContactModel(friend));
+		}
+		
+		///HARRIS
+//		ArrayList<ATLContactModel> addressBookContactA = contactListFromAddressBook();
+//		
+//		contactA.addAll(addressBookContactA);
+//		
+		
+		
+		
+		
+		
+
+		for (ATLContactModel contact : contactA) {
+			contact.setSortValue(contact.displayName());
+		}
+
+		Collections.sort(contactA, new Comparator<ATLContactModel>() {
+			public int compare(ATLContactModel a, ATLContactModel b) {
+				return a.getSortValue().compareToIgnoreCase(b.getSortValue());
+			}
+		});
+
+		// ArrayList<ATLContactModel> contactA = unsortedContactA
+		ATLContactListAdapter adapter = new ATLContactListAdapter(contactA,
+				this);
+		listContacts.setAdapter(adapter);
+		}
+	}
+
+	public void selectContact(ATLContactModel contact) {
+		
+		////SHARON COMMENTING HARRIS ....
+		
+		
+//		Log.i("harris", "selectContact");
+//
+//		String id = contact.getAddressBookId();  
+//		
+//		contact.setUrl(retrieveContactProperty(id,Website.URL,Website.CONTENT_ITEM_TYPE));
+//		
+//		contact.setNotes(retrieveContactProperty(id,Note.NOTE,Note.CONTENT_ITEM_TYPE));
+//		
+//		Log.i("harris", "****getting phones ");
+//		ArrayList<HashMap<String,String>> phoneA = retrieveContactPropertyA(id,ContactsContract.CommonDataKinds.Phone.CONTENT_URI,Phone.DATA,Phone.TYPE);
+//		for(HashMap<String,String> h : phoneA){
+//			if (Integer.parseInt(Utilities.replaceNull(h.get("type"), "0")) == PHONE_TYPE_MOBILE){
+//				contact.setPhoneNumber(h.get("property"));
+//			} else if (Integer.parseInt(Utilities.replaceNull(h.get("type"), "0")) == PHONE_TYPE_WORK){
+//				contact.setPhoneNumberWork(h.get("property"));
+//			}
+//			//Log.i("harris", "****//phone=" + h.get("property"));
+//			//Log.i("harris", "****type=" + h.get("type"));
+//		}
+//
+//		Log.i("harris", "****getting emails");
+//		ArrayList<HashMap<String,String>> emailA = retrieveContactPropertyA(id,ContactsContract.CommonDataKinds.Email.CONTENT_URI,Email.DATA,Email.TYPE);
+//		for(HashMap<String,String> h : emailA){
+//			if (Integer.parseInt(Utilities.replaceNull(h.get("type"), "0")) == EMAIL_TYPE_HOME){
+//				contact.setEmailAddress(h.get("property"));
+//			} else if (Integer.parseInt(Utilities.replaceNull(h.get("type"), "0")) == EMAIL_TYPE_WORK){
+//				contact.setEmailAddressWork(h.get("property"));
+//			}
+//			//Log.i("harris", "****//email=" + h.get("property"));
+//			//Log.i("harris", "****type=" + h.get("type"));
+//		}
+//		
+//		Log.i("harris", "****getting addresses");
+//		ArrayList<HashMap<String,String>> addressA = retrieveContactPropertyA(id,ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,StructuredPostal.DATA,StructuredPostal.TYPE);
+//		for(HashMap<String,String> h : addressA){
+//			//Log.i("harris", "****//address=" + h.get("property"));
+//			//Log.i("harris", "****type=" + h.get("type"));
+//			if (Integer.parseInt(Utilities.replaceNull(h.get("type"), "0")) == ADDRESS_TYPE_HOME){
+//				contact.setAddressStreet(h.get("property"));
+//				//TODO - how to parse out street,city,state,zip
+//			} 
+//		}
+		////END SECTION SHARON COMMENTING	
+		
+		  
+		if (contact!=null){
+		if (mode == MODE_PICKER || (mode != MODE_EDITOR &&(from != null && (from.equals("event")||from.equals("task"))))){
+			Intent intent ;
+			
+			
+			if (from != null &&  from.equals("event"))
+				intent = new Intent(this, CalendarEditView.class);
+			
+			else
+				intent = new Intent(this, EditTask.class);
+  
+			
+			intent.putExtra("com.atlasapp.model.ATLContactModel", contact);
+			setResult(Activity.RESULT_OK, intent);
+			startActivity(intent);
+			//finish();
+		} 
+		else {
+			
+			Intent intent = new Intent(this, ATLContactActivity.class);
+			intent.putExtra("com.atlasapp.model.ATLContactModel", contact);
+			startActivity(intent);
+		}
+		
+		}  
+		// SAMPLE CODE FOR CALLING ACTIVITY
+		// ** define this constant
+		// private final static int CHOOSE_CONTACT = 1;
+		//
+		// ** call this activity like this
+		// Intent intent = new Intent(this, ATLContactListActivity.class);
+		// startActivityForResult(intent, CHOOSE_CONTACT);
+		//
+		// **use this method to retrieve the selected contact
+		// protected void onActivityResult(int requestCode, int resultCode,
+		// Intent data){
+		// switch (requestCode) {
+		// case CHOOSE_CONTACT:
+		//
+		// ATLContactModel contact =
+		// (ATLContactModel)intent..getExtras().getParcelable("com.atlasapp.model.ATLContactModel");
+		//
+		// default:
+		// break;
+		// }
+		// }
+	}
+
+//	private ArrayList<ATLContactModel> contactListFromAddressBookOLD() {
+//
+//		retrieveContacts();
+//
+//		Uri uri = ContactsContract.Contacts.CONTENT_URI;
+//		String[] projection = new String[] { ContactsContract.Data._ID,
+//				ContactsContract.Contacts.DISPLAY_NAME
+//		// StructuredName.GIVEN_NAME,
+//		// StructuredName.FAMILY_NAME,
+//		// Organization.COMPANY,
+//		// GroupMembership.GROUP_SOURCE_ID,
+//		// Phone.NUMBER,
+//		// Email.ADDRESS,
+//		// Website.URL,
+//		// StructuredPostal.CITY,
+//		// Note.NOTE,
+//		// Photo.PHOTO
+//		};
+//		String selection = ContactsContract.Contacts.IN_VISIBLE_GROUP + " = '"
+//				+ ("1") + "'";
+//		String[] selectionArgs = null;
+//		String sortOrder = ContactsContract.Contacts.DISPLAY_NAME
+//				+ " COLLATE LOCALIZED ASC";
+//		Cursor cursor = getContentResolver().query(uri, projection, selection,
+//				selectionArgs, sortOrder);
+//
+//		ArrayList<ATLContactModel> contactA = new ArrayList<ATLContactModel>();
+//		while (cursor.moveToNext()) {
+//			ATLContactModel contact = new ATLContactModel();
+//			// Log.i("harris",cursor.getString(cursor.getColumnIndex(StructuredName.FAMILY_NAME)));
+//			// contact.setFirstname(cursor.getString(cursor.getColumnIndex(StructuredName.GIVEN_NAME)));
+//			contact.setFirstname(cursor.getString(cursor
+//					.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+//			contactA.add(contact);
+//		}
+//		cursor.close();
+//		return contactA;
+//
+//	}
+
+	private void setListener() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void setMainMenuListener() {
+
+		((RadioGroup) findViewById(R.id.main_btns_group))
+				.setVisibility(View.VISIBLE);
+
+		RadioGroup mainBtns = (RadioGroup) findViewById(R.id.main_btns_group);
+
+		// holder.rdgCategory = (RadioGroup)row.findViewById(R.id.radiogroup);
+
+		RadioGroup.OnCheckedChangeListener rdGrpCheckedListener = new RadioGroup.OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+				// ViewFlipper vf = (ViewFlipper)findViewById(R.id.content_vf);
+				// ImageView mainTitle =
+				// (ImageView)findViewById(R.id.mainTitleLabel);
+				// mainTitle.setVisibility(0);
+
+				// TODO Auto-generated method stub
+				// setCategoryinList(position, checkedId);
+				switch (checkedId) {
+				case R.id.btnCal:
+					Intent intent = new Intent(getBaseContext(),
+							CalendarDayView.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+					// intent.putExtra("EXTRA_SESSION_ID", sessionId);
+					startActivity(intent);
+
+					break;
+				case R.id.btnNotes:
+					Intent intentNotes = new Intent(getBaseContext(),
+							ATLNoteListActivity.class);
+					intentNotes.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+					// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+					startActivity(intentNotes);
+
+					break;
+				case R.id.btnSettings:
+					Intent intentSettings = new Intent(getBaseContext(),
+							Settings.class);
+					intentSettings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+					// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+					startActivity(intentSettings);
+
+					break;
+				case R.id.btnToday:
+					Intent intentToday = new Intent(getBaseContext(),
+							ATLContactListActivity.class);
+					// intentToday.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+					// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+					startActivity(intentToday);
+
+					break;
+				case R.id.btnToDo:
+					Intent intentTasks = new Intent(getBaseContext(),
+							Tasks.class);
+					intentTasks.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+					// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+					startActivity(intentTasks);
+
+					break;
+				default:
+
+					break;
+				}
+			}
+		};
+
+		mainBtns.setOnCheckedChangeListener(rdGrpCheckedListener);
+
+	}
+
+	private ArrayList<ATLContactModel> contactListFromAddressBook() {
+		
+		ArrayList<ATLContactModel> contactA = new ArrayList<ATLContactModel>();
+		
+		ContentResolver cr = this.getApplicationContext().getContentResolver();
+		Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
+				null, null, null);
+		int testCtr = 0;
+		String id = "";
+		if (cursor.getCount() > 0) {
+
+			while (cursor.moveToNext()) {
+				id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+
+				ATLContactModel contact = new ATLContactModel();
+				
+				/////// Retreive Phone Numbers
+				ArrayList<String> phones = new ArrayList<String>();
+				
+				
+    //            Cursor phoneCur = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,null, null);
+
+//				Cursor phoneCur = cr.query( 
+//		          		ContactsContract.CommonDataKinds.Phone.CONTENT_URI, 
+//		          		null,
+//		          		ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", 
+//		          		new String[]{id}, null); 
+                        int index = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER); 
+                        int size = cursor.getColumnCount();
+//                        if (index!=-1 && cursor.getColumnCount()>=index){
+//                        	
+						String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+						if ( hasPhone.equalsIgnoreCase("1"))
+								hasPhone = "true";
+						else
+								hasPhone = "false" ;
+
+						if (Boolean.parseBoolean(hasPhone)) 
+						{
+							Cursor phonesCur = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,null, null);
+							while (phonesCur.moveToNext()) 
+							{
+								phones.add(phonesCur.getString(phonesCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+							}
+							phonesCur.close();
+						}
+				
+                     //   }
+				////////////
+				
+				
+				
+				
+
+				//TODO - get phone types, email types, group names
+				// - also, address is not broken into city, state etc. how handle that?
+				// - also, this is too slow right now.  was much quicker when I used contactListFromAddressBookOLD
+				
+				contact.setAddressBookId(id);
+				
+				contact.setFirstname(retrieveContactProperty(id,StructuredName.GIVEN_NAME,StructuredName.CONTENT_ITEM_TYPE));
+				
+				contact.setLastname(retrieveContactProperty(id,StructuredName.FAMILY_NAME,StructuredName.CONTENT_ITEM_TYPE));
+					
+				contact.setFromAddressBook(true);
+				
+				
+			//	ArrayList<String> phones = getContactPhoneLNumberListFromAddressBook(id);
+				String phoneNumber = (phones.size()!=0 && phones.get(0).length()>=10)? phones.get(0):"";  
+				phoneNumber = (phoneNumber!=null)?phoneNumber:"";
+				contact.setPhoneNumber(phoneNumber);
+				
+				
+//				ArrayList<String> emailAddresses = getContactEmailsFromAddressBook(id);
+//				String emailAddress = (emailAddresses.size()!=0)?emailAddresses.get(0):"";
+//				emailAddress = (emailAddress!=null)?emailAddress:"";
+//				contact.setEmailAddress(emailAddress);
+//				
+				
+				
+				contact.setCompany(retrieveContactProperty(id,Organization.COMPANY,Organization.CONTENT_ITEM_TYPE));
+
+				contact.setGroup(retrieveContactProperty(id,GroupMembership.GROUP_SOURCE_ID,GroupMembership.CONTENT_ITEM_TYPE));
+							
+ 				contact.setImage(retrieveContactPhoto(id));
+ 				
+ 				
+ 				if (contact.getEmailAddress()!=null && contact.getFirstname()!=null && !contact.getFirstname().equals("") && 
+ 						(!contact.getEmailAddress().equals("") || !contact.getPhoneNumber().equals(""))
+ 						)
+ 				  
+ 				
+ 					contactA.add(contact);
+			}
+		}
+		cursor.close();
+
+		return contactA;
+
+	}
+
+	private String retrieveContactProperty(String contactId, String columnName,
+			String mimetype) {
+		String property = "";
+		Cursor cursor = getContentResolver().query(
+				ContactsContract.Data.CONTENT_URI,
+				new String[] { columnName },
+				ContactsContract.Data.CONTACT_ID + " = " + contactId
+						+ " AND ContactsContract.Data.MIMETYPE = '"
+						+ mimetype + "'", null, null);
+		try {
+			cursor.moveToNext();
+			property = cursor.getString(cursor.getColumnIndexOrThrow(columnName));
+		} catch (Exception e) {
+			//Log.i("harris", "****property error=" + e.getLocalizedMessage());
+		} 
+			cursor.close();
+		
+		return property;
+	}
+	
+	
+	
+	private ArrayList<String> getContactEmailsFromAddressBook(String contactId)
+	{
+		ContentResolver cr = getContentResolver();
+		 ArrayList<String> emails = new ArrayList<String>();
+      //   String emailType = "";
+          	Cursor emailCur = cr.query( 
+          		ContactsContract.CommonDataKinds.Email.CONTENT_URI, 
+          		null,
+          		ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", 
+          		new String[]{contactId}, null); 
+          	while (emailCur.moveToNext() )
+          	{ 
+          	    // This would allow you get several email addresses
+                      // if the email addresses were stored in an array
+          		emails.add(emailCur.getString(
+                                emailCur.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Email.DATA)));
+//           	     emailType = emailCur.getString(
+//                                emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)); 
+//           	     
+           	 //   contact[0] = id;
+           	  //  contact = email;
+           	     
+           //	    currentABContactsEmailAdd.add(email);
+           	    
+           	    
+           	} 
+           	emailCur.close();
+           	return emails;
+      }
+		
+	private ArrayList<String> getContactPhoneLNumberListFromAddressBook(String contactId)
+	{
+		ContentResolver cr = getContentResolver();
+		 ArrayList<String> phones = new ArrayList<String>();
+			Cursor phoneCur = cr.query( 
+	          		ContactsContract.CommonDataKinds.Phone.CONTENT_URI, 
+	          		null,
+	          		ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", 
+	          		new String[]{contactId}, null); 
+		 String hasPhone = phoneCur.getString(phoneCur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+         if ( hasPhone.equalsIgnoreCase("1"))
+             hasPhone = "true";
+         else
+             hasPhone = "false" ;
+
+         if (Boolean.parseBoolean(hasPhone)) 
+         {
+          Cursor phonesCur = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
+          while (phonesCur.moveToNext()) 
+          {
+        	  phones.add(phonesCur.getString(phonesCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+          }
+          phonesCur.close();
+         }
+		 
+		 return phones;
+		 
+		 
+		 
+	}
+	
+	
+	private ArrayList<HashMap<String,String>> retrieveContactPropertyA(String contactId, Uri contentUri, String columnName, String typeColumnName) {
+		ArrayList<HashMap<String,String>> propertyA = new ArrayList<HashMap<String,String>>();
+		HashMap<String,String> h;
+		Cursor cursor = getContentResolver().query(
+				contentUri,
+				null,
+				ContactsContract.Data.CONTACT_ID + " = " + contactId, 
+				null, null);
+            while (cursor.moveToNext()) { 
+            	try{
+            		h = new HashMap<String,String>(2);
+            		h.put("property", cursor.getString(cursor.getColumnIndexOrThrow(columnName)));            	
+            		h.put("type", cursor.getString(cursor.getColumnIndexOrThrow(typeColumnName)));
+            		propertyA.add(h);
+            	}catch (Exception e){
+            		
+            	}
+            	
+            }
+
+			cursor.close();
+
+		return propertyA;
+	}
+	
+	private Bitmap retrieveContactPhoto(String contactID) {
+
+		Bitmap photo = null;
+
+		try {
+			InputStream inputStream = ContactsContract.Contacts
+					.openContactPhotoInputStream(getContentResolver(),
+							ContentUris.withAppendedId(
+									ContactsContract.Contacts.CONTENT_URI,
+									Long.valueOf(contactID)));
+
+			if (inputStream != null) {
+				photo = BitmapFactory.decodeStream(inputStream);
+			}
+
+			assert inputStream != null;
+			if (inputStream != null)
+				inputStream.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return photo;
+
+	}
+	@Override
+	public void didTabToTabIndex(int index) {
+		// TODO Auto-generated method stub
+		switch (index) {
+		case ATLTabbarViewDelegete.TabbarIndex.tabbar_icon_contacts:
+			
+			
+			Intent intentContacts = new Intent(getBaseContext(),
+
+					ATLContactListActivity.class);
+			intentContacts.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			intentContacts.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+			startActivity(intentContacts);
+			break;
+		case ATLTabbarViewDelegete.TabbarIndex.tabbar_icon_calendar:
+			Intent intentCalendar = new Intent(getBaseContext(),
+					CalendarDayView.class);
+			// intent.putExtra("EXTRA_SESSION_ID", sessionId);
+			// 2012-11-08 RYAN TAN: add to clear to top
+			intentCalendar.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+			intentCalendar.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intentCalendar);
+			break;
+		case ATLTabbarViewDelegete.TabbarIndex.tabbar_icon_home:
+			Intent intentNotes = new Intent(getBaseContext(), ATLNoteListActivity.class);
+			intentNotes.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+			intentNotes.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+			startActivity(intentNotes);
+			break;
+		case ATLTabbarViewDelegete.TabbarIndex.tabbar_icon_tasks:
+			Intent intentTasks = new Intent(getBaseContext(), ATLTaskListActivity.class);
+			intentTasks.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+			intentTasks.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+			startActivity(intentTasks);
+			break;
+		case ATLTabbarViewDelegete.TabbarIndex.tabbar_icon_settings:
+			Intent intentSettings = new Intent(getBaseContext(), Settings.class);
+			intentSettings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+			intentSettings.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// //intent.putExtra("EXTRA_SESSION_ID", sessionId);
+			startActivity(intentSettings);
+			break;
+		}
+	}
+}

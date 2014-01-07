@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contactCellLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <include
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/listview_header" />
+    <RelativeLayout
+    	android:id="@+id/leftLayout"
+    	android:layout_width="70dip"
+    	android:layout_height="55dip"
+    	android:layout_below="@+id/header"
+    	android:background="@android:color/white" >
+        <ImageView
+            android:id="@+id/imageContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <ImageView
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@android:color/darker_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/centerLayout"
+        android:layout_width="190dip"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_toLeftOf="@+id/rightLayout"
+        android:layout_toRightOf="@+id/leftLayout"
+        android:background="@android:color/white" >
+
+        <TextView
+            android:id="@+id/contactDisplayName"
+            style="@style/ATLTitleOfListView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rightLayout"
+        android:layout_width="55dip"
+        android:layout_height="55dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/header"
+        android:background="@android:color/white" >
+
+        <ImageView
+            android:id="@+id/imageAtlasUser"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</LinearLayout>

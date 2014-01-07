@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/find_friends_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/find_friends_background" >
+
+    <RelativeLayout
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/navbar" >
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="#0000"
+            android:src="@drawable/back" />
+        
+        
+        
+        <TextView 
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Message"
+            android:textColor="#ffffff"
+            />
+    </RelativeLayout>
+    
+ <RelativeLayout
+     android:id="@+id/inviteContactLayout"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_below="@id/topBarMenu"
+       android:background="#ffffff" >
+     
+     
+     <TextView
+         android:id="@+id/textView1"
+         android:layout_width="wrap_content"
+         android:layout_height="50dp"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentTop="true"
+         android:layout_margin="10dp"
+         android:text="   To: " />
+      </RelativeLayout>
+
+ <EditText
+     android:id="@+id/editText1"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBottom="@+id/inviteContactLayout"
+     android:layout_alignParentRight="true"
+     android:layout_marginRight="39dp"
+     android:ems="10"
+     android:inputType="phone" >
+
+     <requestFocus />
+ </EditText>
+
+ <RelativeLayout
+     android:id="@+id/messageContactLayout"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentLeft="true"
+     android:layout_alignParentTop="true" >
+
+     <TextView
+         android:layout_width="100dp"
+         android:layout_height="100dp"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:layout_marginBottom="20dp"
+         android:layout_marginLeft="21dp"
+         android:text="Message" />
+
+     <Button
+         android:id="@+id/btnSendSMS"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentRight="true"
+         android:text="Send SMS Invite" />
+ </RelativeLayout>
+    
+</RelativeLayout>

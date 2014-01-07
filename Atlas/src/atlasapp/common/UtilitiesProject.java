@@ -1,0 +1,415 @@
+package atlasapp.common;
+
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import android.os.Environment;
+import android.telephony.TelephonyManager;
+import android.widget.ImageView;
+import atlasapp.common.ATLConstants.ATL_ENVIRONMENT;
+import atlasapp.database.ATLDBCommon;
+import atlasapp.database.AtlasServerConnect;
+import atlasapp.database.DatabaseConstants.SIGN_NEW_USERS_CALLER;
+import atlasapp.database.UserDelagateInterface;
+import atlasapp.model.ATLContactModel;
+import atlasapp.section_appentry.R;
+public final class UtilitiesProject implements UserDelagateInterface{
+	public static Context ctx;
+
+	// ---------------------------------------------------
+	public final static boolean IS_DEBUG_MODE = false ;   
+	public final static String ENVIRON = "dev"; //dev | qa | prod
+
+	public final static boolean RESET_DB = false ;                                                                          
+	// --------------------------------------------------- 
+
+	public final static String DB_NAME = "atlasDB";
+	public final static int DB_VERSION = 1;
+	
+	public static Activity currentActivity;
+
+	private static AtlasServerConnect parseConnect;
+	    
+	public static String getATLWebSite(ATL_ENVIRONMENT environment)
+	{
+		String webSite = "";
+		if (environment==null)
+		{
+			environment = ATL_ENVIRONMENT.ATLAS;
+		}
+		webSite = "http://";
+		webSite += environment.getEnvironmentName();
+		webSite += ATLConstants.ATL_WEB_SITE;
+		return webSite;
+	}
+	
+	// Facebook Friends that are already on local Friend DB
+// HARRIS NEW:
+//		private static ArrayList<ATLContactModel> atlasFBFriendsonDB = null ;
+		private static ArrayList<ATLContactModel> atlasFBFriendsonDB = null ;
+	// Friends from address book that are already on local Friend DB
+// HARRIS NEW:
+//  private static ArrayList<ATLContactModel> atlasABFriendsonDB = null ;
+	private static ArrayList<ATLContactModel> atlasABFriendsonDB = null ;
+	//Friends of the user (contacts/facebook) that dont have the Atlas app
+// HARRIS NEW:
+// private static ArrayList<ATLContactModel> nonAtlasContacts = null;
+	private static ArrayList<ATLContactModel> nonAtlasContacts = null;
+	// Friends of the user (address book/friend) that have the Atlas app 
+	// but needed to be uddated on the user's local DB
+// HARRIS NEW:
+// private static ArrayList<ATLContactModel> newAtlasFriends = null;
+	private static ArrayList<ATLContactModel> newAtlasFriends = null;
+	
+	private static ArrayList<ATLContactModel> newFBAtlasFriends = null;
+	private static ArrayList<String> newFBAtlasFriendsEmails = null;
+	private static ArrayList<ATLContactModel> newABAtlasFriends = null;
+	private static ArrayList<String> newABAtlasFriendsEmails = null;
+
+	private static ArrayList<String> adressBookFriends;
+
+	private static ArrayList<String> adressBookFriendsbyEmail;
+
+	private static CurrentSessionFriendsList currentSessionFriendsList;
+
+	private static ATLDBCommon atlDBCommon;
+
+	public static String deviceId;
+	
+	public static File IMAGE_DIR = new File(Environment.getExternalStorageDirectory()
+            + "/Android/data/com.atlastpowered/files/Pictures");
+	
+	
+	public static File FRIENDS_IMAGE_DIR = new File(Environment.getExternalStorageDirectory()
+          + "/Android/data/com.atlastpowered/files/Pictures/friendPics");
+	
+	public static ContentResolver cr;
+	/**
+	 * Get all users Friends from Facebook that are already on local Friend DB
+	 * @return
+	 */
+// HARRIS NEW:
+// public static ArrayList<ATLContactModel> getAtlasFBFriendsonDB () {
+//	public static ArrayList<ATLContactModel> getAtlasFBFriendsonDB () {
+//		
+//	
+////		if (atlasFriendsonDB==null)
+////		{
+////			updateUsersContactsFromAdressBook();
+////			
+////		}
+//		return atlasFBFriendsonDB;
+//	}
+	
+	/**
+	 * Get all users Friends from address book that are already on local Friend DB
+	 * @return
+	 */
+// HARRIS NEW:
+// public static ArrayList<ATLContactModel> getAtlasABFriendsonDB () {
+//	public static ArrayList<ATLContactModel> getAtlasABFriendsonDB () {
+//		
+//	
+////		if (atlasFriendsonDB==null)
+////		{
+////			updateUsersContactsFromAdressBook();
+////			
+////		}
+//		return atlasABFriendsonDB;
+//	}
+	/**
+	 * Friends of the user (address book/friend) that have the Atlas app 
+	 * but needed to be updated on the user's local DB
+	 * @return
+	 */
+// HARRIS NEW:
+//	public static ArrayList<ATLContactModel> getNewAtlasFriends()
+	
+//	public static ArrayList<ATLContactModel> getNewAtlasFriends()
+//	{
+//		if (newAtlasFriends == null)
+//		{
+//			//updateUsersContactsFromAdressBook();
+//			if (newFBAtlasFriends!=null)
+//			{
+//				newAtlasFriends = newFBAtlasFriends;
+//				if (newABAtlasFriends!=null)
+//				{
+//					newAtlasFriends.addAll(newABAtlasFriends);
+//				}
+//			}else
+//				if (newABAtlasFriends!=null)
+//					newAtlasFriends = newABAtlasFriends;
+//			
+//		}
+//		return newAtlasFriends;
+//	}
+	
+	/**
+	 * Friends of the user (contacts/facebook) that dont have the Atlas app
+	 * @return
+	 */
+// HARRIS NEW:
+//public static ArrayList<ATLContactModel> getNonAtlasContacts()
+//	public static ArrayList<ATLContactModel> getNonAtlasContacts()
+//	{
+////		if (nonAtlasContacts == null)
+////		{
+////			updateUsersContactsFromAdressBook();
+////		}
+//		return nonAtlasContacts;
+//	}
+	
+	public final static void init(Context aCtx) {
+		ctx = aCtx;
+		cr = ctx.getContentResolver();
+		final TelephonyManager tm =(TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
+
+		deviceId = tm.getDeviceId();
+		 parseConnect =   AtlasServerConnect.getSingletonObject(null);
+		 atlDBCommon = ATLDBCommon.getSingletonObject(null);
+	}
+	
+	//
+	public static Calendar getTimeDiff(Date from, Date to)
+	{
+		Calendar calendar = Calendar.getInstance();
+
+		if (from!=null && to!=null)
+		{
+			//		Date now = new Date();
+			int offSet = to.getTimezoneOffset();
+
+
+			calendar.setTime(to);
+			calendar.add(Calendar.MINUTE, -offSet);
+
+			Date modifiedDate = calendar.getTime();
+
+
+			calendar.setTime(from);
+			calendar.add(Calendar.MINUTE, -modifiedDate.getMinutes());
+			calendar.add(Calendar.HOUR, -modifiedDate.getHours());
+			calendar.add(Calendar.SECOND, -modifiedDate.getSeconds());
+		}
+		return  calendar;
+	}
+
+	
+	public static void alertUser(String messageTitle, String message, Context context)
+	{
+		AlertDialog alertDialog = new AlertDialog.Builder(
+				context).create();
+
+		// Setting Dialog Title
+		alertDialog.setTitle(messageTitle);
+
+		// Setting Dialog Message
+		alertDialog.setMessage(message);
+
+		// Setting Icon to Dialog
+	//	alertDialog.setIcon(R.drawable.tick);
+
+		// Setting OK Button
+		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+				// Write your code here to execute after dialog closed
+				//Toast.makeText(getApplicationContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
+				
+				
+				
+				}
+		});
+
+		// Showing Alert Message
+		alertDialog.show();
+	}
+	/**
+	 * Store picture on user's local atlas mobile file
+	 * @param picName  picture stored name (with no extension)
+	 * @param bitPic the picture to be stored in Bitmap
+	 */
+	public static void storePicture(String picName, Bitmap bitPic)
+	{
+		if (bitPic!=null && picName!="")
+		try {
+		// Copy image from one file path to atlas path on mobile
+		// where VALUE represent the source file path
+		    if (IMAGE_DIR.canWrite()) {
+		       
+		    	FileOutputStream fOut=new FileOutputStream(IMAGE_DIR+"/"+picName+".png"); 
+		    	// Here path is either sdcard or internal storage
+		    	bitPic.compress(Bitmap.CompressFormat.PNG,100,fOut);
+		    	fOut.flush();
+		    	fOut.close();
+		    	bitPic.recycle(); // If no longer used..
+		        }
+		    
+		} catch (Exception e) {}
+	}
+	public static Bitmap getUserProfilePic()
+	{
+		Bitmap image = null;
+//		if (profilePicName!=null && !profilePicName.equals(""))
+//		{
+		//		ImageView contactPhoto = (ImageView) findViewById(R.id.contactImage);
+//		File IMAGE_DIR = new File(Environment.getExternalStorageDirectory()
+//				+ "/Android/data/com.atlastpowered/files/Pictures/friendPics");
+////		String profilePicName = (contact.getAtlasId()!=null && !contact.getAtlasId().equals(""))?
+////				contact.getAtlasId():"";
+				String destinationImagePath= "/image.png";	
+				
+//				if (!profilePicName.equals(""))
+//				{
+					// Bitmap storedBitmap = null;
+					File PROFILE_PIC_PATH= new File (IMAGE_DIR,destinationImagePath) ;
+					if(PROFILE_PIC_PATH.exists()){
+						//String filePath = applicationController.IMAGE_DIR+"/"+profilePicName+".png";
+						image = BitmapFactory.decodeFile(PROFILE_PIC_PATH.getAbsolutePath());
+//						ImageView imageView = (ImageView) findViewById(R.id.contactImage);
+
+
+
+
+
+//						imageView.setImageBitmap(image);
+					}
+
+					//	contactPhoto.setImageBitmap(storedBitmap);
+					//	invitee.setImage(storedBitmap);
+//				}
+//		}
+				return image;
+	}
+	public static Bitmap getProfilePic(String profilePicName) {	
+
+		Bitmap image = null;
+		if (profilePicName!=null && !profilePicName.equals(""))
+		{
+		//		ImageView contactPhoto = (ImageView) findViewById(R.id.contactImage);
+		File FRIENDS_IMAGE_DIR = new File(Environment.getExternalStorageDirectory()
+				+ "/Android/data/com.atlastpowered/files/Pictures/friendPics");
+//		String profilePicName = (contact.getAtlasId()!=null && !contact.getAtlasId().equals(""))?
+//				contact.getAtlasId():"";
+				String destinationImagePath= "/"+profilePicName+".png";	
+				
+				if (!profilePicName.equals(""))
+				{
+					// Bitmap storedBitmap = null;
+					File PROFILE_PIC_PATH= new File (FRIENDS_IMAGE_DIR,destinationImagePath) ;
+					if(PROFILE_PIC_PATH.exists()){
+						//String filePath = applicationController.IMAGE_DIR+"/"+profilePicName+".png";
+						image = BitmapFactory.decodeFile(PROFILE_PIC_PATH.getAbsolutePath());
+//						ImageView imageView = (ImageView) findViewById(R.id.contactImage);
+
+
+
+
+
+//						imageView.setImageBitmap(image);
+					}
+
+					//	contactPhoto.setImageBitmap(storedBitmap);
+					//	invitee.setImage(storedBitmap);
+				}
+		}
+				return image;
+	}
+
+	@Override
+	public void getFriendEmailOnParse(
+			ATLContactModel friendsPropertiesOnParseByEmail, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void signInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUserEmailOnParseCallBack(
+			HashMap<String, String> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFacebookFriendIdOnParse(ATLContactModel facebookAtlasFriend,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAllFBAtlasUsersCallBack(
+			ArrayList<ATLContactModel> allFacebookAtlasUsers, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAllFBAtlasUsersFriendsCallBack(
+			ArrayList<ATLContactModel> allFacebookAtlasUsers, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveCallBack(boolean saved) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAtlasNewFriendsByEmailCallBack(
+			ArrayList<ATLContactModel> allCommonAtlasUsers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUpateCallBack(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getSignNonAtlasUsersCallBack(SIGN_NEW_USERS_CALLER caller,
+			boolean success,
+			HashMap<String, ATLContactModel> newCurrentNonAtlasUserToSign) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resetPasswordCallBack(boolean emailSuccessfullySent,
+			String parseMessage) {
+		// TODO Auto-generated method stub
+		
+	} 
+	
+	
+}

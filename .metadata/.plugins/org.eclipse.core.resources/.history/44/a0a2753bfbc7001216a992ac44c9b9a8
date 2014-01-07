@@ -1,0 +1,493 @@
+package atlasapp.facebook;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+import atlasapp.common.ATLUser;
+import atlasapp.database.AtlasServerConnect;
+import atlasapp.database.DatabaseConstants.SIGN_NEW_USERS_CALLER;
+import atlasapp.database.UserDelagateInterface;
+import atlasapp.model.ATLContactModel;
+import atlasapp.section_appentry.AtlasApplication;
+import atlasapp.section_appentry.R;
+
+
+import com.facebook.FacebookActivity;
+import com.facebook.GraphUser;
+import com.facebook.LoginButton;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+// import com.facebook.android.R;
+import com.parse.ParseObject;
+import com.parse.facebook.Facebook;
+
+public class FacebookConnect extends FacebookActivity implements UserDelagateInterface{
+	
+	//indicate that the activity is visible
+		private boolean isResumed = false;
+		private static  Facebook facebook; 
+	    public static void setFacebook(Facebook currentFacebook) { facebook = currentFacebook; }
+
+		private LoginButton authButton;
+
+		private AtlasApplication applicationController;
+		
+		private boolean hasLocalProfile=false;
+		private Session session;
+		private CONNECT_TYPE connect;
+		private String currentAccessToken;
+		
+		// the Activity Class name ,calling the Facebook activity...
+		private String classReference;
+		private AtlasServerConnect parseConnect;
+		private HashMap<String, Object> userFacebookInfo;
+		private GraphUser currentUser;
+		private boolean registerSuccess;
+		private Intent facebookCallbackIntent;
+		// calling Facebook Activity purpose ....facebookCallbackIntent
+		public static enum CONNECT_TYPE { REGISTER,  SIGN_IN }
+		
+
+		
+		
+		 @Override
+		 public void onCreate(Bundle savedInstanceState) 
+		 {
+		    super.onCreate(savedInstanceState);
+		    setContentView(R.layout.welcome);
+			applicationController = (AtlasApplication)getApplicationContext();
+	        parseConnect =   AtlasServerConnect.getSingletonObject(this);
+
+
+			 facebook = new Facebook(getResources().getString(R.string.facebook_app_id));
+		    Bundle extras = getIntent().getExtras();
+		       if (extras != null) {
+		    	     
+		    	 
+		    	    connect = (extras.getString("fb_connect_purpose").equals("register"))?CONNECT_TYPE.REGISTER:CONNECT_TYPE.SIGN_IN;
+		          
+		       }
+		    
+		       authButton = (LoginButton) findViewById(R.id.fbauthButton);
+	        	  authButton.setApplicationId(getString(R.string.facebook_app_id));
+	        	
+	        	  authButton.setBackgroundResource(R.drawable.welcome_btn_connect_fb);
+	      	    authButton.setText("");
+	      	  authButton.setReadPermissions(Arrays.asList( "email"));
+		 }
+		
+		
+		 @Override
+		    public void onResume() {
+		        super.onResume();
+		        isResumed = true;
+		        
+		
+		    }
+
+		    @Override
+		    public void onPause() {
+		        super.onPause();
+		        isResumed = false;
+		    }
+		    
+		    /**
+		     * If the activity is visible show 
+		     */
+		    @Override
+		    protected void onSessionStateChange(SessionState state, Exception exception) {
+		    	// Get the active session
+
+		    	session = Session.getActiveSession();
+		        super.onSessionStateChange(state, exception);
+		        if (isResumed)
+		        {
+		        	
+		        	facebookCallbackIntent = new Intent();
+		        	
+		        	
+		        	
+		        	   if (state.isOpened()) {
+		   	            // Logged In
+		        		   currentAccessToken = Session.getActiveSession()
+                                   .getAccessToken();
+		        	        // Set the Facebook instance session variables
+		        	        facebook.setAccessToken(Session.getActiveSession()
+		        	                                       .getAccessToken());
+		        	        facebook.setAccessExpires(Session.getActiveSession()
+		        	                                         .getExpirationDate()
+		        	                                         .getTime());
+		        		   
+		        		   
+		        		   
+		        		// If the session is open, make an API call to get user data
+		        		    // and define a new callback to handle the response
+		        		    Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
+		        		        @Override
+		        		        public void onCompleted(GraphUser user, Response response) {
+		        		            
+		        		        	// If the response is successful
+		        		            if (session == Session.getActiveSession()) {
+		        		                if (user != null) {
+		        		                
+		        		                   
+		        		                	switch (connect)
+		        		                	{
+		        		                	case REGISTER :
+		        		                		RegisterWithFacebook(user);
+		        		                	//	facebookCallbackIntent.putExtra("fb_connect_success", RegisterWithFacebook(user));
+		        		                		//facebookCallbackIntent.putExtra("fb_connect_message", "");
+
+		        		                		break;
+		        		                	case SIGN_IN:
+		        		                		RegisterWithFacebook(user);
+		        		                		//facebookCallbackIntent.putExtra("fb_connect_success", RegisterWithFacebook(user));
+		        		                		//facebookCallbackIntent.putExtra("fb_connect_message", "");
+
+		        		                		break;
+		        		                	default:
+		        		                		break;
+		        		                	}
+		        		                	
+		        		                
+		        		                }   
+		        		            }   
+		        		        }
+
+								   
+		        		    }); 
+		        		    Request.executeBatchAsync(request);
+		        		   
+		        		   
+		        		   
+		        	   } else 
+		        		   if (state.isClosed()) 
+		        		   {  
+		        			   Toast.makeText(getApplicationContext(), "Logged Out of Facebook",
+		        		    			Toast.LENGTH_LONG).show();
+		                		facebookCallbackIntent.putExtra("fb_connect_success", false);
+
+		                		facebookCallbackIntent.putExtra("fb_connect_message", "User logged out of Facebook");
+		        			   
+		        			// Clear the Facebook instance session variables
+		        		        facebook.setAccessToken(null);
+		        		        facebook.setAccessExpires(-1);
+		   	            // Logged Out
+		        		   }
+		        	    
+		        	   
+		        	   /// Pass data back to the calling Activity (to the onActivityResult() method on the 
+		        	   /// reference Activity calling class....)
+		        	   setResult(RESULT_OK,facebookCallbackIntent );
+		        	   finish();
+		        }
+		    }
+		   
+			/**
+		     * Get user information from facebook 
+		     *  - If user has local account with email matched the one got from facebook
+		     * 		(but user is logged out of the app), update
+		     * 		user's Parse account with facebook id and acceess token
+		     * 		and log user in to the App.
+		     *  - If user has already local account ,with different email then- NOT ALLOWED 
+		     * 
+		     *  - If user doesnt have local profile(shared preferences) & not on Parse 
+		     * 		then make a new user profile on Server and Local from Facebook info retrieved
+		     * 
+		     *  - If user doesnt have local profile but email got from Facebook already match 
+		     *  	a user on Parse. Retrieve the matching user's information from the Server to create 
+		     *  	a local profile, with the Facebook information added...
+		     * 
+		     * 
+		     * @param Facebook user
+		     */
+		    private void  RegisterWithFacebook(GraphUser user)
+		    {
+		    	currentUser = user;
+		    	String email = user.getProperty("email").toString();
+		    	 registerSuccess = false;
+		    	
+		    	 userFacebookInfo = new HashMap<String, Object>();
+	    		userFacebookInfo.put("facebook_id", user.getId());
+	    		userFacebookInfo.put("access_token", currentAccessToken);
+	    		
+	    		
+	    		/// user got a local atlas profile
+		    	if (this.applicationController.localAtlasProf)
+		    	{
+		    		
+		    		
+		    	
+		    		if (email.equals(applicationController.getLocalEmail()))
+		    		{
+		    			// user has local profile and email from facebook matched the profile info
+		    			
+		    			applicationController.setAtlasSharedPreferences(userFacebookInfo);
+		    			applicationController.upadteAtlasAndroidUserObjectFromApp();
+		    			applicationController.logInOrOutUser(true);
+		    			registerSuccess = true;
+		    			
+		    		}
+		    		else
+		    		{
+		    			/// User got local profile email that dont match
+		    			/// the one got from Facebook...
+		    			registerSuccess = false;
+		    		}
+		    	}
+		    	else
+		    	{
+		    		
+		    		 parseConnect.getUserEmailOnParse(email,this);
+		    		///// GO TO DELEGATE getUserEmailOnParseCallBack()
+		    		
+		    		
+//		    		if (!parseAtlasUser.isEmpty())
+//		    		{/// email got from facebook already in Parse and user doesnt have 
+//		    			/// local profile on his mobile
+//		    			/// create a local profile from server with facebook info
+//		    			parseConnect.logUserToServer(parseAtlasUser.get("userName"), parseAtlasUser.get("atlas_password"));
+//		    			if (parseConnect.isSignOnServer())
+//		    			{
+//		    				/// uodate user's Facebook info on Server...
+//		    				parseConnect.updateAtlasUserInfoOnServer(userFacebookInfo);
+//		    				
+//		    				
+//		    				if (parseConnect.setCurrentAtlasAndroidUserFromServer())
+//		    				{
+//		    					applicationController.setAtlasUserLocalInfo();
+//		    					applicationController.logInOrOutUser(true);
+//				    			registerSuccess = true;
+//		    				}
+//		    				
+//		    			}
+//		    			
+//		    		}
+//		    		else
+//		    		{
+//		    		
+//		    		
+//		    		///User dont have a local profile and email got from
+//		    		////Facebook doesnt exsits on parse	....create a new account 
+//		    		//// from Facebook Info.
+//
+//	    			userFacebookInfo.put("userName", user.getUsername());
+//	    			userFacebookInfo.put("userNameDisplay", user.getName());
+//	    			// generate a password for parse using username+id (from facebook)
+//	    			userFacebookInfo.put("atlas_password", user.getUsername()+user.getId());
+//	    			userFacebookInfo.put("email", user.getProperty("email").toString());
+//	    			
+//	    			//// TO DO: SET PICTURE
+//	    			applicationController.setAtlasSharedPreferences(userFacebookInfo);
+//	    			applicationController.upadteApplicationUsersPropertiesFromLocal();
+//	    			applicationController.upadteAtlasAndroidUserObjectFromApp();
+//	    			
+//	    			String parseId = parseConnect.createNewAtlasUser();
+//	    			
+//	    			if (!parseId.equals(""))
+//	    			{
+//	    				userFacebookInfo = new HashMap<String, Object>();
+//	    				userFacebookInfo.put("parseUserID", parseId);
+//		    			
+//	    				applicationController.setAtlasSharedPreferences(userFacebookInfo);
+//	    				applicationController.upadteAtlasAndroidUserObjectFromApp();
+//		    			applicationController.logInOrOutUser(true);
+//		    			registerSuccess = true;
+//	    			}
+//	    			
+//	    			
+//		    		}
+//		    		
+//		    	}
+		    	//return registerSuccess;
+		    }
+
+		    }
+		
+
+
+
+
+			@Override
+			public void registerSuccess(boolean signUpSuccess) {
+				if (ATLUser.getParseUserID()!=null && !ATLUser.getParseUserID().equals(""))
+    			{
+    				userFacebookInfo = new HashMap<String, Object>();
+    				userFacebookInfo.put("parseUserID", ATLUser.getParseUserID());
+	    			
+    				applicationController.setAtlasSharedPreferences(userFacebookInfo);
+    				applicationController.upadteAtlasAndroidUserObjectFromApp();
+	    			applicationController.logInOrOutUser(true);
+	    			registerSuccess = true;
+    			}
+	    		facebookCallbackIntent.putExtra("fb_connect_success", registerSuccess);
+
+			}
+
+
+			
+			@Override
+			public void  getUserEmailOnParseCallBack(
+					HashMap<String, String> loginProperties, boolean success) {
+				HashMap <String, String> parseAtlasUser = loginProperties;
+	    		if (!parseAtlasUser.isEmpty())
+	    		{/// email got from facebook already in Parse and user doesnt have 
+	    			/// local profile on his mobile
+	    			/// create a local profile from server with facebook info
+	    			parseConnect.logUserToServer(parseAtlasUser.get("email"), parseAtlasUser.get("password_copy"),this);
+//	    			if (parseConnect.isSignOnServer())
+//	    			{
+//	    				/// uodate user's Facebook info on Server...
+//	    				parseConnect.updateAtlasUserInfoOnServer(userFacebookInfo,this);
+//	    				parseConnect.setCurrentAtlasAndroidUserFromServer();
+//	    				
+//	    				if (parseConnect.parseUser!=null)
+//	    				{
+//	    					applicationController.setAtlasUserLocalInfo();
+//	    					applicationController.logInOrOutUser(true);
+//			    			registerSuccess = true;
+//	    				}
+//	    				
+//	    			}
+				
+	    		}else
+	    		{
+		    		
+		    		
+	    		///User dont have a local profile and email got from
+	    		////Facebook doesnt exsits on parse	....create a new account 
+	    		//// from Facebook Info.
+	    			if (currentUser!=null)
+	    			{
+    			userFacebookInfo.put("username", currentUser.getProperty("email").toString());
+    			userFacebookInfo.put("first_name", currentUser.getName());
+    			// generate a password for parse using username+id (from facebook)
+    			userFacebookInfo.put("password_copy", currentUser.getUsername()+currentUser.getId());
+    			userFacebookInfo.put("email", currentUser.getProperty("email").toString());
+    			
+    			//// TO DO: SET PICTURE
+    			applicationController.setAtlasSharedPreferences(userFacebookInfo);
+    			applicationController.upadteApplicationUsersPropertiesFromLocal();
+    			applicationController.upadteAtlasAndroidUserObjectFromApp();
+    			
+    			
+    			
+    			// wait for a call back from registerSuccess() method
+    			parseConnect.createNewAtlasUser(this);
+    			
+    			
+	    			}
+	    		}
+	    		facebookCallbackIntent.putExtra("fb_connect_success", registerSuccess);
+			}
+
+
+			@Override
+			public void signInSuccess(boolean success) {
+				if (success)
+    			{
+    				/// uodate user's Facebook info on Server...
+    				parseConnect.updateAtlasUserInfoOnServer(userFacebookInfo,this);
+    				parseConnect.setCurrentAtlasAndroidUserFromServer();
+    				
+    				if (parseConnect.parseUser!=null)
+    				{
+    					applicationController.setAtlasUserLocalInfo();
+    					applicationController.logInOrOutUser(true);
+		    			registerSuccess = true;
+    				}
+    				
+    			}
+				
+			}
+
+
+			@Override
+			public void getFriendEmailOnParse(
+					ATLContactModel friendsPropertiesOnParseByEmail,
+					boolean success) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void getFacebookFriendIdOnParse(
+					ATLContactModel facebookAtlasFriend, boolean success) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void getAllFBAtlasUsersCallBack(
+					ArrayList<ATLContactModel> allFacebookAtlasUsers,
+					boolean success) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void getAllFBAtlasUsersFriendsCallBack(
+					ArrayList<ATLContactModel> allFacebookAtlasUsers,
+					boolean success) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void saveCallBack(boolean saved,String imageUrl) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void getAtlasNewFriendsByEmailCallBack(
+					ArrayList<ATLContactModel> allCommonAtlasUsers) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void getUpateCallBack(boolean success) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void getSignNonAtlasUsersCallBack(
+					SIGN_NEW_USERS_CALLER caller,
+					boolean success,
+					HashMap<String, ATLContactModel> newCurrentNonAtlasUserToSign) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			@Override
+			public void resetPasswordCallBack(boolean emailSuccessfullySent,
+					String parseMessage) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+			
+		    	
+		    	
+		    
+		    
+		    
+		}

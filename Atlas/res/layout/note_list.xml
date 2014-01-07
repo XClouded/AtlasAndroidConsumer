@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/noteList_content"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bk_gray" >
+	<atlasapp.section_main.ATLTopbar
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true" >
+	</atlasapp.section_main.ATLTopbar>
+	<RelativeLayout
+		android:id="@+id/topMenuBar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/navbar" >
+		<ImageButton
+			android:id="@+id/sortButton_test"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/btn_sort" />
+		<ImageButton
+			android:id="@+id/addButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:layout_toRightOf="@+id/sortButton_test"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/btn_add"
+			android:visibility="gone" />
+		<TextView
+			android:id="@+id/titleTextView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/addButton"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/notes_title"
+			android:textColor="@color/white"
+			android:textSize="26dp"
+			android:textStyle="bold" />
+		<ImageButton
+			android:id="@+id/actionButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="5dp"
+			android:layout_toLeftOf="@+id/allyButton"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/btn_lightning"
+			android:visibility="gone" />
+		<ImageButton
+			android:id="@+id/allyButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="5dp"
+			android:background="@android:color/transparent"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/btn_bubbles" />
+	</RelativeLayout>
+	<ImageView
+		android:id="@+id/imageSearchBar"
+		android:layout_width="fill_parent"
+		android:layout_height="44dip"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/topMenuBar"
+		android:background="@drawable/bg_notes"
+		android:contentDescription="@string/app_name" />
+	<RelativeLayout
+		android:id="@+id/bottomBarNote"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:visibility="gone" >
+		<include
+			android:id="@+id/tabBarIncludeLayout"
+			layout="@layout/bottom_tab_bar" />
+	</RelativeLayout>
+	<atlasapp.section_main.ATLMultiSectionListView
+		android:id="@+id/noteList"
+		android:layout_width="fill_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/bottomBarNote"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/imageSearchBar" />
+</RelativeLayout>

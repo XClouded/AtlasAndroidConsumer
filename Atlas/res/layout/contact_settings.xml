@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/calendar_day_view_mlayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+	<RelativeLayout
+		android:id="@+id/calendar_day_view_cal_selects_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/calendar_day_view_alert_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:layout_gravity="right"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<atlasapp.common.ATLDragAndDropView
+		android:id="@+id/settings_list_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/bk_gray" >
+		<RelativeLayout
+			android:id="@+id/topBarMenu"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:background="@drawable/navbar" >
+			<ImageButton
+				android:id="@+id/sortButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="5dp"
+				android:background="@color/transparent"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/btn_sort" />
+			<!--
+          <ImageView
+        android:id="@+id/navbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/app_title"
+        android:src="@drawable/settings_title_bar_title" />
+			-->
+			<ImageButton
+				android:id="@+id/alliesBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="5dp"
+				android:background="#0000"
+				android:contentDescription="@string/allies_btn"
+				android:src="@drawable/btn_bubbles" />
+			<TextView
+				android:id="@+id/titleTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:text="@string/contact_settings_title"
+				android:textColor="@color/white"
+				android:textSize="26sp"
+				android:textStyle="bold" />
+		</RelativeLayout>
+		<TextView
+			android:id="@+id/select_contact_groups_section_title"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/topBarMenu"
+			android:layout_marginTop="10dp"
+			android:paddingLeft="20dp"
+			android:text="@string/contacts_settings_title_select_groups_to_display"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="@color/title_section_list"
+			android:textSize="18sp"
+			android:textStyle="bold" >
+		</TextView>
+		<RelativeLayout
+			android:id="@+id/contact_settings_select_groups_layout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@+id/bottomMenu"
+			android:layout_alignParentRight="true"
+			android:layout_below="@+id/select_contact_groups_section_title"
+			android:layout_marginTop="10dp" >
+			<ListView
+				android:id="@+id/cal_select_list_view"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:background="#0000"
+				android:divider="@color/transparent" >
+			</ListView>
+		</RelativeLayout>
+		<View
+			android:id="@+id/calendar_day_view_cover_view"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@color/transparent"
+			android:visibility="gone" >
+		</View>
+	</atlasapp.common.ATLDragAndDropView>
+</FrameLayout>

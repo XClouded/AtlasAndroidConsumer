@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_day_mover"
+    android:orientation="vertical" >
+ 
+   <ListView
+            android:id="@+id/calendarHourRespondList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_above="@id/bottomBarMenu" >
+        </ListView>
+   <RelativeLayout
+		android:id="@+id/bottomBarMenu"
+		android:layout_width="match_parent"
+		android:layout_height="196dp"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/atl_event_respond_bk_event_response" >
+
+  <RelativeLayout
+      android:id="@+id/eventInviterLayout"
+      android:layout_width="fill_parent"
+      android:layout_height="70dp"
+      android:layout_alignParentTop="true"
+      android:background="@drawable/atl_event_respond_bk_event_response" >
+
+		<ImageView
+		    android:id="@+id/eventInviterImage"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="10dp"
+		    ></ImageView>
+		<TextView
+		    android:id="@+id/eventInviterTitleTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_toRightOf="@id/eventInviterImage"
+		android:textColor="@color/white"
+		android:text="as invited you to..."
+		    ></TextView>
+		<TextView
+		    android:id="@+id/eventEventTitleTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:layout_toRightOf="@id/eventInviterImage"
+		android:layout_below="@id/eventInviterTitleTextView"
+		android:textColor="@color/blue"
+		android:text="Coffee "
+		    ></TextView>
+		 </RelativeLayout>
+		<ImageView
+		    android:id="@+id/eventKeylineHorizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/eventInviterLayout"
+		android:src="@drawable/atl_event_respond_keyline_horizontal"
+		    ></ImageView>
+
+ <RelativeLayout
+      android:id="@+id/eventLeftLayout"
+      android:layout_width="fill_parent"
+      android:layout_height="70dp"
+      android:layout_marginTop="10dp"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@id/eventKeylineHorizontal"
+       >
+
+		
+		<TextView
+		    android:id="@+id/eventLeftLayoutDescriptionTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:textColor="@color/white"
+		android:text="Tap each time to indicate \n if that time works for you or not."
+		    ></TextView>
+		<RelativeLayout
+		    android:id="@+id/eventLeftLayoutAltVote"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		 android:layout_marginTop="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_below="@id/eventLeftLayoutDescriptionTextView"
+		    >
+ <RelativeLayout
+		    android:id="@+id/eventLeftLayoutAltVoteBubbleImage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:background="@drawable/atl_event_respond_bubble_left"
+		    >
+
+     <ImageButton
+         android:id="@+id/idealBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_alignParentLeft="true"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         
+         android:src="@drawable/atl_event_respond_big_ideal" >
+         
+     </ImageButton>
+       <ImageButton
+         android:id="@+id/OkayBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@id/idealBtn"
+         
+         android:src="@drawable/atl_event_respond_big_ok" >
+         
+     </ImageButton>
+      <ImageButton
+         android:id="@+id/CantBtn"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@id/OkayBtn"
+         
+         android:src="@drawable/atl_event_respond_big_cant" >
+         
+     </ImageButton>
+     <RelativeLayout
+		    android:id="@+id/eventLeftLayoutAltVoteBubbleImageVoteSelected"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		    >
+		   <ImageButton
+         android:id="@+id/alt1Btn"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_alignParentLeft="true"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         
+         android:src="@drawable/atl_event_respond_big_ideal" >
+         
+     </ImageButton>
+       <ImageButton
+         android:id="@+id/alt2Btn"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@id/alt1Btn"
+         
+         android:src="@drawable/atl_event_respond_big_ok" >
+         
+     </ImageButton>
+      <ImageButton
+         android:id="@+id/alt3Btn"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_marginLeft="5dp"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@id/alt2Btn"
+         
+         android:src="@drawable/atl_event_respond_big_cant" >
+         
+     </ImageButton> 
+    </RelativeLayout>    
+  </RelativeLayout>    
+ </RelativeLayout>
+  </RelativeLayout>
+ 
+ </RelativeLayout>
+  </RelativeLayout>

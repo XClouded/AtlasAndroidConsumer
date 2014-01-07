@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topBarMenu"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:background="@drawable/navbar" >
+
+    <ImageButton
+        android:id="@+id/sortBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:background="#0000"
+        android:contentDescription="@string/sort_btn"
+        android:src="@drawable/btn_sort" />
+
+    <ImageButton
+        android:id="@+id/monthBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/sortBtn"
+        android:background="#0000"
+        android:contentDescription="@string/month_btn"
+        android:src="@drawable/btn_month" />
+
+    <ImageButton
+        android:id="@+id/alliesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:background="#0000"
+        android:contentDescription="@string/allies_btn"
+        android:src="@drawable/btn_bubbles" />
+
+    <ImageButton
+        android:id="@+id/actionsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@id/alliesBtn"
+        android:background="#0000"
+        android:contentDescription="@string/add_btn"
+        android:src="@drawable/btn_lightning"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/calendar_title"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+    <!--
+        <ImageView
+            android:id="@+id/navbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/nav_bar"
+            android:src="@drawable/cal_day_title_cal" />
+    -->
+
+</RelativeLayout>

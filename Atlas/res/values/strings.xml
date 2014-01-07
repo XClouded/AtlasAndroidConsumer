@@ -1,0 +1,335 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<!-- Actions -->
+	<string name="action_toggle">Toggle indicator</string>
+	<string name="action_add_item">Add item</string>
+	<string name="action_remove_item">Remove item</string>
+	<string name="action_previous">Previous</string>
+	<string name="action_next">Next</string>
+	<string name="action_finish">Finish</string>
+	<string name="action_info">Photo info</string>
+	<string name="action_photo">View photo</string>
+	<!-- Title -->
+	<string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem Ipsum</string>
+	<string name="app_name">Atlas</string>
+	<string name="menu_settings">Settings</string>
+	<string name="title_activity_main_tabbar">Atlas</string>
+	<string name="hello_world">Hello world!</string>
+	<string name="app_title">Atlas</string>
+	<string name="tip_label">Tip:</string>
+	<string name="error_dialog_title">Error</string>
+	<string name="photo_tip">Photos are by default uploaded to the app\'s album. Specify album_id to upload to specific album. E.g. https://graph.facebook.com/{album_id}/photos.\n\nMore Info: https://developers.facebook.com/docs/reference/api/photo</string>
+	<string name="hide_photo">Hide Photo</string>
+	<string name="please_wait">Please wait....</string>
+	<string name="exception">Exception: </string>
+	<string name="facebook_error">Facebook Error: </string>
+	<string name="error_dialog_button_text">OK</string>
+	<string name="tag_photo">Tag Photo</string>
+	<string name="action_people">With whom?</string>
+	<string name="action_people_default">Select friends</string>
+	<string name="api_response">Api Response:</string>
+	<string name="view_photo">View Photo</string>
+	<string name="facebook_app_id">163849393701613</string>
+	<string name="facebook_developer_password">39b5a506b19881e0c91ca986bd0583fc</string>
+	<string name="parse_app_id">ZfzVtSyJdEemMVz7RVC5DnWNxrvrcJiFSpopUxHg</string>
+	<string name="parse_client_key">cPqIUK7X3WndWOmzNEAZa9Pk0Qs6hCKz3RY6x4G4</string>
+	<!-- ACA_TAN 2012-11-08 start add -->
+	<string name="title_activity_main_tabbar">Atlas</string>
+	<string name="title_activity_today">Today</string>
+	<string name="title_activity_calendar">Cal</string>
+	<string name="title_activity_tasks">Tasks</string>
+	<string name="title_activity_notes">Notes</string>
+	<string name="title_activity_settings">Settings</string>
+	<!-- ACA_TAN 2012-11-08 end add -->
+	<!-- TASKS VIEW -->
+	<string name="task_edit_title">Edit Task</string>
+	<string name="task_edit_add_title">New Task</string>
+	<string name="task_edit_what">Task</string>
+	<string name="task_edit_what_hint">Stop by Staples!</string>
+	<string name="task_edit_description">Details</string>
+	<string name="task_edit_description_hint">Pick up office supplies: $5 off</string>
+	<string name="task_edit_due_date">Due Date</string>
+	<string name="task_edit_due_time">Due Time</string>
+	<string name="task_edit_priority">Priority</string>
+	<string name="task_edit_reminder">Reminder</string>
+	<string name="task_edit_calendar">Calendar</string>
+	<string name="task_edit_who">With Who</string>
+	<string name="task_edit_who_hint">Touch to Invite a Friend</string>
+	<string name="task_edit_:">:</string>
+	<string name="task_title">Tasks</string>
+	<!-- END TASK -->
+	<!-- TASKS EDIT VIEW -->
+	<string name="task_edit_info_section_title">Task Info</string>
+	<string name="task_edit_title_text">Title</string>
+	<string name="task_edit_title_hint">required</string>
+	<string name="task_edit_note">Note</string>
+	<string name="task_edit_note_hint">optional</string>
+	<string name="task_edit_details_section_title">Task Details</string>
+	<string name="task_edit_due">Due</string>
+	<string name="task_edit_cal">Calendar</string>
+	<string name="task_edit_delegate_hint">Delegate to a contact</string>
+	<string name="task_edit_sort_section_title">Task Sort</string>
+	<!-- END TASK -->
+	<!-- TASK SORT -->
+	<string name="task_sort_show_competed_text">Show Completed</string>
+	<string name="task_sort_user_name_text">Tan Nguyen</string>
+	<string name="task_sort_bar_title">Sort Tasks by</string>
+	<!-- END -->
+	<!-- NOTES VIEW -->
+	<string name="notes_title">Notes</string>
+	<string name="note_edit_title">Edit Note</string>
+	<string name="note_edit_title_hint">Thoughts on Wayne Enterprise</string>
+	<string name="note_edit_body_hint">I had considered a merge</string>
+	<string name="note_sort_user_name_text"></string>
+	<string name="note_sort_title_bar_text">Sort Note By</string>
+	<!-- END VIEW -->
+	<!-- ACA_TAN 2012-11-13 start add -->
+	<string name="gtask_lable">Sync Tasks from Google Tasks</string>
+	<!-- ACA_TAN 2012-11-13 start add -->
+	<!-- CALENDAR VIEW -->
+	<string name="sort_btn">sort_btn</string>
+	<string name="allies_btn">allies_btn</string>
+	<string name="add_btn">add_btn</string>
+	<string name="month_btn">month_btn</string>
+	<string name="nav_bar">nav_bar</string>
+	<string name="left_arrow_btn">left_arrow_btn</string>
+	<string name="right_arrow_btn">right_arrow_btn</string>
+	<string name="date_sample">January 1, 2012</string>
+	<string name="calendar_day_view_day_format">EEEE, MMM d, yyyy</string>
+	<string name="calendar_title">Calendar</string>
+	<string name="calendar_cell_am_pm">AM</string>
+	<string name="calendar_cell_example_hour">10</string>
+	<string name="calendar_cell_until">until 11:30AM</string>
+	<string name="calendar_cell_event_location_text">Dimond coffee, HCMC</string>
+	<!-- OFF HOUR VIEW -->
+	<string name="off_hour_at_45minute">:45</string>
+	<string name="off_hour_at_30minute">:30</string>
+	<string name="off_hour_at_15minute">:15</string>
+	<string name="off_hour_at_00minute">:00</string>
+	<!-- END -->
+	<!-- CALENDAR EDIT EVENT VIEW -->
+	<string name="calendar_edit_event_what">What</string>
+	<string name="calendar_edit_event_what_hint">Meet over coffee</string>
+	<string name="calendar_edit_event_where">Where</string>
+	<string name="calendar_edit_event_where_hint">Startbucks - get 2 free biscotti!</string>
+	<string name="calendar_edit_event_when">When</string>
+	<string name="calendar_edit_event_duration">Duration</string>
+	<string name="calendar_editevent_duration_hour_text">hr</string>
+	<string name="calendar_editevent_duration_minute_text">min</string>
+	<string name="calendar_edit_event_reminder">Reminder</string>
+	<string name="calendar_edit_event_calendar">Calendar</string>
+	<string name="calendar_edit_event_who">With Who</string>
+	<string name="calendar_edit_event_with_who_hint">Touch to Invite a Friend</string>
+	<string name="calendar_edit_event_alttimes">Starts</string>
+	<string name="calendar_edit_event_alttimes_preferred">Preferred</string>
+	<string name="calendar_edit_event_alttimes_alt1">Alt 1</string>
+	<string name="calendar_edit_event_alttimes_alt2">Alt 2</string>
+	<string name="calendar_edit_event_when_hour">8:00PM</string>
+	<string name="calendar_edit_event_when_hour_format">hh:mmAA</string>
+	<string name="calendar_edit_event_when_day">Nov 11</string>
+	<string name="calendar_edit_event_when_day_format">MMM dd</string>
+	<string name="calendar_edit_remider_alarm2">Alarm 2</string>
+	<string name="calendar_edit_remider_alarm2_text">days</string>
+	<string name="calendar_edit_remider_alarm1">Alarm 1</string>
+	<string name="calendar_edit_remider_alarm1_text">days</string>
+	<string name="calendar_edit_title">Edit Event</string>
+	<string name="calendar_edit_title_add_event">New Event</string>
+	<string name="calendar_edit_event_notes">Notes</string>
+	<!-- CALENDAR EDIT ALT EVENT VIEW -->
+	<!-- CALENDAR EDIT EVENT VIEW 2 -->
+	<string name="cal_edit_event_info_section_title">Event Info</string>
+	<string name="cal_edit_event_what">Title</string>
+	<string name="cal_edit_event_what_hint">required</string>
+	<string name="cal_edit_event_where">Location</string>
+	<string name="cal_edit_event_where_hint">optional</string>
+	<string name="cal_edit_event_details_section_title">Event Details</string>
+	<string name="cal_edit_event_when">Start Time</string>
+	<string name="cal_edit_event_duration">Duration</string>
+	<string name="cal_editevent_duration_hour_text">hr</string>
+	<string name="cal_editevent_duration_minute_text">min</string>
+	<string name="cal_edit_event_reminder">Alarm</string>
+	<string name="cal_edit_event_calendar">Calendar</string>
+	<string name="cal_edit_event_collaboration_section_title">Collaboration Options</string>
+	<string name="cal_edit_event_who">With Who</string>
+	<string name="cal_edit_event_with_who_hint">Add contact to event</string>
+	<string name="cal_edit_event_alttimes">Alt Start Time(s)</string>
+	<string name="cal_edit_event_alttimes_preferred">Preferred</string>
+	<string name="cal_edit_event_alttimes_alt1">Alt 1</string>
+	<string name="cal_edit_event_alttimes_alt2">Alt 2</string>
+	<string name="cal_edit_event_when_hour">8:00PM</string>
+	<string name="cal_edit_event_when_hour_format">hh:mmAA</string>
+	<string name="cal_edit_event_when_day">Nov 11</string>
+	<string name="cal_edit_event_when_day_format">MMM dd</string>
+	<string name="cal_edit_remider_alarm2">Alarm 2</string>
+	<string name="cal_edit_remider_alarm2_text">days</string>
+	<string name="cal_edit_remider_alarm1">Alarm 1</string>
+	<string name="cal_edit_remider_alarm1_text">days</string>
+	<string name="cal_edit_title">Edit Event</string>
+	<string name="cal_edit_title_add_event">New Event</string>
+	<string name="cal_edit_event_notes">Notes</string>
+	<!-- CALENDAR EDIT ALT EVENT VIEW 2 -->
+	<string name="calendar_edit_alt_event_save_btn">Save</string>
+	<string name="calendar_edit_alt_event_cancel_btn">Cancel</string>
+	<string name="calendar_edit_atl_time_format">yyyy-MM-dd hh:mm:ss a</string>
+	<string name="calendar_edit_atl_atl1_lable">ATL1</string>
+	<string name="calendar_edit_atl_atl2_lable">ATL2</string>
+	<string name="calendar_edit_atl_select_time_lable">Select Time</string>
+	<!-- CALENDAR MOVE EVENT -->
+	<string name="calendar_move_event_time_format_compare_day">yyyy-MM-dd</string>
+	<string name="calendar_move_event_title">Move Event</string>
+	<!-- CALENDAR MONTH VIEW -->
+	<string name="cal_month_view_title">Pick a Day</string>
+	<string name="cal_month_view_btn_close">Close</string>
+	<!-- CALENDAR SELECT -->
+	<string name="calendar_select_all_text">All</string>
+	<string name="cal_select_titlebar">Select Calendars</string>
+	<!-- CALENDAR SELECT END -->
+	<!-- ALERT VIEW -->
+	<string name="alerts_find_friend_on_atlas_text">Find Friend on Atlas</string>
+	<string name="alerts_inviter_name">Organizer: Nguyen Minh Tan</string>
+	<string name="alerts_events_invite_you_to">invited you to</string>
+	<string name="alerts_events_title">Event: Meeting at office</string>
+	<string name="alerts_titlebar_notifications">Notifications</string>
+	<string name="alert_task_request_title">Task Request</string>
+	<string name="alert_event_request_title">Select Best Time</string>
+	<string name="alerts_task_request_description_sample">The above Tasks was assigned to you by Nghia Truong.</string>
+	<string name="alert_header_sections_booked_text">Booked</string>
+	<string name="alert_header_sections_pending_text">Pending</string>
+	<string name="alert_header_sections_yourmove_text">Your Move</string>
+	<string name="alert_event_respond_matrix_title">Response Matrix</string>
+	<!-- CONTACT VIEW -->
+	<string name="contacts_title">Contacts</string>
+	<string name="contact_settings_title">Contacts Settings</string>
+	<string name="contacts_search_bar_hint">Search</string>
+	<!-- ACTIONS MENU VIEW -->
+	<string name="actions_title">Action Menu</string>
+	<!-- END ACTION MENU VIEW -->
+	<!-- SETTING SECTION -->
+	<string name="sign_in_email_address_hint">Email address</string>
+	<string name="sign_in_username_hint">Email</string>
+	<string name="sign_in_password_hint">Password</string>
+	<string name="sign_in_login_failed_msg">Username or password was incorrect. Please try again.</string>
+	<string name="sign_in_verify_password_hint">Verify password</string>
+	<string name="calendar_settings_title">Calendar Settings</string>
+	<string name="tasks_settings_title">Tasks Settings</string>
+	<string name="contacts_settings_title">Contacts</string>
+	<string name="feedback_settings_title">Feedback</string>
+	<string name="support_settings_title">Support</string>
+	<string name="calendar_settings_title_select_calendars_to_display">Select Calendars to Display</string>
+	<string name="calendar_settings_title_default_calendar">Default Calendar</string>
+	<string name="calendar_settings_title_default_duration_for_events">Default Duration for Events</string>
+	<string name="calendar_settings_title_default_reminder">Default Reminder</string>
+	<string name="tasks_settings_title_select_sorting_filters">Select Sorting Filters</string>
+	<string name="tasks_settings_title_default_reminder">Default Reminder</string>
+	<string name="contacts_settings_title_select_groups_to_display">Select Groups to Display</string>
+	<string name="contacts_settings_title_default_group">Default Group</string>
+	<string name="feedback_settings_title_atlas_is_awesome">Atlas is awesome..</string>
+	<string name="feedback_settings_title_atlas_needs_some_work">Atlas needs some work..</string>
+	<string name="feedback_settings_title_i_have_a_suggestion_for_atlas">I have a suggestion for Atlas</string>
+	<string name="support_settings_title_reset_arrow_tutorials">Reset Arrow Tutorials</string>
+	<string name="support_settings_title_show_welcome_tutorial">Show Welcome Tutorial</string>
+	<string name="settings_title_sign_out">Sign Out</string>
+	<string name="settings_title_atlas_version">Atlas Version</string>
+	<!-- END -->
+	<!-- VERSION -->
+	<!-- SLIDE MENU -->
+	<string name="slide_menu_where_to">Where to?</string>
+	<string name="slide_menu_friends_settings">Friends \u0026 Settings</string>
+	<string name="slide_menu_today_title">Today</string>
+	<string name="slide_menu_calendars_title">Calendars</string>
+	<string name="slide_menu_map_view_title">Map View</string>
+	<string name="slide_menu_task_list_title">Task Lists</string>
+	<string name="slide_menu_contacts_title">Contacts</string>
+	<string name="slide_menu_find_friends_title">Find My Friends</string>
+	<string name="slide_menu_my_profile_title">My Profile</string>
+	<string name="slide_menu_settings_title">Settings</string>
+	<!-- END -->
+	<!-- Friends -->
+	<string name="find_friends_title">Find Friends</string>
+	<string name="find_friends_from_facebook">From Facebook</string>
+	<string name="find_friends_from_phone_contacts">From Phone Contacts</string>
+	<string name="find_friends_invite_a_friend">Invite a Friend</string>
+	<!-- END -->
+	<!-- PROFILE -->
+	<string name="profile_title">My Profile</string>
+	<string name="register_create_profile_title">Create Profile</string>
+	<string name="sign_in_title">Sign in</string>
+	<string name="edit_profile_reg_info_title">Profile Information</string>
+	<string name="edit_profile_log_info_title">Emails</string>
+	<string name="profile_edit_add_email_hint">Add additional email</string>
+	<string name="profile_edit_last_name_hint">Last name</string>
+	<string name="profile_edit_first_name_hint">First name</string>
+	<!-- END -->
+	<string name="version">Version:303.04.01N</string>
+	<!-- END -->
+	
+	
+	<!-- ACTION BAR -->
+	
+	<!-- END -->
+	
+    <!-- SECTION LOCATION GOOGLE API -->
+
+    <string name="google_maps_api_keys">AIzaSyCvDY7GLIk8qXzsbLSWibIIhim2rmPVewI</string>
+
+    <!-- Address format -->
+    <string name="address_output_string">%1$s %2$s %3$s</string>
+
+    <!-- Latitude, longitude format -->
+    <string name="latitude_longitude">%1$.8f, %2$.8f</string>
+
+    <!-- Menu title -->
+    <string name="action_settings">Settings</string>
+
+    <!-- Labels -->
+    <string name="latlng">Lat/Long:</string>
+    <string name="address">Address:</string>
+
+    <!-- Messages -->
+    
+    <string name="connected">Client connected</string>
+    <string name="connection_error_code_unknown">Unknown connection error code:  %1$d</string>
+    <string name="connection_failed">Connection failed</string>
+    <string name="disconnected">Client disconnected</string>
+    <string name="get_address">Get Address</string>
+    <string name="get_location">Get Location</string>
+    <string name="illegal_argument_exception">        Illegal arguments: Latitude %1$.8f Longitude %2$.8f</string>
+    <string name="invalid_action">Invalid intent action %1$s</string>
+    <string name="invalid_integer_id">Invalid integer request ID: %1$s</string>
+    <string name="IO_Exception_getFromLocation">IO Exception in Geocoder.getFromLocation()</string>
+    <string name="location_requested">Periodic updates requested</string>
+    <string name="location_updated">Location updated</string>
+    <string name="location_update_error">Location update failed</string>
+    <string name="location_update_error_detail">        Location update error. code %1$d message %2$s</string>
+    <string name="location_update_missing_update">        Location update error. No incoming location.</string>
+    <string name="location_updates_stopped">Periodic updates stopped</string>
+    <string name="log_new_location">New location: %1$s</string>
+    <string name="no_address_found">No address found for location</string>
+    <string name="no_connection">No connection: Cannot request location</string>
+    <string name="no_geocoder_available">Cannot get address. No geocoder available.</string>
+    <string name="no_location_available">Location not available</string>
+    <string name="resolved">Error resolved. Please re-try operation.</string>
+    <string name="no_resolution">Google Play services: unable to resolve connection error.</string>
+    <string name="periodic_update_stop">Stopping periodic updates</string>
+    <string name="play_services_available">Google Play services is available</string>
+    <string name="request_location_updates_in_progress">        Can\'t request location updates, previous request hasn\'t finished</string>
+    <string name="start_updates">Start Updates</string>
+    <string name="stop_updates">Stop Updates</string>
+    <string name="unknown">--Unknown--</string>
+    <string name="unknown_activity_request_code">        Received an unknown activity request code %1$d in onActivityResult.</string>
+    <string name="connection_error_code">Connection failure error code: %1$d</string>
+    <string name="connection_error_disabled">Google Play services is disabled</string>
+    <string name="connection_error_internal">An internal error occurred</string>
+    <string name="connection_error_invalid">The version of Google Play services on this device is not authentic</string>
+    <string name="connection_error_invalid_account">The specified account name is invalid</string>
+    <string name="connection_error_license_check_failed">The app is not licensed to the user</string>
+    <string name="connection_error_message">Connection failure error message: %1$s</string>
+    <string name="connection_error_misconfigured">The application is misconfigured</string>
+    <string name="connection_error_missing">Google Play services is missing</string>
+    <string name="connection_error_needs_resolution">Additional resolution is required</string>
+    <string name="connection_error_network">A network error occurred</string>
+    <string name="connection_error_outdated">Google Play services is out of date</string>
+    <string name="connection_error_sign_in_required">The user is not signed in</string>
+    <string name="connection_error_unknown">An unknown error occurred</string>
+    <!-- END GOOGLE API -->
+
+</resources>

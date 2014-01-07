@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customEditTextLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     >
+
+   <!--  <ImageView
+        android:id="@+id/oneRowWithEdgesImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customedittext"
+        android:background="@drawable/one_row_with_top_edges"
+        android:contentDescription="@string/app_name" />
+
+    <EditText
+        android:id="@+id/customEditText"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignBaseline="@+id/signInEditTitleCellBottomImg"
+        android:layout_alignBottom="@+id/signInEditTitleCellBottomImg"
+        android:layout_below="@id/customedittext"
+        android:layout_marginLeft="15dp"
+        android:background="#0000"
+        android:hint="@string/profile_edit_add_email_hint"
+        android:inputType="textEmailSubject"
+        android:textStyle="bold" />
+ -->
+ <ImageView
+    android:id="@+id/oneRowWithTEdgesImg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="@string/app_name"
+    android:src="@drawable/one_row_with_edges" />
+<EditText
+    android:id="@+id/customEditText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ems="10"
+    android:inputType="textEmailAddress" >
+
+    <!-- <requestFocus /> -->
+
+</EditText>
+
+</RelativeLayout>

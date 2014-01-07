@@ -1,0 +1,282 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/registerScroll"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:fillViewport="true" >
+	<RelativeLayout
+		android:id="@+id/registerMainLayout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/register_bg" >
+		<RelativeLayout
+			android:id="@+id/topBarMenu"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:background="@drawable/navbar" >
+			<ImageButton
+				android:id="@+id/registerBackBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="5dp"
+				android:background="#0000"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/signin_title_bar_btn_back" />
+			<ImageView
+				android:id="@+id/navbarTitle"
+				android:layout_width="wrap_content"
+				android:layout_height="35dp"
+				android:layout_centerInParent="true"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/register_title"
+				android:visibility="gone" />
+			<TextView
+				android:id="@+id/titleTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:text="@string/register_create_profile_title"
+				android:textColor="@color/white"
+				android:textSize="26sp"
+				android:textStyle="bold" />
+		</RelativeLayout>
+		<ImageButton
+			android:id="@+id/fbSignInBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/topBarMenu"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="20dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/register_login_with_fb" />
+		<atlasapp.facebook.LoginButton
+			android:id="@+id/fbauthButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/fbSignInBtn"
+			android:layout_alignLeft="@+id/fbSignInBtn"
+			android:layout_alignRight="@+id/fbSignInBtn"
+			android:layout_alignTop="@+id/fbSignInBtn"
+			android:layout_below="@id/topBarMenu"
+			android:layout_centerHorizontal="true"
+			android:background="#0000"
+			android:src="@drawable/welcome_btn_connect_fb"
+			android:textColor="#FFFFFF" />
+		<ImageView
+			android:id="@+id/registerORImg"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/fbauthButton"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="10dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/signin_text_or" />
+
+		<RelativeLayout
+		    android:id="@+id/editProfile"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@id/registerORImg"
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp"
+		    android:layout_marginTop="10dp" >
+
+			<ImageView
+				android:id="@+id/registserTitleCelltitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentTop="true"
+				android:layout_marginBottom="10dp"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="100dp"
+				android:background="#0000"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/edit_profile_reg_info_title" />
+
+			<RelativeLayout
+			    android:id="@+id/registerTitleCell"
+			    android:layout_width="wrap_content"
+			    android:layout_height="300dp"
+			    android:layout_below="@id/registserTitleCelltitle"
+			    android:background="@drawable/register_textfields_background" >
+
+				<EditText
+				    android:id="@+id/registerEmailEditTxt"
+				    android:layout_width="match_parent"
+				    android:layout_height="94dp"
+				    android:layout_alignParentTop="true"
+				    android:layout_marginLeft="10dp"
+				    android:background="#0000"
+				    android:ems="10"
+				    android:hint="@string/sign_in_username_hint"
+				    android:inputType="textEmailAddress"
+				    android:paddingLeft="15dp"
+				    android:paddingRight="5dp" />
+
+				<ImageButton
+				    android:id="@+id/editProfileCameraBtn"
+				    android:layout_width="wrap_content"
+				    android:layout_height="90dp"
+				    android:layout_alignLeft="@+id/registerEmailEditTxt"
+				    android:layout_alignTop="@+id/registerFirstNameDisplayEditTxt"
+				    android:layout_marginTop="42dp"
+				    android:background="#0000"
+				    android:contentDescription="@string/app_name"
+				    android:paddingLeft="5dp"
+				   
+				    android:src="@drawable/register_camera_blue" />
+
+			<!-- 	<EditText
+				    android:id="@+id/registerPasswordtxt"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_alignLeft="@+id/editText1"
+				    android:layout_alignRight="@+id/editText1"
+				    android:layout_below="@+id/registerLastNameDisplayEditTxt"
+				    android:ems="10"
+				    
+				    android:hint="Password"
+				    android:inputType="textPassword" /> -->
+
+				<EditText
+				    android:id="@+id/registerFirstNameDisplayEditTxt"
+				    android:layout_width="match_parent"
+				    android:layout_height="95dp"
+				    android:layout_alignParentTop="true"
+				    android:layout_marginTop="33dp"
+				    android:layout_toRightOf="@+id/editProfileCameraBtn"
+				    android:background="#0000"
+				    android:ems="10"
+				    android:hint="First Name"
+				    android:inputType="text"
+				    android:paddingLeft="25dp"
+				    android:paddingRight="5dp" />
+
+				<EditText
+				    android:id="@+id/registerLastNameDisplayEditTxt"
+				    android:layout_width="match_parent"
+				    android:layout_height="95dp"
+				    android:layout_centerVertical="true"
+				    android:layout_toRightOf="@+id/editProfileCameraBtn"
+				    android:background="#0000"
+				    android:ems="10"
+				    android:hint="Last Name"
+				    android:inputType="text"
+				    android:paddingLeft="25dp"
+				    android:paddingRight="5dp" />
+
+				<EditText
+				    android:id="@+id/registerPasswordVerifiedtxt"
+				    android:layout_width="wrap_content"
+				    android:layout_height="70dp"
+				    android:layout_alignParentBottom="true"
+				    android:layout_alignParentLeft="true"
+				    android:background="#0000"
+				    android:ems="10"
+				    android:hint="Confirm Password"
+				    android:inputType="textPassword"
+				    android:paddingLeft="25dp" />
+
+				<EditText
+				    android:id="@+id/registerPasswordtxt"
+				    android:layout_width="wrap_content"
+				    android:layout_height="70dp"
+				    android:layout_alignLeft="@+id/editProfileCameraBtn"
+				    android:layout_alignParentRight="true"
+				    android:layout_below="@+id/camerapreview"
+				    android:layout_marginTop="11dp"
+				    android:background="#0000"
+				    android:ems="10"
+				    android:hint="Password"
+				    android:inputType="textPassword"
+				    android:paddingLeft="25dp" >
+
+				    <requestFocus />
+				</EditText>
+
+				<ImageView
+				    android:id="@+id/camerapreview"
+				    android:layout_width="100dp"
+				    android:layout_height="100dp"
+				    android:layout_alignBottom="@+id/editProfileCameraBtn"
+				    android:layout_alignLeft="@+id/editProfileCameraBtn"
+				    android:contentDescription="@string/app_name" />
+
+			</RelativeLayout>
+		</RelativeLayout>
+		<!-- <RelativeLayout
+			android:id="@+id/passwords"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/editProfile"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="10dp" >
+			<ImageView
+				android:id="@+id/registerCreateinfoTitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:layout_marginTop="15dp"
+				android:background="#0000"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/register_log_info_title" />
+			<ImageView
+				android:id="@+id/registerCreateCell"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/registerCreateinfoTitle"
+				android:layout_marginTop="5dp"
+				android:background="@drawable/edit_profile_pwd_cell_bg"
+				android:contentDescription="@string/app_name" />
+			<EditText
+				android:id="@+id/registerPasswordtxt"
+				android:layout_width="match_parent"
+				android:layout_height="45dp"
+				android:layout_alignLeft="@+id/registerCreateCell"
+				android:layout_alignTop="@+id/registerCreateCell"
+				android:background="#0000"
+				android:hint="@string/sign_in_password_hint"
+				android:inputType="textPassword"
+				android:paddingLeft="10dp"
+				android:paddingRight="5dp" />
+			<EditText
+				android:id="@+id/registerPasswordVerifiedtxt"
+				android:layout_width="match_parent"
+				android:layout_height="45dp"
+				android:layout_alignBottom="@+id/registerCreateCell"
+				android:layout_alignLeft="@+id/registerCreateCell"
+				android:background="#0000"
+				android:hint="@string/sign_in_verify_password_hint"
+				android:inputType="textPassword"
+				android:paddingLeft="10dp"
+				android:paddingRight="5dp" />
+		</RelativeLayout> -->
+		<ImageButton
+			android:id="@+id/registerBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/fbSignInBtn"
+			android:layout_below="@id/editProfile"
+			android:layout_marginTop="10dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/register_login_btn_register" />
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/registerBtn"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="19dp"
+			android:text="@string/version"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textColor="@color/black" />
+	</RelativeLayout>
+</ScrollView>

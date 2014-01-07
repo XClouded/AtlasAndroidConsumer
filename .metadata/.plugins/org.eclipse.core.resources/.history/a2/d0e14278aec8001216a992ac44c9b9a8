@@ -1,0 +1,422 @@
+package atlasapp.database;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import atlasapp.database.DatabaseConstants.OPERATION_METHOD;
+import atlasapp.database.DatabaseConstants.SERVER_MESSAGE;
+import atlasapp.database.DatabaseConstants.TABLES_NAME;
+import atlasapp.model.ATLContactModel;
+
+
+
+public class EmailAddress extends AtlasServerTable implements ParseDBCallBackInterface{
+
+	 
+	EmailAddressCallBackInterface emailAddressListener;
+	
+	public EmailAddress()
+	{
+		TABLE_NAME = TABLES_NAME.EMAIL_ADDRESS.getTableName();
+		atlasServerTable = new ParseObject(TABLE_NAME);
+		userQuery = new ParseQuery(TABLE_NAME);
+		parseQuery = new ParseQuery(TABLE_NAME);
+		// sign Event to database call back's methods
+		parseCallBackDeleget = this;
+	}
+	/**
+	 * Gets an Array List of email address 
+	 * the user with atlasId ('atlasId') has
+	 * and update the Parse email_address table
+	 * 
+	 * return success (true/false) for a class that listen to the
+	 * 			EmailAddressCallBackInterface on the setUserEmailAddressOnParseCallBack
+	 * 			method.
+	 * @param atlasUserEmails - ArrayList containing all the user email address
+	 * @param atlasId - the user atlas id (parse object id)
+	 */
+	 ParseObject emailTable;
+	public void setUserEmailAddressOnParse(final ArrayList<String>atlasUserEmails, final String atlasId)
+	{
+		HashMap<String,Object> emailAddressHashMap = new HashMap<String,Object>();
+
+		if (atlasUserEmails!=null && atlasUserEmails.size()>0 && atlasId!=null && !atlasId.equals("") )
+		{
+			emailAddressHashMap.put("atlas_id", atlasId);
+			emailAddressHashMap.put("email_address", atlasUserEmails.get(0));
+			emailAddressHashMap.put("email_address_id", generateRandomID());
+			emailAddressHashMap.put("is_verified", false);
+			emailTable = new ParseObject(TABLE_NAME);
+			Iterator iter = emailAddressHashMap.keySet().iterator();
+			
+			while(iter.hasNext()) { 
+  
+				String key = (String)iter.next();  
+				Object val = (Object)emailAddressHashMap.get(key);
+				
+				emailTable.put(key, val);
+			}
+//			generateNewRecord(emailAddressHashMap);
+			
+			emailTable.saveInBackground(new SaveCallback()
+			{
+				public void done(ParseException e) {
+				    if (e == null) 
+				    {
+				    	atlasUserEmails.remove(0);
+				    	if (atlasUserEmails!=null && atlasUserEmails.size()>0)
+				    	{
+				    		/// keep saving email address records
+				    		emailTable = new ParseObject(TABLE_NAME);
+					    	setUserEmailAddressOnParse(atlasUserEmails,atlasId);
+
+				    	}
+				    	else
+				    	{
+				    		////// saved all user email records
+				    		emailAddressListener.setUserEmailAddressOnParseCallBack(true);
+				    	}
+				    }
+				    else
+				    {
+			    		emailAddressListener.setUserEmailAddressOnParseCallBack(false);
+
+				    }
+				}
+			});
+		}else
+    		emailAddressListener.setUserEmailAddressOnParseCallBack(false);
+
+		
+	}
+	final int desiredRandomLength   =  8 ;
+	private String  generateRandomID()
+	{
+	  // RANDOM NUMBER ------------------------------------------------------------------------------------------------
+	  // -------------------------------------------------------------------------------------------------------------
+	  int maxRandomValue ;
+	  int intRandomNumber ;
+	  String strRandomNumber = "" ;
+	  String strRandomString = "" ;
+	  maxRandomValue = (int) (Math.pow(2, 32)-1);//pow(2,32)-1 ;
+	  String padString = "" ;
+	  
+	  
+	  // Generate a 32-byte hex (128-bit binary) number 4 times, concatenating each 8-byte string to get a 32-byte string:
+	  int ktr = 0 ;
+	  Random random = new Random();
+	  for (ktr = 1; ktr <= 4 ; ktr++) {
+
+	    // Generate a 32-bit random number
+	    intRandomNumber = random.nextInt(maxRandomValue);//arc4random_uniform(maxRandomValue) ;
+
+	    // Format the 32-bit random number as hex:
+	     strRandomNumber = Integer.toHexString(intRandomNumber);
+	   // strRandomNumber = [NSString stringWithFormat: @"%x", intRandomNumber] ;
+	     padString = "" ;
+	    // Pad the 32-bit random number on the left with zeros to desiredRandomLength const value:
+	    if (strRandomNumber.length() < desiredRandomLength) {
+	    	
+	    	for (int i=0; i<(desiredRandomLength - strRandomNumber.length()); i++)
+	    		padString += "0";
+	      //padString = [padString stringByPaddingToLength: () withString: @"0"  startingAtIndex: 0] ;
+	      strRandomNumber =  padString+ strRandomNumber ;
+	    }
+
+	    // Build the random string by concatenating with last random number string
+	    strRandomString =strRandomString+strRandomNumber ;
+	  }
+	  // -------------------------------------------------------------------------------------------------------------
+
+	  return strRandomString ;
+	  
+	}
+	/**
+	 * Return the email_address records as ArrayList of EmailAddressRecord
+	 * associated with the atlas_id, for a class that listen to the EmailAddressCallBackInterface
+	 * on the getAllAtlasUserEmailAddressRecordsCallBack method
+	 * @param atlasId
+	 */
+	public void getAllAtlasUserEmailAddressRecords(String atlasId)
+	{
+		
+		if (atlasId!=null && !atlasId.equals(""))
+		{	
+			HashMap<String,Object> query = new HashMap<String,Object>();
+			query.put("atlas_id", atlasId);
+		// CALL BACK ON getFindQueryCallBack
+			findWhereEqualTo(query, OPERATION_METHOD.FIND);
+		}
+		else
+			
+			emailAddressListener.getAllAtlasUserEmailAddressRecordsCallBack(null);
+
+		
+	}
+	/**
+	 * Search the email_address table for email given (relevant for atlas users only)
+	 * gets all the email adresses associated with that user email, and return the User Login 
+	 * information from the User table on Parse
+	 * 
+	 * @param email
+	 */
+	public void getAtlasUserByEmailAddress(String email)
+	{
+		if (email!=null && !email.equals(""))
+		{
+			HashMap<String,Object> query = new HashMap<String,Object>();
+			query.put("email_address", email);
+		// CALL BACK ON getFindQueryCallBack
+			findWhereEqualTo(query, OPERATION_METHOD.FIND);
+		}
+		else
+		{
+			emailAddressListener.getAtlasUserByEmailAddressCallBack(null);
+			
+		}
+	}
+	public void getAllUsersContactsEmailsOnParse(String[] emailAddresses) 
+	{
+		if (emailAddresses!=null && emailAddresses.length>0)
+		{
+			parseQuery.whereContainedIn("email_address", Arrays.asList(emailAddresses));
+			
+		}
+		else
+		{
+			emailAddressListener.getAllAtlasUserEmailAddressCallBack(null);
+		}
+		
+	}
+	public void getAllAtlasUserEmailAddress(String atlasId)
+	{
+		
+		if (atlasId!=null && !atlasId.equals(""))
+		{	
+			HashMap<String,Object> query = new HashMap<String,Object>();
+			query.put("atlas_id", atlasId);
+		// CALL BACK ON getFindQueryCallBack
+			findWhereEqualTo(query, OPERATION_METHOD.FIND);
+		}
+		else
+			
+			emailAddressListener.getAllAtlasUserEmailAddressCallBack(null);
+
+		
+	}
+	@Override
+	public void getFindQueryCallBack(List<ParseObject> foundQueryList,
+			boolean found) {
+		if (found && foundQueryList!=null && foundQueryList.size()>0)
+		{
+			ArrayList<EmailAddressRecord> emailAddressRecords = new ArrayList<EmailAddressRecord>();
+			ArrayList<String> emailAddrees = new ArrayList<String>();
+			//emailAddressListener
+			String atlasId = foundQueryList.get(0).getString("atlas_id");
+			for (ParseObject record:foundQueryList)
+			{
+				emailAddrees.add(record.getString("email_address"));
+				emailAddressRecords.add(EmailAddressRecord.fromParseObject(record));
+			}
+			
+			emailAddressListener.getAllAtlasUserEmailAddressRecordsCallBack(emailAddressRecords);
+			emailAddressListener.getAllAtlasUserEmailAddressCallBack(emailAddrees);
+			
+			
+			User user = new User();
+			user.parseCallBackDeleget = this;
+			/// get call back on getObjectIdCallBack
+			user.retrieveRowByObjectId(atlasId);
+			
+		}
+		else
+		{
+			emailAddressListener.getAllAtlasUserEmailAddressCallBack(null);
+
+			emailAddressListener.getAllAtlasUserEmailAddressRecordsCallBack(null);
+			
+			emailAddressListener.getAtlasUserByEmailAddressCallBack(null);
+
+		}
+		
+	}
+
+	@Override
+	public void getObjectIdCallBack(ParseObject retreivedObjectId,
+			boolean success)
+	{
+		if (success && retreivedObjectId!=null)
+		{
+			HashMap<String,Object> userLoginInfo = new HashMap<String,Object>();
+			userLoginInfo.put("atlas_id", retreivedObjectId.getObjectId());
+			userLoginInfo.put("first_name", retreivedObjectId.getString("first_name"));
+			userLoginInfo.put("last_name", retreivedObjectId.getString("last_name"));
+			userLoginInfo.put("email", retreivedObjectId.getString("email"));
+			userLoginInfo.put("password_copy", retreivedObjectId.getString("password_copy"));
+			userLoginInfo.put("is_atlas_user", (retreivedObjectId.getBoolean("is_atlas_user"))?"1":"0");
+			userLoginInfo.put("facebook_id", (retreivedObjectId.getString("facebook_id")));
+			userLoginInfo.put("access_token", (retreivedObjectId.getString("access_token")));
+			emailAddressListener.getAtlasUserByEmailAddressCallBack(userLoginInfo);
+
+			
+		}
+		else
+		{
+			emailAddressListener.getAtlasUserByEmailAddressCallBack(null);
+
+		}
+		
+	}
+	/**
+	 * Retrieve an email address record from the Parse email_address 
+	 * table on the getEmailAddressRecordCallBack listeners method
+	 * @param email
+	 */
+	public void getEmailAddressRecord(String email) 
+	{
+		if (email!=null && !email.equals(""))
+		{
+			ParseQuery emailTableQuery =  new ParseQuery(TABLE_NAME);
+			emailTableQuery.whereEqualTo("email_address", email);
+			emailTableQuery.findInBackground(new FindCallback() {
+					  public void done(List<ParseObject> emailRecordFound, ParseException e) {
+					    if (e == null && emailRecordFound!=null) 
+					    {
+					        // The query was successful.
+					    	
+					    	
+					    } else 
+					    {
+					        // Something went wrong.
+					    	emailAddressListener.getEmailAddressRecordCallBack(null);
+					    }
+					  }
+					});
+				
+		}
+		else
+		{
+			emailAddressListener.getEmailAddressRecordCallBack(null);
+		}
+		
+	}
+	
+	@Override
+	public void getSaveCallBack(boolean saved, ParseObject parseObjectSaved) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	@Override
+	public void getDataCallBack(byte[] fileRetreived, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getSuccessCallBack(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerSuccess(boolean signUpSuccess) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void signInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+//	@Override
+//	public void saveFileCallBack(boolean success, ParseObject psrseObjectSaved) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+	@Override
+	public void getUserEmailOnParseCallBack(
+			HashMap<String, String> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFriendEmailOnParseCallBack(
+			List<ParseObject> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFacebookFriendIdOnParseCallBack(
+			List<ParseObject> findResult, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAllAtlasUsersCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAllFBAtlasUsersFriendsCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void friendSignInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAtlasNewFriendsByEmailCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		   
+	}
+
+	@Override
+	public void getUpateCallBack(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void signInNewFriendUserSuccess(boolean success, ParseUser user) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void saveFileCallBack(boolean success, ParseObject psrseObjectSaved
+			) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+}

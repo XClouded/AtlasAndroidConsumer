@@ -1,0 +1,39 @@
+package com.atlasapp.model;
+
+
+import android.graphics.Bitmap;
+
+public class ATLContactModel extends ATLFriendModel{
+	
+	
+		public ATLContactModel(){}
+	 
+	    
+	    
+	    private static Bitmap picture;
+	    public static void setPicture(Bitmap currentpicture) { picture = currentpicture; }
+	    public static Bitmap getPicture() { return picture; }
+	    
+	    
+	    
+	
+	    
+	    private static String displayName="";
+	    public static void setDisplayName(String currentDisplayName) { displayName = currentDisplayName; }
+	    public static String getDisplayName() { return displayName; }
+	    
+	    
+	 
+	    
+	   
+	    
+	    
+	    private static String objectId="";
+	    public static void setObjectId(String currentObjectId) { objectId = currentObjectId; }
+	    public static String getObjectId() { return objectId; }
+	    
+	    
+	    
+	    
+
+}

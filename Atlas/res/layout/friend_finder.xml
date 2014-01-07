@@ -1,0 +1,385 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/calendar_day_view_mlayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+	<RelativeLayout
+		android:id="@+id/calendar_day_view_cal_selects_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/calendar_day_view_alert_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:layout_gravity="right"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<atlasapp.common.ATLDragAndDropView
+		android:id="@+id/find_friends_content"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="@drawable/bk_gray" >
+		<RelativeLayout
+			android:id="@+id/topBarMenu"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:background="@drawable/navbar" >
+			<ImageButton
+				android:id="@+id/sortBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="5dp"
+				android:background="#0000"
+				android:contentDescription="@string/sort_btn"
+				android:src="@drawable/btn_sort" />
+			<ImageButton
+				android:id="@+id/alertBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="5dp"
+				android:background="#0000"
+				android:contentDescription="@string/allies_btn"
+				android:src="@drawable/btn_bubbles" />
+			<TextView
+				android:id="@+id/titleTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:text="@string/find_friends_title"
+				android:textColor="@color/white"
+				android:textSize="26sp"
+				android:textStyle="bold" />
+		</RelativeLayout>
+		<!--
+      <com.atlasapp.common.LoadingView
+     android:id="@+id/loadingView"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:visibility="gone"
+     
+     
+     />
+		-->
+		<RelativeLayout
+			android:id="@+id/findFriendsOnAtlasSectionLayout"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/topBarMenu"
+			android:layout_centerHorizontal="true" >
+			<RelativeLayout
+				android:id="@+id/facebookFindLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:layout_centerHorizontal="true" >
+				<ImageView
+					android:id="@+id/findFriendsTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:paddingLeft="20dp"
+					android:src="@drawable/find_friends_on_atlas_title" />
+				<ImageView
+					android:id="@+id/facebookCell"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/findFriendsTitle"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/settings_cell_signout" />
+				<Button
+					android:id="@+id/findFacebookFriendsBtn"
+					android:layout_width="match_parent"
+					android:layout_height="25dp"
+					android:layout_alignBottom="@+id/facebookCell"
+					android:layout_alignLeft="@+id/facebookCell"
+					android:layout_alignRight="@+id/facebookCell"
+					android:layout_alignTop="@+id/facebookCell"
+					android:alpha="1"
+					android:background="#0000"
+					android:gravity="left|center_vertical"
+					android:paddingLeft="60dp"
+					android:text="@string/find_friends_from_facebook"
+					android:textColor="#000000"
+					android:textSize="20sp"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/facebookIcon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/facebookCell"
+					android:layout_alignLeft="@+id/facebookCell"
+					android:layout_alignTop="@+id/facebookCell"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/find_friends_facebook_icon" />
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/facebookCell"
+					android:layout_alignRight="@+id/facebookCell"
+					android:layout_alignTop="@+id/facebookCell"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/right_arrow" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/twitterFindLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/facebookFindLayout"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="10dp" >
+				<ImageView
+					android:id="@+id/twitterCell"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/settings_cell_signout" />
+				<Button
+					android:id="@+id/findTwitterFriendsBtn"
+					android:layout_width="match_parent"
+					android:layout_height="25dp"
+					android:layout_alignBottom="@+id/twitterCell"
+					android:layout_alignLeft="@+id/twitterCell"
+					android:layout_alignRight="@+id/twitterCell"
+					android:layout_alignTop="@+id/twitterCell"
+					android:alpha="1"
+					android:background="#0000"
+					android:gravity="left|center_vertical"
+					android:paddingLeft="60dp"
+					android:text="From Twitter"
+					android:textColor="#000000"
+					android:textSize="20sp"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/twitterIcon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/twitterCell"
+					android:layout_alignLeft="@+id/twitterCell"
+					android:layout_alignTop="@+id/twitterCell"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/find_friends_twitter_icon" />
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/twitterCell"
+					android:layout_alignRight="@+id/twitterCell"
+					android:layout_alignTop="@+id/twitterCell"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/right_arrow" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/linkedinFindLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/twitterFindLayout"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="10dp" >
+				<ImageView
+					android:id="@+id/linkedinCell"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/settings_cell_signout" />
+				<Button
+					android:id="@+id/findLinkedinFriendsBtn"
+					android:layout_width="match_parent"
+					android:layout_height="25dp"
+					android:layout_alignBottom="@+id/linkedinCell"
+					android:layout_alignLeft="@+id/linkedinCell"
+					android:layout_alignRight="@+id/linkedinCell"
+					android:layout_alignTop="@+id/linkedinCell"
+					android:alpha="1"
+					android:background="#0000"
+					android:gravity="left|center_vertical"
+					android:paddingLeft="60dp"
+					android:text="From LinkedIn"
+					android:textColor="#000000"
+					android:textSize="20sp"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/linkedinIcon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/linkedinCell"
+					android:layout_alignLeft="@+id/linkedinCell"
+					android:layout_alignTop="@+id/linkedinCell"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/find_friends_linkedin_icon" />
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/linkedinCell"
+					android:layout_alignRight="@+id/linkedinCell"
+					android:layout_alignTop="@+id/linkedinCell"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/right_arrow" />
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/contactsFindLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/linkedinFindLayout"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="10dp" >
+				<ImageView
+					android:id="@+id/contactsCell"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:background="#0000"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/settings_cell_signout" />
+				<Button
+					android:id="@+id/findContactsFriendsBtn"
+					android:layout_width="match_parent"
+					android:layout_height="25dp"
+					android:layout_alignBottom="@+id/contactsCell"
+					android:layout_alignLeft="@+id/contactsCell"
+					android:layout_alignRight="@+id/contactsCell"
+					android:layout_alignTop="@+id/contactsCell"
+					android:alpha="1"
+					android:background="#0000"
+					android:gravity="left|center_vertical"
+					android:paddingLeft="60dp"
+					android:text="From My Contact List"
+					android:textColor="#000000"
+					android:textSize="20sp"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/contactsIcon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/contactsCell"
+					android:layout_alignLeft="@+id/contactsCell"
+					android:layout_alignTop="@+id/contactsCell"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/find_friends_addressbook_icon" />
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBottom="@+id/contactsCell"
+					android:layout_alignRight="@+id/contactsCell"
+					android:layout_alignTop="@+id/contactsCell"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="10dp"
+					android:contentDescription="@string/app_name"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:src="@drawable/right_arrow" />
+			</RelativeLayout>
+		</RelativeLayout>
+		<RelativeLayout
+			android:id="@+id/searchLayout"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/findFriendsOnAtlasSectionLayout"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="50dp" >
+			<ImageView
+				android:id="@+id/searchCell"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:layout_centerHorizontal="true"
+				android:background="#0000"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/settings_cell_signout" />
+			<Button
+				android:id="@+id/searchBtn"
+				android:layout_width="match_parent"
+				android:layout_height="25dp"
+				android:layout_alignBottom="@+id/searchCell"
+				android:layout_alignLeft="@+id/searchCell"
+				android:layout_alignRight="@+id/searchCell"
+				android:layout_alignTop="@+id/searchCell"
+				android:alpha="1"
+				android:background="#0000"
+				android:gravity="left|center_vertical"
+				android:paddingLeft="60dp"
+				android:text="Search"
+				android:textColor="#000000"
+				android:textSize="20sp"
+				android:textStyle="bold" />
+			<ImageView
+				android:id="@+id/imageView1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/searchCell"
+				android:layout_alignLeft="@+id/searchCell"
+				android:layout_alignTop="@+id/searchCell"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="10dp"
+				android:contentDescription="@string/app_name"
+				android:paddingBottom="10dp"
+				android:paddingTop="10dp"
+				android:src="@drawable/find_friends_magnifying_glass_icon" />
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/searchCell"
+				android:layout_alignRight="@+id/searchCell"
+				android:layout_alignTop="@+id/searchCell"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="10dp"
+				android:contentDescription="@string/app_name"
+				android:paddingBottom="10dp"
+				android:paddingTop="10dp"
+				android:src="@drawable/right_arrow" />
+		</RelativeLayout>
+		<View
+			android:id="@+id/calendar_day_view_cover_view"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@color/transparent"
+			android:visibility="gone" >
+		</View>
+	</atlasapp.common.ATLDragAndDropView>
+</FrameLayout>

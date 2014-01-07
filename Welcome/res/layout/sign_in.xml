@@ -1,0 +1,156 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/welcomeLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/signin_bg" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageButton
+			android:id="@+id/signinBackBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/signin_title_bar_btn_back" />
+		<ImageView
+			android:id="@+id/navbarTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="35dp"
+			android:layout_centerInParent="true"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/signin_title_bar_title"
+			android:visibility="gone" />
+		<TextView
+			android:id="@+id/titleTextView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/sign_in_title"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" />
+	</RelativeLayout>
+	<ImageButton
+		android:id="@+id/fbSignInBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/topBarMenu"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="20dp"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/signin_btn_signin_fb" />
+	<com.atlasapp.facebook.LoginButton
+		android:id="@+id/fbauthButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/fbSignInBtn"
+		android:layout_alignLeft="@+id/fbSignInBtn"
+		android:layout_alignRight="@+id/fbSignInBtn"
+		android:layout_alignTop="@+id/fbSignInBtn"
+		android:layout_centerHorizontal="true"
+		android:background="#0000"
+		android:src="@drawable/welcome_btn_connect_fb"
+		android:textColor="#0000" />
+	<ImageView
+		android:id="@+id/signinORImg"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/fbauthButton"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="20dp"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/signin_text_or" />
+	<ImageView
+		android:id="@+id/signinEditTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/signinORImg"
+		android:layout_marginLeft="40dp"
+		android:layout_marginTop="20dp"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/signin_cell_login_title" />
+	<ImageView
+		android:id="@+id/signInEditTitleCell"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/signinEditTitle"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="5dp"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/tworows" />
+	<EditText
+		android:id="@+id/signInUserNameEditTxt"
+		android:layout_width="wrap_content"
+		android:layout_height="45dp"
+		android:layout_alignLeft="@+id/signInEditTitleCell"
+		android:layout_alignRight="@+id/signInEditTitleCell"
+		android:layout_alignTop="@+id/signInEditTitleCell"
+		android:background="#0000"
+		android:gravity="center_vertical"
+		android:hint="@string/sign_in_username_hint"
+		android:imeOptions="actionNext"
+		android:inputType="textEmailAddress"
+		android:paddingLeft="20dp"
+		android:paddingRight="20dp"
+		android:textStyle="bold" >
+		<requestFocus />
+	</EditText>
+	<EditText
+		android:id="@+id/signInPasswordTxt"
+		android:layout_width="wrap_content"
+		android:layout_height="45dp"
+		android:layout_alignLeft="@+id/signInEditTitleCell"
+		android:layout_alignRight="@+id/signInEditTitleCell"
+		android:layout_below="@+id/signInUserNameEditTxt"
+		android:background="#0000"
+		android:gravity="center_vertical"
+		android:hint="@string/sign_in_password_hint"
+		android:imeOptions="actionDone"
+		android:inputType="textPassword"
+		android:paddingLeft="20dp"
+		android:paddingRight="20dp"
+		android:textStyle="bold" >
+	</EditText>
+	<ImageButton
+		android:id="@+id/signinBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/signInPasswordTxt"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="15dp"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/signin_btn_signin" />
+	<ImageView
+		android:id="@+id/signinForgotTextImg"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/signinBtn"
+		android:layout_centerHorizontal="true"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/signin_text_forgot"
+		android:visibility="gone" />
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="120dp"
+		android:text="@string/version"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textColor="@color/black" />
+</RelativeLayout>

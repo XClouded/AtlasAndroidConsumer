@@ -1,0 +1,554 @@
+/**
+ * 
+ */
+package com.atlasapp.section_alerts;
+
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+import com.atlasapp.atlas_database.AtlasServerConnect;
+import com.atlasapp.common.ATLConstants.AlertType;
+import com.atlasapp.common.AtlasAndroidUser;
+import com.atlasapp.section_appentry.R;
+import com.atlasapp.section_calendar.ATLCalCellData;
+import com.atlasapp.section_calendar.ATLCalCellList;
+import com.atlasapp.section_calendar.ATLCalendarListEditAltAdapter;
+import com.atlasapp.section_calendar.CalendarEditAltCell;
+import com.atlasapp.section_calendar.CalendarEditView;
+import com.atlasapp.section_calendar.CalendarEventSingleton;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+
+/**
+ * @author nghia
+ * 
+ */
+public class AlertsEventRequest extends Activity implements OnClickListener {
+
+	/**
+	 * 
+	 */
+	public static ATLAlertWebAccessCallBackInterface delegate;
+	ATLCalendarListEditAltAdapter adapter;
+	ATLCalCellList aCalCellList;
+	ListView listEvent;
+	final int PRE = 0;
+	final int ALT2 = 1;
+	final int ALT3 = 2;
+	int FLAG = 0;
+	private AtlasServerConnect parseConnect;
+
+	TextView preferDay;
+	TextView preferHour;
+	TextView alt2Hour;
+	TextView alt2Day;
+	TextView alt3Hour;
+	TextView alt3Day;
+
+	ImageButton backArrowBtn;
+	ImageButton nextArrowBtn;
+	TextView dateLable;
+	TextView eventTitle;
+
+	Date currentDate = new Date();
+	private ArrayList<Integer> atlIndexs = new ArrayList<Integer>();
+	private ArrayList<Date> atlDateArr = new ArrayList<Date>();
+	private ImageView alt2Img;
+	private ImageView alt3Img;
+	private ImageView preferImg;
+	private int altCurrentActive;
+	private AlertCellData currentCellData;
+	private Date preferDayNew;
+	private Date alt2DayNew;
+	private Date alt3DayNew;
+	private int prefDateHour;
+	private int altOneDateHour;
+	private int altTwoDateHour;
+
+	static final int CELL_BACKGROUND_ORANGE = Color.rgb(255, 211, 170);
+	static final int CELL_BACKGROUND_WHITE = Color.WHITE;
+
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.alerts_event_request);
+		////sharon
+		prefDateHour = -1;
+		altOneDateHour = -	1;
+		altTwoDateHour = -1;
+		//////
+		
+		
+		currentCellData = AlertRequestEventSingleton.getInstance()
+				.getAlertCellData();
+		currentDate = currentCellData.alertCellPreferredDatetime;
+		ImageView decideLater = (ImageView) findViewById(R.id.cancelBtn);
+		decideLater.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		ImageView decline = (ImageView) findViewById(R.id.saveBtn);
+		decline.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO save data before finish
+				// SENT DECLINE INFO
+				
+				parseConnect.calendarInviteRespond(false,currentCellData.alertCellObjectID,"",  
+						currentCellData.alertCellSenderId, currentCellData.alertCellSenderEmail,
+						currentCellData.alertCellSenderName, currentCellData.alertCellEventTitle, 
+						"", null, 
+						currentCellData.alertCellDuration, "");
+				finish();
+			}
+		});
+
+		eventTitle = (TextView) findViewById(R.id.alerts_events_title);
+
+		preferDay = (TextView) findViewById(R.id.preferDay);
+		preferHour = (TextView) findViewById(R.id.preferHour);
+		preferImg = (ImageView) findViewById(R.id.preferImg);
+		preferImg.setOnClickListener(this);
+
+		alt2Hour = (TextView) findViewById(R.id.alt2Hour);
+		alt2Day = (TextView) findViewById(R.id.alt2Day);
+		alt2Img = (ImageView) findViewById(R.id.alt2);
+
+		alt3Hour = (TextView) findViewById(R.id.alt3Hour);
+		alt3Day = (TextView) findViewById(R.id.alt3Day);
+		alt3Img = (ImageView) findViewById(R.id.alt3);
+
+		backArrowBtn = (ImageButton) findViewById(R.id.prevDay);
+		backArrowBtn.setOnClickListener(this);
+		nextArrowBtn = (ImageButton) findViewById(R.id.nextDay);
+		nextArrowBtn.setOnClickListener(this);
+		dateLable = (TextView) findViewById(R.id.currentDay);
+
+		listEvent = (ListView) findViewById(R.id.calendarList);
+		aCalCellList = new ATLCalCellList();
+		aCalCellList.setCalListDate(currentDate);
+		adapter = new ATLCalendarListEditAltAdapter(aCalCellList, this);
+		listEvent.setAdapter(adapter);
+		
+		
+		
+		dateDidChanged();// Set data to view
+		// initATLTime(); // TAN : To handle when change current date
+		listEvent.setOnItemClickListener(new OnItemClickListener() {
+
+
+			@Override
+			public void onItemClick(AdapterView<?> list, View v, int index,
+					long arg3) {
+				
+				
+				///ON CALENDAR LIST DATE TIME CLICKED
+
+				int clickedHour = Integer.valueOf(index);
+//				prefDateHour = -1;
+//				altOneDateHour = -	1;
+//				altTwoDateHour = -1;
+				if (clickedHour!=-1 &&
+						(clickedHour==prefDateHour || 
+						clickedHour==altOneDateHour || 
+						clickedHour==altTwoDateHour) )
+				{
+					
+					
+					 confirmEventSelect(clickedHour);
+					 alertUser("Clendar respond invite", "Your calendar respond invite to "+currentCellData.alertCellSenderName+" at "+clickedHour+" for "+currentCellData.alertCellEventTitle+" was sent" );
+
+				}
+
+			}
+
+			private void confirmEventSelect(int clickedHour) {
+				parseConnect = AtlasServerConnect.getSingletonObject(null);
+
+				// TODO Auto-generated method stub
+				String invitee = AtlasAndroidUser.getParseUserID();
+				String eventLocation = currentCellData.alertCellEventLocation;
+				Date datePref = (clickedHour==prefDateHour)? currentCellData.alertCellPreferredDatetime:  
+						(clickedHour==altOneDateHour)?  currentCellData.alertCellAlt1DateTime:
+						(clickedHour==altTwoDateHour) ? currentCellData.alertCellAlt2DateTime : new Date();
+				String optionPicked = (clickedHour==prefDateHour)? "1" :
+					(clickedHour==altOneDateHour)? "2":
+						(clickedHour==altTwoDateHour) ? "3" :"1";
+				SimpleDateFormat lv_formatter;  
+				lv_formatter = new SimpleDateFormat("yyyy:DD:MM HH:mm:ss");
+				lv_formatter.setTimeZone(TimeZone.getTimeZone("UTC"));  
+				
+				//Date taskDate = EditTaskModel.getInstance().getTaskCellData().taskCellDate;
+				
+				String prefdateFormateInUTC = lv_formatter.format(datePref); 
+				String eventTitle = currentCellData.alertCellEventTitle;
+				parseConnect.calendarInviteRespond(true,currentCellData.alertCellObjectID,optionPicked,  
+						currentCellData.alertCellSenderId, currentCellData.alertCellSenderEmail,
+						currentCellData.alertCellSenderName, currentCellData.alertCellEventTitle, 
+						eventLocation, datePref, 
+						currentCellData.alertCellDuration, prefdateFormateInUTC);
+			}
+		});
+		///sharon addings
+				setDatesInviteOnCalendarList();
+	}
+
+	
+	@SuppressWarnings("deprecation")
+	private void alertUser(String messageTitle, String message) {
+		AlertDialog alertDialog = new AlertDialog.Builder(AlertsEventRequest.this)
+				.create();
+
+		// Setting Dialog Title
+		alertDialog.setTitle(messageTitle);
+
+		// Setting Dialog Message
+		alertDialog.setMessage(message);
+
+		// Setting Icon to Dialog
+		// alertDialog.setIcon(R.drawable.tick);
+
+		// Setting OK Button
+		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				//finish();
+				// Write your code here to execute after dialog closed
+				// Toast.makeText(getApplicationContext(), "You clicked on OK",
+				// Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		// Showing Alert Message
+		alertDialog.show();
+	}
+	
+	private void setDatesInviteOnCalendarList()
+	{
+		//prefDateHour = 1;
+//		altOneDateHour = 2;
+//		altTwoDateHour = 3;
+		
+		
+//		CalendarEditAltCell  v = (CalendarEditAltCell)aCalCellList.getCalListArray().get(prefDateHour);
+//		
+//		v.primaryLabel.setText(currentCellData.alertsCellEventTitle);
+//		
+		
+//		CalendarEditAltCell  v = (CalendarEditAltCell)aCalCellList.getCalListArray().get(0).;
+//		v.(currentCellData);
+//		
+		
+		
+		//ATLCalCellData prefDate1 = (ATLCalCellData) listEvent.getItemAtPosition(listEvent.getPositionForView(preferDay));
+		ATLCalCellData prefDate = (ATLCalCellData) listEvent.getItemAtPosition(prefDateHour);
+		ATLCalCellData altOneDate = (ATLCalCellData) listEvent.getItemAtPosition(altOneDateHour);
+		ATLCalCellData altTwoDate = (ATLCalCellData) listEvent.getItemAtPosition(altTwoDateHour);
+
+		
+		prefDate.setCalCellTitle(currentCellData.alertCellEventTitle);
+		prefDate.calCellBackgroundColor = CELL_BACKGROUND_ORANGE;
+		altOneDate.calCellBackgroundColor = CELL_BACKGROUND_ORANGE;
+		altTwoDate.calCellBackgroundColor = CELL_BACKGROUND_ORANGE;
+
+		//if (!prefDate.getCalCellTitle().equals(""))
+		prefDate.setInviterAtlasId(currentCellData.alertCellSenderId);
+		
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+
+		if (v == backArrowBtn) {
+			// TAN - still have bug at the first time call
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(currentDate);
+			Calendar calTemp = Calendar.getInstance();
+			calTemp.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+					cal.get(Calendar.DAY_OF_MONTH) - 1, 0, 0, 0);
+			currentDate = calTemp.getTime();
+			aCalCellList.currentDateDidChanged(currentDate);
+			dateDidChanged();
+
+		} else if (v == nextArrowBtn) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(currentDate);
+			Calendar calTemp = Calendar.getInstance();
+			calTemp.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+					cal.get(Calendar.DAY_OF_MONTH) + 1, 0, 0, 0);
+			currentDate = calTemp.getTime();
+			aCalCellList.currentDateDidChanged(currentDate);
+			dateDidChanged();
+		} else if (v == alt2Img) {
+			altCurrentActive = 1;
+			setAltCurrentActive();
+//			delegate.postEventAcceptedSent(AlertType.eventAccepted_Sent,
+//					currentCellData);
+			finish();
+		} else if (v == alt3Img) {
+			altCurrentActive = 2;
+			setAltCurrentActive();
+//			delegate.postEventAcceptedSent(AlertType.eventAccepted_Sent,
+//					currentCellData);
+			finish();
+		} else if (v == preferImg) {
+			altCurrentActive = 0;
+			setAltCurrentActive();
+//			delegate.postEventAcceptedSent(AlertType.eventAccepted_Sent,
+//					currentCellData);
+			finish();
+		}
+	}
+
+	private void dateDidChanged() {
+		// TODO Auto-generated method stub
+		initATLTime();
+		dateLable.setText(DateFormat
+				.format(getResources().getString(
+						R.string.calendar_day_view_day_format), currentDate));
+		eventTitle.setText("You've been invited by "
+				+ currentCellData.alertCellSenderName + " to "
+				+ currentCellData.alertCellEventTitle);
+		adapter.notifyDataSetChanged();
+	}
+
+	private void initATLTime() {
+		// TODO Auto-generated method stub
+		int count = 0;
+		atlDateArr.clear();
+		atlIndexs.clear();
+
+		altCurrentActive = 0;
+		String hourFormat = getResources().getString(
+				R.string.calendar_edit_event_when_hour_format);
+		String dayFormat = getResources().getString(
+				R.string.calendar_edit_event_when_day_format);
+
+		preferDay.setText(DateFormat.format(dayFormat,
+				currentCellData.alertCellPreferredDatetime));
+		preferHour
+				.setText(DateFormat
+						.format(hourFormat,
+								currentCellData.alertCellPreferredDatetime)
+						.toString().toUpperCase());
+		////SHARON ADD...
+		prefDateHour = currentCellData.alertCellPreferredDatetime.getHours();
+		
+		/////
+		
+		
+		
+		
+		preferDayNew = currentCellData.alertCellPreferredDatetime;
+		atlDateArr.add(preferDayNew);
+		changeBgColorOfCell(preferDayNew);
+		count = 1;
+		if (currentCellData.alertCellAlt1DateTime != null) {// For init value
+			alt2Day.setText(DateFormat.format(dayFormat,
+					currentCellData.alertCellAlt1DateTime));
+			alt2Hour.setText(DateFormat
+					.format(hourFormat, currentCellData.alertCellAlt1DateTime)
+					.toString().toUpperCase());
+			//// SHARON 
+			altOneDateHour = currentCellData.alertCellAlt1DateTime.getHours();
+			
+			
+			//////
+			
+			
+			alt2DayNew = currentCellData.alertCellAlt1DateTime;
+			atlDateArr.add(alt2DayNew);
+			changeBgColorOfCell(alt2DayNew);
+			count = 2;
+			alt2Img.setOnClickListener(this);// No listener if have no day
+		}
+
+		if (currentCellData.alertCellAlt2DateTime != null) { // For init
+																// value
+			alt3Day.setText(DateFormat.format(dayFormat,
+					currentCellData.alertCellAlt2DateTime));
+			alt3Hour.setText(DateFormat
+					.format(hourFormat, currentCellData.alertCellAlt2DateTime)
+					.toString().toUpperCase());
+			
+			
+		//// SHARON 
+					altTwoDateHour = currentCellData.alertCellAlt2DateTime.getHours();
+					
+					
+					//////
+			alt3DayNew = currentCellData.alertCellAlt2DateTime;
+			atlDateArr.add(alt3DayNew);
+			changeBgColorOfCell(alt3DayNew);
+			count = 3;
+			alt3Img.setOnClickListener(this);// No listener if have no day
+		}
+		altCurrentActive = altCurrentActive < count ? altCurrentActive : count;// TAN
+																				// :
+																				// set
+																				// alts
+																				// Prefered->alt2->alt3
+		setAltCurrentActive();
+	}
+
+	private void changeBgColorOfCell(Date aDate) {
+		// TODO Auto-generated method stub
+		Calendar aDateCal = Calendar.getInstance();
+		aDateCal.setTime(aDate);
+		aDateCal.set(aDateCal.get(Calendar.YEAR), aDateCal.get(Calendar.MONTH),
+				aDateCal.get(Calendar.DAY_OF_MONTH),
+				aDateCal.get(Calendar.HOUR_OF_DAY),
+				aDateCal.get(Calendar.MINUTE), 0);
+
+		String aDateCalString = (String) DateFormat.format(getResources()
+				.getString(R.string.calendar_edit_atl_time_format), aDateCal
+				.getTime());
+
+		Calendar aCellCal = Calendar.getInstance();
+
+		int listSize = adapter.getCount();
+		for (int i = 0; i < listSize; i++) {
+			ATLCalCellData cellData = (ATLCalCellData) adapter.getItem(i);
+			aCellCal.setTime(cellData.getCalCellDate());
+			aCellCal.set(aCellCal.get(Calendar.YEAR),
+					aCellCal.get(Calendar.MONTH),
+					aCellCal.get(Calendar.DAY_OF_MONTH),
+					aCellCal.get(Calendar.HOUR_OF_DAY),
+					aCellCal.get(Calendar.MINUTE), 0);
+			Log.v("CalendarEditAltView",
+					"aDateCal "
+							+ DateFormat
+									.format(getResources()
+											.getString(
+													R.string.calendar_edit_atl_time_format),
+											aDateCal.getTime()));
+			Log.v("CalendarEditAltView",
+					"aCellCal "
+							+ DateFormat
+									.format(getResources()
+											.getString(
+													R.string.calendar_edit_atl_time_format),
+											aCellCal.getTime()));
+			String aCellCalString = (String) DateFormat.format(getResources()
+					.getString(R.string.calendar_edit_atl_time_format),
+					aCellCal.getTime());
+			if (aDateCalString.equals(aCellCalString)) {
+				cellData.calCellCalendarColor = CELL_BACKGROUND_ORANGE;
+				atlIndexs.add(Integer.valueOf(i));// TAN: To keep index of the
+													// row
+			}
+
+		}
+	}
+
+	private void setAltTime() {
+
+		altCurrentActive = altCurrentActive % 3;
+		switch (altCurrentActive) {
+		case 0:
+			preferDayNew = atlDateArr.get(atlDateArr.size() - 1);
+			preferDay.setText(DateFormat.format(
+					getResources().getString(
+							R.string.calendar_edit_event_when_day_format),
+					atlDateArr.get(atlDateArr.size() - 1)));
+			preferHour.setText(DateFormat.format(
+					getResources().getString(
+							R.string.calendar_edit_event_when_hour_format),
+					atlDateArr.get(atlDateArr.size() - 1)));
+			// currentCellData.setCalCellDate(preferDayNew);
+
+			break;
+		case 1:
+			alt2DayNew = atlDateArr.get(atlDateArr.size() - 1);
+			alt2Day.setText(DateFormat.format(
+					getResources().getString(
+							R.string.calendar_edit_event_when_day_format),
+					atlDateArr.get(atlDateArr.size() - 1)));
+			alt2Hour.setText(DateFormat.format(
+					getResources().getString(
+							R.string.calendar_edit_event_when_hour_format),
+					atlDateArr.get(atlDateArr.size() - 1)));
+			// currentCellData.setCalCellALT2Datetime((alt2DayNew));
+			break;
+		case 2:
+			alt3DayNew = atlDateArr.get(atlDateArr.size() - 1);
+			alt3Day.setText(DateFormat.format(
+					getResources().getString(
+							R.string.calendar_edit_event_when_day_format),
+					atlDateArr.get(atlDateArr.size() - 1)));
+			alt3Hour.setText(DateFormat.format(
+					getResources().getString(
+							R.string.calendar_edit_event_when_hour_format),
+					atlDateArr.get(atlDateArr.size() - 1)));
+			// currentCellData.setCalCellALT3Datetime((alt3DayNew));
+			break;
+
+		}
+		altCurrentActive++;
+		setAltCurrentActive();
+
+	}
+
+	private void setAltCurrentActive() {
+		altCurrentActive = altCurrentActive % 3;
+		switch (altCurrentActive) {
+		case 0:
+			preferImg
+					.setImageResource(R.drawable.calendar_editevent_alttimes_select_btn);
+			alt2Img.setImageResource(R.drawable.calendar_editevent_alttimes_unselect_btn);
+			alt3Img.setImageResource(R.drawable.calendar_editevent_alttimes_unselect_btn);
+			// SEND ACCEPT INFO
+			if (currentCellData.alertCellPreferredDatetime != null) {
+			currentCellData.alertDateAccepted = AlertsParseObjectParser
+					.localDateTimeToServerTimeString(currentCellData.alertCellPreferredDatetime);
+			}
+			break;
+		case 1:
+			preferImg
+					.setImageResource(R.drawable.calendar_editevent_alttimes_unselect_btn);
+			alt2Img.setImageResource(R.drawable.calendar_editevent_alttimes_select_btn);
+			alt3Img.setImageResource(R.drawable.calendar_editevent_alttimes_unselect_btn);
+			// SEND ACCEPT INFO
+			if (currentCellData.alertCellAlt1DateTime != null) {
+				currentCellData.alertDateAccepted = AlertsParseObjectParser
+						.localDateTimeToServerTimeString(currentCellData.alertCellAlt1DateTime);
+			}
+			break;
+		case 2:
+			preferImg
+					.setImageResource(R.drawable.calendar_editevent_alttimes_unselect_btn);
+			alt2Img.setImageResource(R.drawable.calendar_editevent_alttimes_unselect_btn);
+			alt3Img.setImageResource(R.drawable.calendar_editevent_alttimes_select_btn);
+			// SEND ACCEPT INFO
+			if (currentCellData.alertCellAlt2DateTime != null) {
+				currentCellData.alertDateAccepted = AlertsParseObjectParser
+						.localDateTimeToServerTimeString(currentCellData.alertCellAlt2DateTime);
+			}
+			break;
+		}
+
+	}
+}

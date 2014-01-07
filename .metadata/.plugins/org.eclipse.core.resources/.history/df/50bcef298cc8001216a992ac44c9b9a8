@@ -1,0 +1,238 @@
+package atlasapp.database;
+
+import java.util.HashMap;
+import java.util.List;
+
+import atlasapp.database.DatabaseConstants.TABLES_NAME;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+public class ATLOutboundEmail extends AtlasServerTable implements ParseDBCallBackInterface{
+
+	
+	
+	public ATLOutboundEmail()
+	{
+		TABLE_NAME = TABLES_NAME.OUTBOUND_EMAIL.getTableName();
+		atlasServerTable = new ParseObject(TABLE_NAME);
+		userQuery = new ParseQuery(TABLE_NAME);
+		parseQuery = new ParseQuery(TABLE_NAME);
+		// sign Event to database call back's methods
+		parseCallBackDeleget = this;
+	}
+	private void updateOutboundEmailRecordsOnParse(
+			List<ParseObject> updateOutboundEmailOnParseList,
+		) {
+    	String webItemUserId ="";
+    	ItemUserProperties itemUserPropertyUpdated;
+    	for (ParseObject itemUserRecord:updateItemUserOnParseList)
+    	{
+    		if (itemUserRecord!=null)
+    		{
+    			webItemUserId = itemUserRecord.getString("web_item_user_id");
+    			if (webItemUserId!=null && !webItemUserId.equals(""))
+    			{
+    				itemUserPropertyUpdated = itemUserHashMapByWebItemId.get(webItemUserId);
+    				if (itemUserPropertyUpdated!=null)
+    				{
+    					itemUserRecord.put("item_type", itemUserPropertyUpdated.itemType.getItemName());
+    					itemUserRecord.put("web_item_id", itemUserPropertyUpdated.webItemId);
+    					itemUserRecord.put("atlas_id", itemUserPropertyUpdated.atlasId);
+    					itemUserRecord.put("status", itemUserPropertyUpdated.status.ordinal());
+    					itemUserRecord.put("status_datetime", itemUserPropertyUpdated.statusDateTime);
+    					itemUserRecord.put("was_received", itemUserPropertyUpdated.wasReceived);
+    					itemUserRecord.put("display_order", itemUserPropertyUpdated.displayOrder);
+//    					int priority = (itemUserPropertyUpdated.priorityOrder.ordinal()==1)? -1:itemUserPropertyUpdated.priorityOrder.ordinal();
+    					itemUserRecord.put("priority_order",itemUserPropertyUpdated.priorityOrder.ordinal()-1);
+    					itemUserRecord.put("action", itemUserPropertyUpdated.action.getActionName());
+    				}	    			
+    			}
+    		}
+    	}
+    	
+    	
+    	saveUpdatedItemUserRecordsOnParse(updateItemUserOnParseList);
+    	
+		
+	}
+	private void saveUpdatedItemUserRecordsOnParse(
+			List<ParseObject> updateItemUserOnParseList) 
+{
+	if (updateItemUserOnParseList!=null)
+	{
+		final List<ParseObject> updateItemUserOnParseListCopy = updateItemUserOnParseList;
+	
+		if (updateItemUserOnParseListCopy.get(0)!=null)
+			updateItemUserOnParseListCopy.get(0).saveInBackground(new SaveCallback()
+			{
+				public void done(ParseException e) {
+				    if (e == null)
+				    {
+				    	updateItemUserOnParseListCopy.remove(0);
+				    	if (updateItemUserOnParseListCopy==null || updateItemUserOnParseListCopy.size()==0)
+				    	{
+				    		itemUserListener.updateItemUserCallBack(true);
+//				    		itemUserListener.updateBookedItemUserCallBack(true);
+				    	}
+				    	else
+				    		saveUpdatedItemUserRecordsOnParse(updateItemUserOnParseListCopy);
+				    	
+				    }else 
+				    {
+			    		itemUserListener.updateItemUserCallBack(false);
+//			    		itemUserListener.updateBookedItemUserCallBack(false);
+
+					}
+				}
+			});
+			
+		
+	}
+		
+	else
+	{
+		itemUserListener.updateItemUserCallBack(false);
+
+	}
+}
+	public void saveOutboundEmailRecordOnParse(OutboundEmailProperties outboundEmailProperties)
+	{
+		if (outboundEmailProperties!=null)
+		{
+			HashMap<String, Object> outboundEmailColumns = new HashMap<String, Object>();
+
+			
+			outboundEmailColumns.put("body", outboundEmailProperties.body);
+			outboundEmailColumns.put("from", outboundEmailProperties.from);
+		
+			outboundEmailColumns.put("from_name", outboundEmailProperties.fromName);
+			outboundEmailColumns.put("reply_to", outboundEmailProperties.replyTo);
+			outboundEmailColumns.put("subject", outboundEmailProperties.subject);
+			outboundEmailColumns.put("to", outboundEmailProperties.to);
+			outboundEmailColumns.put("has_error", outboundEmailProperties.hasError);
+			outboundEmailColumns.put("is_pending",outboundEmailProperties.isPending);
+			outboundEmailColumns.put("is_sent", outboundEmailProperties.isSent);
+			/// wait for getSaveCallBack method...
+				put(outboundEmailColumns);
+			
+			
+		}
+	}
+	@Override
+	public void getSaveCallBack(boolean saved, ParseObject parseObjectSaved)
+	{
+		
+		
+	}
+	
+	@Override
+	public void getFindQueryCallBack(List<ParseObject> foundQueryList,
+			boolean found) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	@Override
+	public void getObjectIdCallBack(ParseObject retreivedObjectId,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getDataCallBack(byte[] fileRetreived, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getSuccessCallBack(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerSuccess(boolean signUpSuccess) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void signInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveFileCallBack(boolean success, ParseObject psrseObjectSaved) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUserEmailOnParseCallBack(
+			HashMap<String, String> userParseLogin, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFriendEmailOnParseCallBack(
+			List<ParseObject> loginProperties, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFacebookFriendIdOnParseCallBack(
+			List<ParseObject> findResult, boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAllAtlasUsersCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAllFBAtlasUsersFriendsCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void friendSignInSuccess(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAtlasNewFriendsByEmailCallBack(List<ParseObject> findResult,
+			boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getUpateCallBack(boolean success) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void signInNewFriendUserSuccess(boolean success, ParseUser user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

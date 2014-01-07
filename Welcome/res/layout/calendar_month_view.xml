@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bk_gray"
+    android:orientation="vertical" >
+
+    <!--
+    <RelativeLayout
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:background="#0000"
+        android:layout_alignParentTop="true">
+        
+          <include android:id="@+id/tabBarIncludeLayout" layout="@layout/top_menu_bar" android:layout_alignParentTop="true" /> 
+        
+
+    </RelativeLayout>
+    -->
+
+    <RelativeLayout
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/navbar" >
+
+        <TextView
+            android:id="@+id/cal_month_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cal_month_view_title"
+            android:textColor="@color/white"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+        <!--
+        <ImageView
+            android:id="@+id/navbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/cal_day_title_cal" />
+        -->
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/calendarToJournalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:gravity="left" >
+    </ImageView>
+
+    <Button
+        android:id="@+id/selectedDayMonthYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/app_name"
+        android:textColor="#000000"
+        android:visibility="invisible" >
+    </Button>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/calendarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBarMenu"
+        android:background="@drawable/bg_day_mover" >
+
+        <!--
+        <TextView
+		    android:id="@+id/thisMonthLabel"
+		android:layout_centerInParent="true"
+		 android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+
+		/>
+        -->
+
+        <TextView
+            android:id="@+id/currentMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/date_sample"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/blue_datetime"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/nextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
+            android:background="#0000"
+            android:contentDescription="@string/right_arrow_btn"
+            android:src="@drawable/cal_btn_right_arrow" />
+
+        <ImageView
+            android:id="@+id/prevMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="#0000"
+            android:contentDescription="@string/left_arrow_btn"
+            android:src="@drawable/cal_btn_left_arrow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/calendarHeaderLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendarMenu" >
+
+        <ImageView
+            android:id="@+id/calendarheader"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/cal_week_header2x" >
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true" >
+
+        <!--
+        <include
+            android:id="@+id/tabBarIncludeLayout"
+            android:layout_alignParentTop="true"
+            layout="@layout/bottom_tab_bar" />
+        -->
+
+        <Button
+            android:id="@+id/cal_month_view_btn_close"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/cal_month_view_btn_close"
+            android:textColor="@color/blue_datetime"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/calendar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomMenu"
+        android:layout_below="@id/calendarHeaderLayout"
+        android:numColumns="7" >
+
+    </GridView>
+
+</RelativeLayout>

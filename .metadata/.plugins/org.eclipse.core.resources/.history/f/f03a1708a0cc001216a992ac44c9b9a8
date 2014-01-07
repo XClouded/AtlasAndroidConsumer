@@ -1,0 +1,98 @@
+package atlasapp.section_alerts;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import atlasapp.common.ATLFriendLocalTable;
+import atlasapp.common.CurrentSessionFriendsList;
+import atlasapp.database.ATLAlertController;
+import atlasapp.database.ATLDBCommon;
+import atlasapp.database.AtlasServerConnect;
+import atlasapp.database.EventController;
+import atlasapp.model.ATLContactModel;
+import atlasapp.model.ATLEventCalendarModel;
+import atlasapp.model.ATLItemUserModel;
+import atlasapp.section_alerts.ATLALertListController;
+
+public class ATLPushNotificationReceiver extends BroadcastReceiver {
+	private static final String TAG = "ATLPushNotificationReceiver";
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		ArrayList<String> atlasIds = new ArrayList<String>();
+		try {
+			String action = intent.getAction();
+			String channel = intent.getExtras().getString("com.parse.Channel");
+			JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
+
+			//	      Log.d(TAG, "got action " + action + " on channel " + channel + " with:");
+			Iterator itr = json.keys();
+			
+			while (itr.hasNext()) {
+				String key = (String) itr.next();
+				if (key!=null && key.equals("atlasId"))
+				{
+					
+					atlasIds.add(json.getString(key));
+					
+				}//	        Log.d(TAG, "..." + key + " => " + json.getString(key));
+			}
+		} catch (JSONException e) {
+			//	      Log.d(TAG, "JSONException: " + e.getMessage());
+		}
+//		CurrentSessionFriendsList currentSessionFriendsList = CurrentSessionFriendsList.getSingletonObject();
+//		currentSessionFriendsList.setFriendsUpdateComplete(false);
+//
+//		/////SET ALL CURRENT EMAIL'S (USER NAMES) FROM ATLAS DB (PARSE)
+//		atlDBCommon = ATLDBCommon.getSingletonObject(null);
+		
+		if (atlasIds!=null && atlasIds.size()>0)
+		{
+			CurrentSessionFriendsList currentSessionFriendsList = CurrentSessionFriendsList.getSingletonObject();
+
+			currentSessionFriendsList.setFriendsUpdateComplete(false);
+
+			/////SET ALL CURRENT EMAIL'S (USER NAMES) FROM ATLAS DB (PARSE)
+			ATLDBCommon atlDBCommon = ATLDBCommon.getSingletonObject(null);
+			
+//			ATLFriendModel.readAllLocalFriendsInBackground();
+			
+			  
+			
+//			atlDBCommon.setCurrentSessionUsersOnATLASInBackground(true,false);  
+
+//			ATLFriendModel.readAllLocalFriendsInBackground();
+//			ATLContactModel.readAllLocalFriendsInBackground();
+			ATLFriendLocalTable.retrieveNewFriendsByAtlasIds(atlasIds);
+			ATLContactModel.readAllLocalFriendsInBackground();
+		}
+//		ATLFriendModel.readAllLocalFriendsInBackground();
+		
+		  
+		
+//		atlDBCommon.setCurrentSessionUsersOnATLASInBackground(true,false);  
+
+//		ATLFriendModel.readAllLocalFriendsInBackground();
+		
+//		ATLEventCalendarModel.eventCalendarModelListener = ATLAlertController.this;
+//		ATLItemUserModel.atlItemUserModelListener = this;
+//		EventController eventController = new EventController();
+//		eventController.eventControllerCallBackListener = this;
+//		
+//		eventController.RefreshAllEventRecordsFromParseInBackground(context);
+//		eventController.GetNewEvents();
+		else
+		{
+		ATLAlertController.eventControllerCallBackListener = ATLAlertController.eventControllerCallBackListener;
+		EventController.GetNewEvents();
+		}
+//		AtlasServerConnect.refreshAllEventsFromParseInBackground();
+		
+	}
+}

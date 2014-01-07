@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/task_list_view_mlayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<RelativeLayout
+		android:id="@+id/task_sort_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/task_alert_fragment"
+		android:layout_width="310dp"
+		android:layout_height="fill_parent"
+		android:layout_gravity="right"
+		android:visibility="visible" >
+	</RelativeLayout>
+	<atlasapp.common.ATLDragAndDropView
+		android:id="@+id/tasks_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/bk_gray" >
+		<!--
+     <com.atlasapp.section_main.ATLTopbar
+        android:id="@+id/topBarMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+    </com.atlasapp.section_main.ATLTopbar>
+		-->
+		<!-- BEGIN TOPBAR MENU -->
+		<RelativeLayout
+			android:id="@+id/topMenuBar"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/navbar" >
+			<ImageButton
+				android:id="@+id/sortButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="5dp"
+				android:background="@color/transparent"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/btn_sort" />
+			<ImageButton
+				android:id="@+id/addbtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignTop="@+id/sortButton"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="5dp"
+				android:layout_toRightOf="@+id/sortButton"
+				android:background="@color/transparent"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/btn_add"
+				android:visibility="gone" />
+			<TextView
+				android:id="@+id/titleTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignTop="@+id/addbtn"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:text="@string/task_title"
+				android:textColor="@color/white"
+				android:textSize="26sp"
+				android:textStyle="bold" />
+			<!--
+    <ImageView
+        android:id="@+id/titleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnMonthImage"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/settings_title_bar_title" 
+        android:contentDescription="@string/app_name"/>
+			-->
+			<ImageButton
+				android:id="@+id/actionBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="5dp"
+				android:layout_toLeftOf="@+id/alliesbtn"
+				android:background="@color/transparent"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/btn_lightning"
+				android:visibility="gone" />
+			<ImageButton
+				android:id="@+id/alliesbtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="5dp"
+				android:background="@color/transparent"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/btn_bubbles" />
+		</RelativeLayout>
+		<!-- END TOPBAR MENU -->
+		<RelativeLayout
+			android:id="@+id/bottomBarTasks"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:visibility="gone" >
+			<include
+				android:id="@+id/tabBarIncludeLayout"
+				layout="@layout/bottom_tab_bar" />
+		</RelativeLayout>
+		<ProgressBar
+			android:id="@+id/progressBar"
+			style="?android:attr/progressBarStyleLarge"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:visibility="gone" />
+		<atlasapp.section_main.ATLMultiSectionListView
+			android:id="@+id/listTask"
+			android:layout_width="fill_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@+id/bottomBarTasks"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/topMenuBar" />
+		<RelativeLayout
+			android:id="@+id/task_view_content_layout"
+			android:layout_width="fill_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@+id/bottomBarTasks"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/topMenuBar" >
+		</RelativeLayout>
+		<View
+			android:id="@+id/task_list_cover_view"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@color/transparent"
+			android:visibility="gone" >
+		</View>
+	</atlasapp.common.ATLDragAndDropView>
+</FrameLayout>

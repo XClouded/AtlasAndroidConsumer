@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/topMenuBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/navbar" >
+
+        <ImageButton
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="#0000"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/btn_cancel" />
+
+        <TextView
+            android:id="@+id/task_edit_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/note_edit_title"
+            android:textColor="@color/white"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+
+        <!--
+             <ImageView
+            android:id="@+id/titleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/title_edit_task"
+            android:visibility="gone" />
+        -->
+
+        <ImageButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="#0000"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/btn_save2" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/table_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topMenuBar" >
+
+        <TableRow android:layout_width="wrap_content" >
+
+            <View
+                android:layout_width="5dip"
+                android:layout_height="47dip"
+                android:background="@color/blue_datetime" />
+
+            <ImageView
+                android:layout_width="51dip"
+                android:layout_height="47dip"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/note_edit_title_bg_blue" />
+
+            <View
+                android:layout_width="1dip"
+                android:layout_height="47dip"
+                android:layout_marginLeft="5dp"
+                android:background="#FF909090" />
+
+            <EditText
+                android:id="@+id/note_edit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="47dip"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="10dp"
+                android:background="#0000"
+                android:hint="@string/note_edit_title_hint"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:background="#FF909090" />
+    </TableLayout>
+
+    <RelativeLayout
+        android:id="@+id/table_body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/table_title"
+        android:background="@drawable/note_edit_body_bg_blue" >
+
+        <EditText
+            android:id="@+id/note_edit_body"
+            android:layout_width="320dip"
+            android:layout_height="125dip"
+            android:layout_marginLeft="70dp"
+            android:background="#0000"
+            android:hint="@string/note_edit_body_hint"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="125dip"
+            android:layout_marginLeft="61dp"
+            android:background="#FF909090" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:layout_marginTop="124dp"
+            android:background="#FF909090" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/task_quick_add_bottom_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/table_body"
+        android:background="@drawable/note_edit_bottombar_bg" >
+
+        <ImageButton
+            android:id="@+id/note_edit_allies"
+            android:layout_width="44dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/note_edit_bottombar_allies"
+            android:contentDescription="@string/month_btn" />
+
+        <ImageButton
+            android:id="@+id/note_edit_ally1_img"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/note_edit_allies"
+            android:background="@drawable/note_edit_bottombar_blank"
+            android:contentDescription="@string/month_btn" />
+
+        <RelativeLayout
+            android:id="@+id/task_quick_add_calendars_holder"
+            android:layout_width="235dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/note_edit_ally1_img"
+            android:background="@drawable/calendar_box" >
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/note_bottom_bar_calendarlist"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/note_edit_bottombar_arrow" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/note_edit_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/note_edit_bottombar_star_unselected"
+            android:contentDescription="@string/month_btn" />
+    </RelativeLayout>
+
+</RelativeLayout>

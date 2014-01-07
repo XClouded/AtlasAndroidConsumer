@@ -1,0 +1,11 @@
+package atlasapp.section_appentry;
+
+import android.app.Activity;
+import android.widget.ViewSwitcher.ViewFactory;
+import atlasapp.database.EmailAddressCallBackInterface;
+import atlasapp.database.ParseDBCallBackInterface;
+import atlasapp.database.UserDelagateInterface;
+
+public class ATLVerifyEmailAddress extends Activity implements ViewFactory{
+
+}

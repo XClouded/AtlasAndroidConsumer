@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="310dp"
+	android:layout_height="match_parent"
+	android:layout_gravity="right"
+	android:background="@drawable/slide_menu_background" >
+	<RelativeLayout
+		android:id="@+id/alert_find_friend_view"
+		android:layout_width="match_parent"
+		android:layout_height="45dp"
+		android:background="#0000" >
+		<TextView
+			android:id="@+id/cal_select_user_name_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="50dp"
+			android:text="@string/alerts_find_friend_on_atlas_text"
+			android:textColor="@color/white"
+			android:textSize="20sp"
+			android:textStyle="bold" >
+		</TextView>
+		<ImageView
+			android:id="@+id/cal_select_user_avatar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/right_arrow" >
+		</ImageView>
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/alert_header_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/alert_find_friend_view"
+		android:background="#0000" >
+		<TextView
+			android:id="@+id/alert_header_imageView"
+			android:layout_width="wrap_content"
+			android:layout_height="32dp"
+			android:background="@drawable/alerts_titlebar_bg2x"
+			android:gravity="center_vertical"
+			android:paddingLeft="20dp"
+			android:text="@string/alerts_titlebar_notifications"
+			android:textColor="@color/white"
+			android:textSize="18sp"
+			android:textStyle="bold" />
+		<ProgressBar
+			android:id="@+id/progressBar"
+			style="?android:attr/progressBarStyleSmall"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="7dp"
+			android:visibility="invisible" />
+	</RelativeLayout>
+	<ImageButton
+		android:id="@+id/alert_reload_imageButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/alerts_sync_icon" />
+	<com.atlasapp.section_main.ATLMultiSectionListView
+		android:id="@+id/listNotes"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/alert_reload_imageButton"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/alert_header_layout" />
+</RelativeLayout>

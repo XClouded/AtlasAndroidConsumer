@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/contentTabLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:id="@+id/topMenuBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/top_bar_bg" >
+
+            <!--
+            <TextView 
+            android:id="@+id/mainTitleLabel" 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            
+            android:layout_centerVertical="true"
+            android:textSize="19sp"
+            android:gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:text=""/>
+            -->
+
+            <ImageButton
+                android:id="@+id/topBarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/topMenuBar"
+                android:background="#0000"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/mainTitleLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="#0000"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/main_btns_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/top_bar_bg"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/btnToday"
+                style="@style/navbar_button"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:drawableTop="@drawable/navbar_todayselector"
+                android:text="Today" />
+
+            <RadioButton
+                android:id="@+id/btnCal"
+                style="@style/navbar_button"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:drawableTop="@drawable/navbar_calendarselector"
+                android:text="Cal" />
+
+            <RadioButton
+                android:id="@+id/btnToDo"
+                style="@style/navbar_button"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:drawableTop="@drawable/navbar_todoselector"
+                android:text="To Do" />
+
+            <RadioButton
+                android:id="@+id/btnNotes"
+                style="@style/navbar_button"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:drawableTop="@drawable/navbar_notesselector"
+                android:text="Notes" />
+
+            <RadioButton
+                android:id="@+id/btnSettings"
+                style="@style/navbar_button"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:drawableTop="@drawable/navbar_settingsselector"
+                android:text="Settings" />
+        </RadioGroup>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/contentLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/main_btns_group"
+            android:layout_below="@id/topMenuBar" >
+
+            <ViewFlipper
+                android:id="@+id/content_vf"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <include
+                    android:id="@+id/todayIncludeLayout"
+                    layout="@layout/register" />
+
+                <include
+                    android:id="@+id/calIncludeLayout"
+                    layout="@layout/settings" />
+
+                <include
+                    android:id="@+id/todoIncludeLayout"
+                    layout="@layout/sign_in" />
+
+                <include
+                    android:id="@+id/notesIncludeLayout"
+                    layout="@layout/welcome" />
+
+                <include
+                    android:id="@+id/settingsIncludeLayout"
+                    layout="@layout/settings" />
+            </ViewFlipper>
+            <!--
+         <include
+        android:id="@+id/incldeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        layout="@layout/settings" />
+            -->
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

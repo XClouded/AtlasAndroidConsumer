@@ -1,0 +1,19 @@
+package atlasapp.database;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import atlasapp.common.ATLConstants.EmailTemplateType;
+
+public interface EmailAddressCallBackInterface {
+	
+	
+	
+	void getAllAtlasUserEmailAddressRecordsCallBack(ArrayList<EmailAddressRecord> emailAddressRecords);
+	void setUserEmailAddressOnParseCallBack(boolean success);
+	void getAllAtlasUserEmailAddressCallBack(ArrayList<String> emailAddrees);
+	
+	
+	void getEmailAddressRecordCallBack(EmailAddressRecord emailAddressRecord,EmailTemplateType emailTemplateType);
+	void getAtlasUserByEmailAddressCallBack(HashMap<String,Object> userLoginInfo);
+}

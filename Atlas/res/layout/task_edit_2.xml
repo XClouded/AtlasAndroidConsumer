@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bk_gray" >
+	<RelativeLayout
+		android:id="@+id/topMenuBar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/navbar_orange" >
+		<ImageButton
+			android:id="@+id/btnCancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/btn_cancel_orange" />
+		<ImageButton
+			android:id="@+id/btnMonthImage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/btnCancel"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="13dp"
+			android:layout_toRightOf="@+id/btnCancel"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/calendarview_topbar_btnmonthimage"
+			android:visibility="gone" />
+		<TextView
+			android:id="@+id/task_edit_title_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/task_edit_add_title"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" />
+		<ImageView
+			android:id="@+id/titleImage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/btnMonthImage"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/title_edit_task"
+			android:visibility="gone" />
+		<ImageButton
+			android:id="@+id/addbtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/calendarview_topbar_addbtn"
+			android:visibility="gone" />
+		<ImageButton
+			android:id="@+id/btnSave"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/btn_done_orange" />
+	</RelativeLayout>
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/topMenuBar"
+		android:scrollbars="none" >
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#0000" >
+			<RelativeLayout
+				android:id="@+id/task_edit_info_section_layout"
+				android:layout_width="match_parent"
+				android:layout_height="175dp" >
+				<TextView
+					android:id="@+id/task_edit_info_section_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="30dp"
+					android:layout_marginTop="20dp"
+					android:text="@string/task_edit_info_section_title"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:textColor="@color/title_section_list"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/cal_edit_event_info_section_bg"
+					android:layout_width="match_parent"
+					android:layout_height="90dp"
+					android:layout_below="@+id/task_edit_info_section_title"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="15dp"
+					android:background="@drawable/tworows"
+					android:contentDescription="@string/app_name" />
+				<LinearLayout
+					android:id="@+id/cal_edit_event_info_section_title_layout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignLeft="@+id/cal_edit_event_info_section_bg"
+					android:layout_alignRight="@+id/cal_edit_event_info_section_bg"
+					android:layout_alignTop="@+id/cal_edit_event_info_section_bg"
+					android:layout_below="@+id/task_edit_info_section_title"
+					android:layout_centerHorizontal="true"
+					android:orientation="horizontal" >
+					<TextView
+						android:layout_width="100dp"
+						android:layout_height="45dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="30dp"
+						android:gravity="center|left"
+						android:text="@string/cal_edit_event_what"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold" />
+					<EditText
+						android:id="@+id/edit_task_what_text_new"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_marginRight="20dp"
+						android:background="#0000"
+						android:hint="@string/cal_edit_event_what_hint"
+						android:padding="5dip"
+						android:textSize="20sp"
+						android:textStyle="normal" />
+				</LinearLayout>
+				<LinearLayout
+					android:id="@+id/cal_edit_event_info_section_location_layout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignLeft="@+id/cal_edit_event_info_section_bg"
+					android:layout_alignRight="@+id/cal_edit_event_info_section_bg"
+					android:layout_below="@+id/cal_edit_event_info_section_title_layout"
+					android:layout_centerHorizontal="true"
+					android:orientation="horizontal" >
+					<TextView
+						android:layout_width="100dp"
+						android:layout_height="45dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="30dp"
+						android:gravity="center|left"
+						android:text="@string/task_edit_description"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold" />
+					<EditText
+						android:id="@+id/edit_task_description_etxt"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_marginRight="20dp"
+						android:background="#0000"
+						android:hint="@string/task_edit_note_hint"
+						android:padding="5dip"
+						android:textSize="20sp"
+						android:textStyle="normal" />
+				</LinearLayout>
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/cal_edit_event_details_section_layout"
+				android:layout_width="match_parent"
+				android:layout_height="155dp"
+				android:layout_below="@+id/task_edit_info_section_layout" >
+				<TextView
+					android:id="@+id/cal_edit_event_details_section_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="30dp"
+					android:text="@string/task_edit_details_section_title"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:textColor="@color/title_section_list"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/cal_edit_event_details_section_bg"
+					android:layout_width="match_parent"
+					android:layout_height="90dp"
+					android:layout_below="@+id/cal_edit_event_details_section_title"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="15dp"
+					android:background="@drawable/tworows"
+					android:contentDescription="@string/app_name" />
+				<LinearLayout
+					android:id="@+id/cal_edit_event_details_section_start_time_layout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignLeft="@+id/cal_edit_event_details_section_bg"
+					android:layout_alignRight="@+id/cal_edit_event_details_section_bg"
+					android:layout_alignTop="@+id/cal_edit_event_details_section_bg"
+					android:layout_below="@+id/task_edit_info_section_layout"
+					android:layout_centerHorizontal="true"
+					android:orientation="horizontal" >
+					<TextView
+						android:layout_width="70dp"
+						android:layout_height="45dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="30dp"
+						android:gravity="center|left"
+						android:text="@string/task_edit_priority"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold" />
+					<RelativeLayout
+						android:layout_width="match_parent"
+						android:layout_height="45dp"
+						android:layout_marginRight="20dp" >
+						<ImageButton
+							android:id="@+id/taskBtnHigh"
+							android:layout_width="51dp"
+							android:layout_height="32dp"
+							android:layout_centerVertical="true"
+							android:layout_marginLeft="10dip"
+							android:background="@color/transparent"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/task_edit_icon_high" />
+						<ImageButton
+							android:id="@+id/taskBtnMedium"
+							android:layout_width="51dp"
+							android:layout_height="32dp"
+							android:layout_alignBottom="@+id/taskBtnHigh"
+							android:layout_centerVertical="true"
+							android:layout_marginLeft="10dip"
+							android:layout_toRightOf="@+id/taskBtnHigh"
+							android:background="@color/transparent"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/task_edit_icon_medium" />
+						<ImageButton
+							android:id="@+id/taskBtnLow"
+							android:layout_width="51dp"
+							android:layout_height="32dp"
+							android:layout_alignBottom="@+id/taskBtnHigh"
+							android:layout_marginLeft="10dip"
+							android:layout_toRightOf="@+id/taskBtnMedium"
+							android:background="@color/transparent"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/task_edit_icon_low" />
+					</RelativeLayout>
+				</LinearLayout>
+				<LinearLayout
+					android:id="@+id/cal_edit_event_details_section_duration_layout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignLeft="@+id/cal_edit_event_details_section_bg"
+					android:layout_alignRight="@+id/cal_edit_event_details_section_bg"
+					android:layout_below="@+id/cal_edit_event_details_section_start_time_layout"
+					android:layout_centerHorizontal="true"
+					android:orientation="horizontal" >
+					<TextView
+						android:layout_width="35dp"
+						android:layout_height="45dp"
+						android:layout_marginLeft="30dp"
+						android:gravity="center|left"
+						android:text="@string/task_edit_due"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold" />
+					<RelativeLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:layout_marginRight="20dp" >
+						<ImageButton
+							android:id="@+id/taskBtnToday"
+							android:layout_width="70dp"
+							android:layout_height="32dp"
+							android:layout_centerVertical="true"
+							android:layout_marginLeft="10dip"
+							android:background="@color/transparent"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/task_edit_icon_today" />
+						<ImageButton
+							android:id="@+id/taskBtnTomorrow"
+							android:layout_width="70dp"
+							android:layout_height="32dp"
+							android:layout_centerVertical="true"
+							android:layout_marginLeft="2dip"
+							android:layout_toRightOf="@+id/taskBtnToday"
+							android:background="@color/transparent"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/task_edit_icon_tomorrow_select" />
+						<ImageButton
+							android:id="@+id/taskBtnCustom"
+							android:layout_width="70dp"
+							android:layout_height="32dp"
+							android:layout_centerVertical="true"
+							android:layout_marginLeft="2dip"
+							android:layout_toRightOf="@+id/taskBtnTomorrow"
+							android:background="@color/transparent"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/task_edit_icon_custom" />
+						<TextView
+							android:id="@+id/edit_task_custom_due_text"
+							android:layout_width="80dp"
+							android:layout_height="wrap_content"
+							android:layout_alignParentTop="true"
+							android:layout_marginLeft="5dip"
+							android:layout_toRightOf="@+id/taskBtnCustom"
+							android:gravity="center"
+							android:textAppearance="?android:attr/textAppearanceSmall"
+							android:textColor="@color/black"
+							android:textStyle="bold" />
+						<TextView
+							android:id="@+id/edit_task_custom_due_text1"
+							android:layout_width="80dp"
+							android:layout_height="wrap_content"
+							android:layout_below="@+id/edit_task_custom_due_text"
+							android:layout_marginLeft="5dip"
+							android:layout_toRightOf="@+id/taskBtnCustom"
+							android:gravity="center"
+							android:textAppearance="?android:attr/textAppearanceSmall"
+							android:textColor="@color/black" />
+					</RelativeLayout>
+				</LinearLayout>
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/task_edit_sort_section"
+				android:layout_width="match_parent"
+				android:layout_height="100dp"
+				android:layout_below="@+id/cal_edit_event_details_section_layout" >
+				<TextView
+					android:id="@+id/task_edit_sort_section_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="30dp"
+					android:text="@string/task_edit_sort_section_title"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:textColor="@color/title_section_list"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/task_edit_sort_section_bg"
+					android:layout_width="match_parent"
+					android:layout_height="45dp"
+					android:layout_below="@+id/task_edit_sort_section_title"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="15dp"
+					android:background="@drawable/onerow2x"
+					android:contentDescription="@string/app_name" />
+				<LinearLayout
+					android:id="@+id/task_edit_sort_section_layout"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignLeft="@+id/task_edit_sort_section_bg"
+					android:layout_alignRight="@+id/task_edit_sort_section_bg"
+					android:layout_alignTop="@+id/task_edit_sort_section_bg"
+					android:layout_centerHorizontal="true"
+					android:orientation="horizontal" >
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="45dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="30dp"
+						android:gravity="center|left"
+						android:text="@string/cal_edit_event_calendar"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold" />
+					<RelativeLayout
+						android:id="@+id/cal_edit_event_names"
+						android:layout_width="match_parent"
+						android:layout_height="37dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="5dp"
+						android:layout_marginRight="25dp"
+						android:background="@drawable/calendar_box" >
+						<kankan.wheel.widget.WheelView
+							android:id="@+id/edit_task_calendar_names"
+							android:layout_width="match_parent"
+							android:layout_height="33dp"
+							android:layout_centerVertical="true"
+							android:layout_marginRight="10dp" />
+						<ImageView
+							android:layout_width="11dp"
+							android:layout_height="20dp"
+							android:layout_alignParentRight="true"
+							android:layout_centerVertical="true"
+							android:layout_marginRight="5dp"
+							android:contentDescription="@string/app_name"
+							android:src="@drawable/calendar_editevent_time_box_up_arrow2x" />
+					</RelativeLayout>
+				</LinearLayout>
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/task_edit_collaboration_section_layout"
+				android:layout_width="match_parent"
+				android:layout_height="180dp"
+				android:layout_below="@+id/task_edit_sort_section" >
+				<TextView
+					android:id="@+id/task_edit_collaboration_section_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="30dp"
+					android:layout_marginTop="15dp"
+					android:text="@string/cal_edit_event_collaboration_section_title"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:textColor="@color/title_section_list"
+					android:textStyle="bold" />
+				<ImageView
+					android:id="@+id/task_edit_collaboration_section_bg"
+					android:layout_width="match_parent"
+					android:layout_height="45dp"
+					android:layout_below="@+id/task_edit_collaboration_section_title"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="15dp"
+					android:background="@drawable/onerow2x"
+					android:contentDescription="@string/app_name" />
+				<LinearLayout
+					android:id="@+id/whoTableRow"
+					android:layout_width="match_parent"
+					android:layout_height="45dp"
+					android:layout_alignLeft="@+id/task_edit_collaboration_section_bg"
+					android:layout_alignRight="@+id/task_edit_collaboration_section_bg"
+					android:layout_alignTop="@+id/task_edit_collaboration_section_bg"
+					android:layout_centerHorizontal="true"
+					android:orientation="horizontal" >
+					<View
+						android:layout_width="20dp"
+						android:layout_height="match_parent"
+						android:layout_marginLeft="20dp" />
+					<ImageView
+						android:id="@+id/imageContact"
+						android:layout_width="wrap_content"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="10dp"
+						android:layout_marginRight="10dp"
+						android:contentDescription="@string/app_name"
+						android:src="@drawable/avatar_man" />
+					<TextView
+						android:id="@+id/edit_task_who"
+						android:layout_width="wrap_content"
+						android:layout_height="45dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginLeft="3dip"
+						android:gravity="center|left"
+						android:padding="3dip"
+						android:text="@string/task_edit_delegate_hint"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold" />
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical|right"
+						android:layout_marginLeft="24dp"
+						android:layout_marginTop="1.5dp"
+						android:contentDescription="@string/app_name"
+						android:src="@drawable/right_arrow" />
+				</LinearLayout>
+			</RelativeLayout>
+		</RelativeLayout>
+	</ScrollView>
+	<!-- 2013-01-11 TAN Store old view to anti Null poiter # START -->
+	<TableLayout
+		android:id="@+id/tasks_edit_table_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:visibility="gone" >
+		<TableRow
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+			<TextView
+				android:id="@+id/edit_task_who"
+				android:layout_width="100dip"
+				android:layout_height="63dip"
+				android:gravity="center|left"
+				android:paddingLeft="5dp"
+				android:text="@string/task_edit_due_time"
+				android:textColor="@color/blue_atl_sections_title"
+				android:textSize="20sp"
+				android:textStyle="bold" />
+			<View
+				android:layout_width="1dip"
+				android:layout_height="63dip"
+				android:background="#FF909090" />
+			<LinearLayout
+				android:id="@+id/llNumber"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginLeft="3dp"
+				android:layout_marginRight="10dp"
+				android:paddingLeft="10dp" >
+				<RelativeLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:background="@drawable/calendar_box" >
+					<kankan.wheel.widget.WheelView
+						android:id="@+id/edit_task_due_hour_wheel"
+						android:layout_width="50dp"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical" />
+				</RelativeLayout>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="1dp"
+					android:text="@string/task_edit_:"
+					android:textColor="@color/black"
+					android:textSize="20sp"
+					android:textStyle="bold" />
+				<RelativeLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="2dp"
+					android:background="@drawable/calendar_box" >
+					<kankan.wheel.widget.WheelView
+						android:id="@+id/edit_task_due_minute_wheel"
+						android:layout_width="50dp"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical" />
+				</RelativeLayout>
+				<RelativeLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginLeft="5dp"
+					android:background="@drawable/calendar_box" >
+					<kankan.wheel.widget.WheelView
+						android:id="@+id/edit_task_due_AMPM_wheel"
+						android:layout_width="50dp"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical" />
+				</RelativeLayout>
+			</LinearLayout>
+		</TableRow>
+		<TableRow
+			android:layout_width="wrap_content" >
+			<TextView
+				android:layout_width="100dip"
+				android:layout_height="63dip"
+				android:gravity="center|left"
+				android:paddingLeft="5dp"
+				android:text="@string/task_edit_reminder"
+				android:textColor="@color/blue_atl_sections_title"
+				android:textSize="20sp"
+				android:textStyle="bold" />
+			<View
+				android:layout_width="1dip"
+				android:layout_height="63dip"
+				android:background="#FF909090" />
+			<RelativeLayout
+				android:id="@+id/cal_edit_event_reminder_hour"
+				android:layout_width="95dp"
+				android:layout_height="40dp"
+				android:layout_gravity="center_vertical"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="145dp"
+				android:background="@drawable/calendar_box" >
+				<kankan.wheel.widget.WheelView
+					android:id="@+id/edit_task_reminder_names"
+					android:layout_width="90dp"
+					android:layout_height="40dp"
+					android:layout_gravity="center_vertical" />
+				<ImageView
+					android:layout_width="11dp"
+					android:layout_height="20dp"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="5dp"
+					android:contentDescription="@string/app_name"
+					android:src="@drawable/calendar_editevent_time_box_up_arrow2x" />
+			</RelativeLayout>
+		</TableRow>
+	</TableLayout>
+	<!-- 2013-01-11 TAN Store old view to anti Null poiter # END -->
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent" >
+	</TextView>
+</RelativeLayout>

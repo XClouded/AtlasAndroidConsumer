@@ -1,0 +1,8 @@
+package atlasapp.database;
+
+public interface ATLOutboundEmailCallBackInterface {
+	
+	
+	public void savedNewOutboundEmailCallBack(boolean success);
+
+}

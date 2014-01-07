@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bk_gray"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageButton
+			android:id="@+id/closeBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/month_btn"
+			android:src="@drawable/btn_close" />
+		<TextView
+			android:id="@+id/navbarTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/alert_event_respond_matrix_title"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" />
+	</RelativeLayout>    
+	<LinearLayout     
+		android:id="@+id/calendarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="45dp"
+		android:layout_below="@id/topBarMenu"
+		android:background="@color/grey"
+		android:gravity="right|center_vertical" >
+		<LinearLayout
+			android:id="@+id/preferImg1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="25dp"
+			android:contentDescription="@string/app_title"
+			android:orientation="vertical"
+			android:src="@drawable/calendar_editevent_alttimes_select_btn" >
+			<TextView
+				android:id="@+id/alt1hourTop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt1dayTop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="11sp" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/alt2_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="25dp"
+			android:contentDescription="@string/app_title"
+			android:orientation="vertical"
+			android:src="@drawable/calendar_editevent_alttimes_unselect_btn" >
+			<TextView
+				android:id="@+id/alt2hourTop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt2dayTop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="11sp" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/alt3_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="25dp"
+			android:contentDescription="@string/app_title"
+			android:orientation="vertical"
+			android:src="@drawable/calendar_editevent_alttimes_unselect_btn" >
+			<TextView
+				android:id="@+id/alt3hourTop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt3dayTop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textColor="@color/black"
+				android:textSize="11sp" />
+		</LinearLayout>
+	</LinearLayout>
+	<ListView
+		android:id="@+id/inviteeRespondList"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/bottomBarMenu"
+		android:layout_below="@+id/calendarMenu" >
+	</ListView>
+	<RelativeLayout
+		android:id="@+id/bottomBarMenu"
+		android:layout_width="match_parent"
+		android:layout_height="96dp"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/alerts_invite_box_bg" >
+		<RelativeLayout
+		    android:id="@+id/altHoursPicksVotesLayout"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true" >
+			
+			
+			
+			<ImageButton
+				android:id="@+id/altButtonIdeal"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				
+				android:layout_marginTop="5dp"
+				android:background="#0000"
+				
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/respond_matrix_decide_ideal" />
+			<TextView
+				android:id="@+id/alt2ButtonIdleDescription"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/altButtonIdeal"
+				android:layout_alignRight="@+id/altButtonIdeal"
+				android:layout_below="@+id/altButtonIdeal"
+				
+				android:gravity="center"
+				android:text="Ideal"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<ImageButton
+				android:id="@+id/altButtonOk"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="#0000"
+				android:layout_toRightOf="@+id/altButtonIdeal"
+				android:layout_alignParentTop="true"
+				android:layout_marginLeft="15dp"
+				android:layout_marginTop="5dp"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/respond_matrix_decide_ok" />
+			
+			<TextView
+				android:id="@+id/altButtonOkDescription"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/altButtonOk"
+				android:layout_alignRight="@+id/altButtonOk"
+				android:layout_below="@+id/altButtonOk"
+				android:gravity="center"
+				android:text="Okay"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			
+			<ImageButton
+				android:id="@+id/altButtonDecline"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/altButtonOk"
+				android:layout_marginLeft="15dp"
+				android:layout_marginTop="5dp"
+				android:background="#0000"
+				android:layout_toRightOf="@+id/altButtonOk"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/respond_matrix_decide_cant" />
+			<TextView
+				android:id="@+id/altButtonDeclineDescription"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/altButtonDecline"
+				android:layout_alignRight="@+id/altButtonDecline"
+				android:layout_below="@+id/altButtonDecline"
+				android:gravity="center"
+				android:text="Can't"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			
+		</RelativeLayout>
+	    
+		<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" >
+			<ImageButton
+				android:id="@+id/bookEventButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt1Button"
+				android:layout_marginRight="7dp"
+				android:background="#0000"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/btn_confirm_book" />
+			<ImageButton
+				android:id="@+id/alt1Button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="10dp"
+				android:background="#0000"
+				android:layout_toRightOf="@+id/bookEventButton"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/calendar_editevent_alttimes_select_btn" />
+			
+			<TextView
+				android:id="@+id/alt1hourBottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/alt1Button"
+				android:layout_alignRight="@+id/alt1Button"
+				android:layout_alignTop="@+id/alt1Button"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt1dayBottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt1Button"
+				android:layout_alignLeft="@+id/alt1Button"
+				android:layout_alignRight="@+id/alt1Button"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="11sp" />
+			<ImageButton
+				android:id="@+id/alt2Button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt1Button"
+				android:layout_marginLeft="7dp"
+				android:background="#0000"
+				android:layout_toRightOf="@+id/alt1Button"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/calendar_editevent_alttimes_unselect_btn" />
+			<TextView
+				android:id="@+id/alt2hourBottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/alt2Button"
+				android:layout_alignRight="@+id/alt2Button"
+				android:layout_alignTop="@+id/alt2Button"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt2dayBottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt2Button"
+				android:layout_alignLeft="@+id/alt2Button"
+				android:layout_alignRight="@+id/alt2Button"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="11sp" />
+			<ImageButton
+				android:id="@+id/alt3Button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt2Button"
+				android:layout_marginLeft="7dp"
+				android:background="#0000"
+				android:layout_toRightOf="@+id/alt2Button"
+				android:contentDescription="@string/app_title"
+				android:src="@drawable/calendar_editevent_alttimes_unselect_btn" />
+			<TextView
+				android:id="@+id/alt3hourBottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignLeft="@+id/alt3Button"
+				android:layout_alignRight="@+id/alt3Button"
+				android:layout_alignTop="@+id/alt3Button"
+				android:gravity="center"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="14sp"
+				android:textStyle="bold" />
+			<TextView
+				android:id="@+id/alt3dayBottom"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignBottom="@+id/alt3Button"
+				android:layout_alignLeft="@+id/alt3Button"
+				android:layout_alignRight="@+id/alt3Button"
+				android:gravity="center"
+				
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:textSize="11sp" />
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>

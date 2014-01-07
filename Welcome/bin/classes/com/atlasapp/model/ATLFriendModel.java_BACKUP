@@ -1,0 +1,367 @@
+package com.atlasapp.model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.atlasapp.common.*;
+
+public class ATLFriendModel {
+	
+
+	private int friendId;
+	private String firstname= "";
+	private String lastname ="";
+	private String phoneNumber="";  
+	private String emailAddress="";
+	private String picPath="";
+	private boolean fromFacebook= false;
+	private String facebookId="";
+	private String atlasId="";
+	private boolean fromTwitter= false;
+	private String twitterId="";
+	private boolean fromLinkedin= false;
+	private String linkedinId="";
+	private boolean fromAddressBook=false;
+	private String addressBookId="";
+	  
+	
+	
+	public static enum FRIEND_PROPERTY { ID,  FIRST_NAME, EMAIL, LAST_NAME, PHONE, FROM_FACEBOOK, FROM_AB, FROM_TWITTER, FROM_LNKEDIN
+											,FB_ID, AB_ID, 	ATLAS_ID,PIC_PATH, OTHER}
+	
+	
+	
+	
+	private static FRIEND_PROPERTY getFriendProperty(String property)
+	{
+		return (property.equals("id")? FRIEND_PROPERTY.ID:
+			    property.equals("first_name")?FRIEND_PROPERTY.FIRST_NAME:
+			    	property.equals("last_name")?FRIEND_PROPERTY.LAST_NAME:
+			    		property.equals("email")?FRIEND_PROPERTY.EMAIL:
+			    			property.equals("phone")?FRIEND_PROPERTY.PHONE:
+			    				property.equals("pic_path")?FRIEND_PROPERTY.PIC_PATH:
+			    					property.equals("from_facebook")?FRIEND_PROPERTY.FROM_FACEBOOK:
+			    						property.equals("from_twitter")?FRIEND_PROPERTY.FROM_TWITTER:
+			    							property.equals("from_linkedin")?FRIEND_PROPERTY.FROM_LNKEDIN:
+			    								property.equals("fb_id")?FRIEND_PROPERTY.FB_ID:
+			    									property.equals("ab_id")?FRIEND_PROPERTY.AB_ID:
+			    										property.equals("parse_id")?FRIEND_PROPERTY.ATLAS_ID:
+			    											property.equals("from_ab")?FRIEND_PROPERTY.FROM_AB:FRIEND_PROPERTY.OTHER);
+	}
+	private HashMap<String, String> h;
+
+	public ATLFriendModel() {
+	}
+
+	public ATLFriendModel(int friendId) {
+		this.friendId = friendId;
+		read();
+	}
+
+	public ATLFriendModel(HashMap<String, String> h) {
+		fromHashMap(h);
+	}
+	
+	public static ArrayList<HashMap<String, String>> readAll() {
+		return DB.q("SELECT * FROM ATL_FRIEND order by FIRSTNAME");
+	}
+	/**
+	 * Getting all user's friends email address that are on Atlas 
+	 * @return a list of all emails
+	 */
+	public static ArrayList<String> readAllABEmails() {
+		ArrayList<HashMap<String, String>> hA = DB.q("SELECT EMAIL_ADDRESS FROM ATL_FRIEND WHERE EMAIL_ADDRESS is not null AND FROM_ADDRESS_BOOK = '1' ORDER BY EMAIL_ADDRESS");
+		ArrayList<String> emailAddressA = new ArrayList<String>(hA.size());
+		for(HashMap<String, String> h : hA){
+			emailAddressA.add(h.get("EMAIL_ADDRESS"));
+		}
+		return emailAddressA;
+	}
+	
+	
+	
+	/**
+	 * Getting all user's friends email address that are on Atlas 
+	 * @return a list of all emails
+	 */
+	public static ArrayList<String> readAllEmails() {
+		ArrayList<HashMap<String, String>> hA = DB.q("SELECT EMAIL_ADDRESS FROM ATL_FRIEND WHERE EMAIL_ADDRESS is not null ORDER BY EMAIL_ADDRESS");
+		ArrayList<String> emailAddressA = new ArrayList<String>(hA.size());
+		for(HashMap<String, String> h : hA){
+			emailAddressA.add(h.get("EMAIL_ADDRESS"));
+		}
+		return emailAddressA;
+	}
+	
+	/**
+	 * Getting all user's Adress Book Contacts friends that are on Atlas 
+	 * @return a list of all adress book id's 
+	 */
+	public static ArrayList<String> readAllAdressBookId() {
+		ArrayList<HashMap<String, String>> hA = DB.q("SELECT ADDRESS_BOOK_ID FROM ATL_FRIEND WHERE ADDRESS_BOOK_ID is not null ORDER BY ADDRESS_BOOK_ID");
+		ArrayList<String> addressBookIdA = new ArrayList<String>(hA.size());
+		for(HashMap<String, String> h : hA){
+			addressBookIdA.add(h.get("ADDRESS_BOOK_ID"));
+		}
+		return addressBookIdA;
+	}
+	
+	/**
+	 * update the DB with the property given ...TO DO!!!!!
+	 * @param id
+	 * @param property
+	 */  
+	public static void updateFriendByID(String id, String property, String value)
+	{
+		FRIEND_PROPERTY propertyUpdate = getFriendProperty(property);
+		
+		
+		/// TO DO.......
+		
+		switch (propertyUpdate)
+		{
+		case FB_ID: 
+			break;
+		}
+		
+		
+	}
+	
+	/**
+	 * Getting all user's Facebook friends that are on Atlas 
+	 * @return a list of all facebook id's 
+	 */
+	public static ArrayList<String> readAllFacebookId() {
+
+		ArrayList<HashMap<String, String>> hA = DB.q("SELECT FACEBOOK_ID FROM ATL_FRIEND WHERE FACEBOOK_ID is not null ORDER BY FACEBOOK_ID");
+		ArrayList<String> facebookIdA = new ArrayList<String>();
+		if (hA!=null){
+		facebookIdA = new ArrayList<String>(hA.size());
+		for(HashMap<String, String> h : hA){
+			facebookIdA.add(h.get("FACEBOOK_ID"));
+		}
+		}
+		return facebookIdA;
+	}
+	
+	public void read() {
+		fromHashMap(Utilities.eHash(DB.q("SELECT * FROM ATL_FRIEND WHERE FRIEND_ID='" + friendId + "' LIMIT 1")));
+	}
+
+	public void readByFacebookId() {
+		fromHashMap(Utilities.eHash(DB.q("SELECT * FROM ATL_FRIEND WHERE FACEBOOK_ID='" + facebookId + "' LIMIT 1")));
+	}
+	
+	
+	public void readByAdressBookId() {
+		fromHashMap(Utilities.eHash(DB.q("SELECT * FROM ATL_FRIEND WHERE ADDRESS_BOOK_ID='" + addressBookId + "' LIMIT 1")));
+	}
+	
+	public void readByEmailAdress() {
+		fromHashMap(Utilities.eHash(DB.q("SELECT * FROM ATL_FRIEND WHERE EMAIL_ADDRESS='" + emailAddress + "' LIMIT 1")));
+	}
+	
+	public void write() {
+		String sql = "insert into ATL_FRIEND (" 
+				+ "FIRSTNAME," 
+				+ "LASTNAME," 
+				+ "PHONE_NUMBER," 
+				+ "EMAIL_ADDRESS,"
+				+ "PIC_PATH,"
+				+ "FROM_FACEBOOK,"
+				+ "FACEBOOK_ID,"
+				+ "ATLAS_ID,"
+				+ "FROM_TWITTER,"
+				+ "TWITTER_ID,"
+				+ "FROM_LINKEDIN,"
+				+ "LINKEDIN_ID,"
+				+ "FROM_ADDRESS_BOOK,"
+				+ "ADDRESS_BOOK_ID) values (" 
+				+ "'" + DB.prep(firstname) + "'," 
+				+ "'" + DB.prep(lastname) + "'," 
+				+ "'" + DB.prep(phoneNumber) + "'," 
+				+ "'" + DB.prep(emailAddress) + "'," 
+				+ "'" + DB.prep(picPath) + "'," 
+				+ "'" + DB.prep(fromFacebook) + "'," 
+				+ "'" + DB.prep(facebookId) + "'," 
+				+ "'" + DB.prep(atlasId) + "',"
+				+ "'" + DB.prep(fromTwitter) + "'," 
+				+ "'" + DB.prep(twitterId) + "',"
+				+ "'" + DB.prep(fromLinkedin) + "'," 
+				+ "'" + DB.prep(linkedinId) + "',"
+				+ "'" + DB.prep(fromAddressBook) + "',"
+				+ "'" + DB.prep(addressBookId) + "');";
+		DB.q(sql);
+		friendId = Integer.parseInt(DB.lastInsertId());
+	}
+	
+	public HashMap<String, String> toHashMap() {
+		h = new HashMap<String, String>();
+		h.put("FRIEND_ID", Integer.toString(friendId));
+		h.put("FIRSTNAME", firstname);
+		h.put("LASTNAME", lastname);
+		h.put("PHONE_NUMBER", phoneNumber);
+		h.put("EMAIL_ADDRESS", emailAddress);
+		h.put("PIC_PATH", picPath);
+		h.put("FROM_FACEBOOK", Utilities.toString(fromFacebook));
+		h.put("FACEBOOK_ID", facebookId);
+		h.put("FROM_TWITTER", Utilities.toString(fromTwitter));
+		h.put("FACEBOOK_ID", facebookId);
+		h.put("ATLAS_ID", atlasId);
+		h.put("FROM_LINKEDIN", Utilities.toString(fromLinkedin));
+		h.put("LINKEDIN_ID", linkedinId);
+		h.put("FROM_ADDRESS_BOOK", Utilities.toString(fromAddressBook));
+		h.put("ADDRESS_BOOK_ID", addressBookId);
+		return h;
+	}
+
+	public void fromHashMap(HashMap<String, String> h) {
+		this.h = h;
+		friendId = Integer.parseInt((String) h.get("FRIEND_ID"));
+		firstname = (String) h.get("FIRSTNAME");
+		lastname = (String) h.get("LASTNAME");
+		phoneNumber = (String) h.get("PHONE_NUMBER");
+		emailAddress = (String) h.get("EMAIL_ADDRESS");
+		picPath = (String) h.get("PIC_PATH");
+		fromFacebook = Utilities.toBoolean(h.get("FROM_FACEBOOK"));
+		facebookId = (String) h.get("FACEBOOK_ID");
+		atlasId = (String) h.get("ATLAS_ID");
+		fromTwitter = Utilities.toBoolean(h.get("FROM_TWITTER"));
+		twitterId = (String) h.get("TWITTER_ID");
+		fromLinkedin = Utilities.toBoolean(h.get("FROM_LINKEDIN"));
+		linkedinId = (String) h.get("LINKEDIN_ID");
+		fromAddressBook = Utilities.toBoolean(h.get("FROM_ADDRESS_BOOK"));
+		addressBookId = (String) h.get("ADDRESS_BOOK_ID");
+	}
+
+	public HashMap<String, String> getH() {
+		return h;
+	}
+
+	public String toString() {
+		toHashMap();
+		String s = "";
+		for (String key : h.keySet()) {
+			s += key + " = " + h.get(key) + "\n";
+		}
+		return s;
+	}
+	
+	/** Accessors **/
+	
+	public int getFriendId() {
+		return friendId;
+	}
+
+	public void setFriendId(int friendId) {
+		this.friendId = friendId;
+	}
+	
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getPicPath() {
+		return picPath;
+	}
+
+	public void setPicPath(String picPath) {
+		this.picPath = picPath;
+	}
+
+	public boolean isFromFacebook() {
+		return fromFacebook;
+	}
+
+	public void setFromFacebook(boolean fromFacebook) {
+		this.fromFacebook = fromFacebook;
+	}
+	
+	public String getFacebookId() {
+		return facebookId;
+	}
+	public String getAtlasId() {
+		return atlasId;
+	}
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
+	public void setAtlasId(String atlasId) {
+		this.atlasId = atlasId;
+	}
+	public boolean isFromTwitter() {
+		return fromTwitter;
+	}
+
+	public void setFromTwitter(boolean fromTwitter) {
+		this.fromTwitter = fromTwitter;
+	}
+	
+	public String getTwitterId() {
+		return twitterId;
+	}
+
+	public void setTwitterId(String twitterId) {
+		this.twitterId = twitterId;
+	}
+	
+	public boolean isFromLinkedin() {
+		return fromLinkedin;
+	}
+
+	public void setFromLinkedin(boolean fromLinkedin) {
+		this.fromLinkedin = fromLinkedin;
+	}
+	
+	public String getLinkedinId() {
+		return linkedinId;
+	}
+
+	public void getLinkedinId(String linkedinId) {
+		this.linkedinId = linkedinId;
+	}
+	
+	public boolean isFromAddressBook() {
+		return fromAddressBook;
+	}
+
+	public void setFromAddressBook(boolean fromAddressBook) {
+		this.fromAddressBook = fromAddressBook;
+	}
+	
+	public String getAddressBookId() {
+		return addressBookId;
+	}
+
+	public void setAddressBookId(String addressBookId) {
+		this.addressBookId = addressBookId;
+	}
+}

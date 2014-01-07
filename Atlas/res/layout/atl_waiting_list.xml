@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/atlSigninLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/white" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_marginBottom="5dp"
+			android:layout_marginTop="5dp"
+			android:text="Waiting List"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" >
+		</TextView>
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/atlWaitingListContentBody"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/topBarMenu" >
+		<ImageView
+			android:id="@+id/atlWaitingListTop"
+			android:layout_width="match_parent"
+			android:layout_height="90dp"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/waiting_list_background_top" >
+		</ImageView>
+		<ImageView
+			android:id="@+id/atlWaitingListCenter"
+			android:layout_width="match_parent"
+			android:layout_height="203dp"
+			android:layout_below="@+id/atlWaitingListTop"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="35dp"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/waiting_list_background_center" >
+		</ImageView>
+		<ImageView
+			android:id="@+id/atlWaitingListLower"
+			android:layout_width="match_parent"
+			android:layout_height="138dp"
+			android:layout_below="@+id/atlWaitingListCenter"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="35dp"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/waiting_list_background_lower" >
+		</ImageView>
+	</RelativeLayout>
+</RelativeLayout>

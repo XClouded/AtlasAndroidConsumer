@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bk_gray"
+	android:orientation="vertical" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageButton
+			android:id="@+id/monthBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="7dp"
+			android:background="#0000"
+			android:contentDescription="@string/month_btn"
+			android:src="@drawable/btn_month" />
+		<TextView
+			android:id="@+id/calendar_move_event_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:text="@string/calendar_move_event_title"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" />
+		<!--
+        <ImageView
+            android:id="@+id/navbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/nav_bar"
+            android:src="@drawable/calendar_edit_alt_view_title" />
+		-->
+	</RelativeLayout>
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/calendarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/topBarMenu"
+		android:background="@drawable/bg_day_mover" >
+		<ImageButton
+			android:id="@+id/prevDay"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="12dp"
+			android:layout_marginTop="12dp"
+			android:background="#0000"
+			android:contentDescription="@string/left_arrow_btn"
+			android:src="@drawable/cal_btn_left_arrow" />
+		<TextView
+			android:id="@+id/currentDay"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="@string/date_sample"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="@color/blue_datetime"
+			android:textSize="24sp"
+			android:textStyle="bold" >
+		</TextView>
+		<ImageButton
+			android:id="@+id/nextDay"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentTop="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="12dp"
+			android:layout_marginTop="12dp"
+			android:background="#0000"
+			android:contentDescription="@string/right_arrow_btn"
+			android:src="@drawable/cal_btn_right_arrow" />
+	</RelativeLayout>
+	<ListView
+		android:id="@+id/calendarList"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/bottomBarMenu"
+		android:layout_below="@+id/calendarMenu" >
+	</ListView>
+	<RelativeLayout
+		android:id="@+id/bottomBarMenu"
+		android:layout_width="match_parent"
+		android:layout_height="59dp"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/cal_move_event_bottom_bar_bg" >
+		<!--
+        <ImageView
+            android:id="@+id/preferImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/cal_move_event_time_bg" 
+            android:contentDescription="@string/app_name"/>
+		-->
+		<ImageView
+			android:id="@+id/preferImg"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="20dp"
+			android:contentDescription="@string/app_title"
+			android:src="@drawable/cal_move_event_time_bg" />
+		<TextView
+			android:id="@+id/preferHour"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/preferImg"
+			android:layout_alignRight="@+id/preferImg"
+			android:layout_alignTop="@+id/preferImg"
+			android:gravity="center"
+			android:text="@string/calendar_edit_event_when_hour"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textSize="16sp"
+			android:textStyle="bold" />
+		<TextView
+			android:id="@+id/preferDay"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/preferImg"
+			android:layout_alignLeft="@+id/preferImg"
+			android:layout_alignRight="@+id/preferImg"
+			android:gravity="center"
+			android:text="@string/calendar_edit_event_when_day"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textSize="14sp"
+			android:textStyle="bold" />
+		<ImageButton
+			android:id="@+id/cal_move_event_btn_cancel"
+			android:layout_width="63dp"
+			android:layout_height="37dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="20dp"
+			android:background="@drawable/cal_move_event_btn_cancel"
+			android:contentDescription="@string/app_name" />
+		<ImageButton
+			android:id="@+id/cal_move_event_btn_save"
+			android:layout_width="63dp"
+			android:layout_height="37dp"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="20dp"
+			android:layout_toLeftOf="@+id/cal_move_event_btn_cancel"
+			android:background="@drawable/cal_move_event_btn_save"
+			android:contentDescription="@string/app_name" />
+	</RelativeLayout>
+</RelativeLayout>

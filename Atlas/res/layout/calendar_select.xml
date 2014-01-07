@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="310dp"
+	android:layout_height="match_parent" >
+	<RelativeLayout
+		android:id="@+id/cal_select_user_view"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="#0000" >
+		<ImageView
+			android:id="@+id/cal_select_user_avatar"
+			android:layout_width="45dp"
+			android:layout_height="45dp"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:contentDescription="@string/app_name" >
+		</ImageView>
+		<TextView
+			android:id="@+id/cal_select_user_name_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/cal_select_user_avatar"
+			android:text="@string/task_sort_user_name_text"
+			android:textColor="@color/white"
+			android:textSize="26sp"
+			android:textStyle="bold" >
+		</TextView>
+	</RelativeLayout>
+	<TextView
+		android:id="@+id/cal_select_bar"
+		android:layout_width="wrap_content"
+		android:layout_height="32dp"
+		android:layout_below="@+id/cal_select_user_view"
+		android:background="@drawable/alerts_titlebar_bg2x"
+		android:gravity="center_vertical"
+		android:paddingLeft="20dp"
+		android:text="@string/cal_select_titlebar"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		android:textStyle="bold" >
+	</TextView>
+	<RelativeLayout
+		android:id="@+id/cal_select_show_all_cell"
+		android:layout_width="match_parent"
+		android:layout_height="55dp"
+		android:layout_below="@+id/cal_select_bar"
+		android:background="@drawable/task_sort_cell_background" >
+		<ImageView
+			android:id="@+id/calendar_select_color_img"
+			android:layout_width="10dip"
+			android:layout_height="match_parent"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:contentDescription="@string/app_name" />
+		<TextView
+			android:id="@+id/calendar_select_calendar_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:layout_toRightOf="@+id/calendar_select_color_img"
+			android:text="@string/calendar_select_all_text"
+			android:textColor="@color/white"
+			android:textSize="20sp"
+			android:textStyle="bold" >
+		</TextView>
+		<CheckBox
+			android:id="@+id/calendar_select_checkbox"
+			android:layout_width="23dp"
+			android:layout_height="23dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="7dp"
+			android:button="@drawable/custom_check_box"
+			android:checked="true" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:layout_alignParentBottom="true"
+			android:background="@color/black" />
+	</RelativeLayout>
+	<ListView
+		android:id="@+id/cal_select_list_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/cal_select_show_all_cell"
+		android:background="#0000" >
+	</ListView>
+</RelativeLayout>

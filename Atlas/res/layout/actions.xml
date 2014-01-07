@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bk_gray" >
+
+    <!-- BEGIN TOPBAR MENU -->
+
+    <RelativeLayout
+        android:id="@+id/topMenuBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/navbar" >
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/actions_title"
+            android:textColor="@color/white"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+        <!--
+    <ImageView
+        android:id="@+id/titleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnMonthImage"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/settings_title_bar_title" 
+        android:contentDescription="@string/app_name"/>
+        -->
+
+        <ImageButton
+            android:id="@+id/actions_close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="#0000"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/btn_close" />
+    </RelativeLayout>
+    <!-- END TOPBAR MENU -->
+
+
+    <!-- BEGIN CONTENT LAYOUT -->
+
+    <ImageButton
+        android:id="@+id/actions_menu_event_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topMenuBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_event"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/actions_menu_event_with_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actions_menu_event_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_event_with"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/actions_menu_task_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actions_menu_event_with_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_task"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/actions_menu_task_delegate_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actions_menu_task_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_task_delegate"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/actions_menu_note_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actions_menu_task_delegate_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_note"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/actions_menu_note_with_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actions_menu_note_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_note_with"
+        android:contentDescription="@string/app_name" />
+
+    <ImageButton
+        android:id="@+id/actions_menu_contact_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actions_menu_note_with_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/actions_menu_contact"
+        android:contentDescription="@string/app_name" />
+
+    <!-- END CONTENT LAYOUT -->
+
+
+    <!-- BEGIN BOTTOM TABBAR
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <include
+            android:id="@+id/tabBarIncludeLayout"
+            layout="@layout/bottom_tab_bar" />
+    </RelativeLayout>
+
+     END BOTTOM TABBAR -->
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customTopEdgesEditTextLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     >
+
+    <ImageView
+        android:id="@+id/oneRowWithTopEdgesImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/one_row_with_top_edges2x"
+        android:contentDescription="@string/app_name" />
+
+    <EditText
+        android:id="@+id/customTopEdgesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/oneRowWithTopEdgesImg"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="5dp"
+        android:background="#0000"
+        android:hint="@string/profile_edit_add_email_hint"
+        android:inputType="textEmailAddress"
+        android:textStyle="bold" >
+ 
+</EditText>
+<!-- <ImageView
+    android:id="@+id/oneRowWithEdgesImg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/one_row_with_edges" />
+<EditText
+    android:id="@+id/customEditText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBaseline="@+id/oneRowWithEdgesImg"
+    android:layout_alignBottom="@+id/oneRowWithEdgesImg"
+    android:ems="10"
+    android:inputType="textEmailAddress" > -->
+
+    <!-- <requestFocus /> -->
+
+<!-- </EditText> -->
+<!-- <RelativeLayout> -->
+
+</RelativeLayout>

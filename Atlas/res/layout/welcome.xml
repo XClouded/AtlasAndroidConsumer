@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/welcomeLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/welcome_background" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageButton
+			android:id="@+id/welcomeRegisterBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/welcome_title_bar_btn_register" />
+		<ImageButton
+			android:id="@+id/welcomeSignInBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="5dp"
+			android:background="#0000"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/welcome_title_bar_btn_signin" />
+	</RelativeLayout>
+	<ImageButton
+		android:id="@+id/fbSignInBtn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="35dp"
+		android:background="#0000"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/signin_btn_signin_fb" />
+	<atlasapp.facebook.LoginButton
+		android:id="@+id/fbauthButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/fbSignInBtn"
+		android:layout_alignLeft="@+id/fbSignInBtn"
+		android:layout_alignRight="@+id/fbSignInBtn"
+		android:layout_alignTop="@+id/fbSignInBtn"
+		android:background="#0000"
+		android:src="@drawable/welcome_btn_connect_fb"
+		android:textColor="#0000" />
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/fbSignInBtn"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="22dp"
+		android:text="@string/version"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textColor="@color/black" />
+</RelativeLayout>

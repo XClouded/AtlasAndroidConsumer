@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/today_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bk_gray" >
+
+    <!-- BEGIN TOPBAR MENU -->
+
+    <RelativeLayout
+        android:id="@+id/topMenuBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/navbar" >
+
+      <ImageButton
+        android:id="@+id/sortButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/btn_sort" />
+
+    <ImageButton
+        android:id="@+id/addbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/sortButton"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/sortButton"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/btn_add" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/addbtn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/contacts_title"
+        android:textColor="@color/white"
+        android:textSize="26dp"
+        android:textStyle="bold" />
+    <!--
+    <ImageView
+        android:id="@+id/titleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnMonthImage"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/settings_title_bar_title" 
+        android:contentDescription="@string/app_name"/>
+    -->
+
+    <ImageButton
+        android:id="@+id/actionsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/alliesbtn"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/btn_lightning" />
+
+    <ImageButton
+        android:id="@+id/alliesbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/btn_atlas" />
+
+</RelativeLayout>
+    <!-- END TOPBAR MENU -->
+
+
+    <!-- BEGIN CONTENT LAYOUT -->
+
+    <ImageView
+        android:id="@+id/contacts_search_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/topMenuBar"
+        android:background="@drawable/contacts_search_bar"
+        android:contentDescription="@string/app_name"/>
+    
+     <ImageView
+        android:id="@+id/contacts_group_users_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/contacts_search_image"
+        android:background="@drawable/contacts_group_users"
+        android:contentDescription="@string/app_name"/>
+
+    <!-- END CONTENT LAYOUT -->
+
+
+    <!-- BEGIN BOTTOM TABBAR -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <include
+            android:id="@+id/tabBarIncludeLayout"
+            layout="@layout/bottom_tab_bar" />
+    </RelativeLayout>
+
+    <!-- END BOTTOM TABBAR -->
+
+</RelativeLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <include
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/listview_header" />
+
+    <RelativeLayout
+        android:id="@+id/leftLayout"
+        android:layout_width="70dip"
+        android:layout_height="55dip"
+        android:layout_below="@+id/header"
+        android:background="@android:color/white" >
+
+        <ImageView
+            android:id="@+id/imageCalendarColor"
+            android:layout_width="10dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name" />
+
+        <ImageView
+            android:id="@+id/imageNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/imageCalendarColor"
+            android:contentDescription="@string/app_name" />
+
+        <ImageView
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@android:color/darker_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rightLayout"
+        android:layout_width="55dip"
+        android:layout_height="55dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/header"
+        android:background="@android:color/white" >
+
+        <ImageView
+            android:id="@+id/imageUser"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/app_name" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/centerLayout"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_toLeftOf="@+id/rightLayout"
+        android:layout_toRightOf="@+id/leftLayout"
+        android:background="@android:color/white" >
+
+        <TextView
+            android:id="@+id/noteTitle"
+            style="@style/ATLTitleOfListView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/task_edit_title"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/noteDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/noteTitle"
+            android:layout_below="@+id/noteTitle"
+            android:layout_marginTop="0dp"
+            android:text="@string/task_edit_description"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/note_cell_delete_view"
+        android:layout_width="75dip"
+        android:layout_height="55dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/header"
+        android:background="@drawable/bk_gray"
+        android:visibility="gone" >
+
+        <ImageButton
+            android:id="@+id/note_cell_delete_btn"
+            android:layout_width="60dp"
+            android:layout_height="28dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/task_cell_btn_delete2x"
+            android:contentDescription="@string/app_name" />
+    </RelativeLayout>
+
+</RelativeLayout>

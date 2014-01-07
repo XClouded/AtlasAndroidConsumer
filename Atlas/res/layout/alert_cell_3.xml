@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="#0000" >
+	<RelativeLayout
+		android:id="@+id/leftLayout"
+		android:layout_width="60dp"
+		android:layout_height="match_parent"
+		android:layout_centerVertical="true"
+		android:background="#0000" >
+		<ImageView
+			android:id="@+id/alert_avatar_image"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="3dp"
+			android:contentDescription="@string/app_name"
+			android:src="@drawable/avatar2x" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/centerLayout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/leftLayout"
+		android:layout_marginLeft="3dp"
+		android:layout_toRightOf="@+id/leftLayout" >
+		<TextView
+			android:id="@+id/alerts_events_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:text="@string/alerts_events_title"
+			android:textColor="@color/white"
+			android:textSize="16sp"
+			android:textStyle="normal" />
+		<TextView
+			android:id="@+id/alerts_inviter_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@+id/alerts_events_title"
+			android:text="@string/alerts_inviter_name"
+			android:textColor="@color/white"
+			android:textSize="16sp"
+			android:textStyle="normal" />
+		<TextView
+			android:id="@+id/alerts_event_prefered_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/alerts_inviter_name"
+			android:layout_below="@+id/alerts_inviter_name"
+			android:gravity="top"
+			android:text="@string/date_sample"
+			android:textSize="16sp"
+			android:textStyle="bold" />
+	</RelativeLayout>
+</RelativeLayout>

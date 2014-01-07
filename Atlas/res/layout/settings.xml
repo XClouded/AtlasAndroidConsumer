@@ -1,0 +1,192 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/settings_bg" >
+	<RelativeLayout
+		android:id="@+id/topBarMenu2"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true" >
+		<include
+			android:id="@+id/tabBarIncludeLayout"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			layout="@layout/top_menu_bar" />
+	</RelativeLayout>
+	<RelativeLayout
+		android:id="@+id/topBarMenu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@drawable/navbar" >
+		<ImageView
+			android:id="@+id/navbarTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="35dp"
+			android:layout_centerInParent="true"
+			android:src="@drawable/settings_title_bar_title" />
+	</RelativeLayout>
+	<ImageView
+		android:id="@+id/settingsFriendsTitleImg"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/topBarMenu"
+		android:layout_marginLeft="35dp"
+		android:layout_marginTop="10dp"
+		android:background="#0000"
+		android:src="@drawable/settings_title_friends" />
+	<ImageView
+		android:id="@+id/settingsCell"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/settingsFriendsTitleImg"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="5dp"
+		android:background="#0000"
+		android:src="@drawable/edit_profile_pwd_cell_bg" />
+	<Button
+		android:id="@+id/settingsFindAtlasFriendsBtn"
+		android:layout_width="match_parent"
+		android:layout_height="25dp"
+		android:layout_alignLeft="@+id/settingsCell"
+		android:layout_alignTop="@+id/settingsCell"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="15dp"
+		android:layout_marginTop="10dp"
+		android:alpha="1"
+		android:background="#0000"
+		android:gravity="left"
+		android:text="Find Friends On Atlas" />
+	<ImageView
+		android:id="@+id/settingsRightArroeCell1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@id/settingsCell"
+		android:layout_alignTop="@+id/settingsFindAtlasFriendsBtn"
+		android:layout_marginRight="20dp"
+		android:background="#0000"
+		android:src="@drawable/settings_right_arrow" />
+	<Button
+		android:id="@+id/settingsInviteFindToAtlasBtn"
+		android:layout_width="match_parent"
+		android:layout_height="25dp"
+		android:layout_alignBottom="@+id/settingsCell"
+		android:layout_alignLeft="@+id/settingsCell"
+		android:layout_marginBottom="5dp"
+		android:layout_marginLeft="10dp"
+		android:alpha="1"
+		android:background="#0000"
+		android:gravity="left"
+		android:text="Invite Friends To Atlas" />
+	<ImageView
+		android:id="@+id/settingsRightArroeCell2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@id/settingsCell"
+		android:layout_alignTop="@+id/settingsInviteFindToAtlasBtn"
+		android:layout_marginRight="20dp"
+		android:background="#0000"
+		android:src="@drawable/settings_right_arrow" />
+	<ImageView
+		android:id="@+id/settingsAccountTitleImg"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/settingsCell"
+		android:layout_marginLeft="35dp"
+		android:layout_marginTop="20dp"
+		android:background="#0000"
+		android:src="@drawable/settings_title_account" />
+	<ImageView
+		android:id="@+id/settingsAccountCell"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/settingsAccountTitleImg"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="5dp"
+		android:background="#0000"
+		android:src="@drawable/settings_cell_account" />
+	<Button
+		android:id="@+id/settingsEditProfileBtn"
+		android:layout_width="match_parent"
+		android:layout_height="25dp"
+		android:layout_alignLeft="@+id/settingsAccountCell"
+		android:layout_alignTop="@+id/settingsAccountCell"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:alpha="1"
+		android:background="#0000"
+		android:gravity="left"
+		android:text="Edit Profile" />
+	<ImageView
+		android:id="@+id/settingsRightArroeCell3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@id/settingsAccountCell"
+		android:layout_alignTop="@+id/settingsEditProfileBtn"
+		android:layout_marginRight="20dp"
+		android:background="#0000"
+		android:src="@drawable/settings_right_arrow" />
+	<Button
+		android:id="@+id/settingsForgotPasswordBtn"
+		android:layout_width="match_parent"
+		android:layout_height="25dp"
+		android:layout_alignBottom="@+id/settingsAccountCell"
+		android:layout_alignLeft="@+id/settingsAccountCell"
+		android:layout_marginBottom="5dp"
+		android:layout_marginLeft="10dp"
+		android:alpha="1"
+		android:background="#0000"
+		android:gravity="left"
+		android:text="Test Event" />
+	<ImageView
+		android:id="@+id/settingsRightArroeCell2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@id/settingsAccountCell"
+		android:layout_alignTop="@+id/settingsForgotPasswordBtn"
+		android:layout_marginRight="20dp"
+		android:background="#0000"
+		android:src="@drawable/settings_right_arrow" />
+	<ImageView
+		android:id="@+id/settingsSignOutCell"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/settingsAccountCell"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="25dp"
+		android:background="#0000"
+		android:src="@drawable/settings_cell_signout" />
+	<Button
+		android:id="@+id/settingsSignOutBtn"
+		android:layout_width="match_parent"
+		android:layout_height="25dp"
+		android:layout_alignLeft="@+id/settingsSignOutCell"
+		android:layout_alignTop="@+id/settingsSignOutCell"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:alpha="1"
+		android:background="#0000"
+		android:gravity="left"
+		android:text="Sign Out" />
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:visibility="gone" >
+		<include
+			android:id="@+id/tabBarIncludeLayout"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			layout="@layout/bottom_tab_bar" />
+	</RelativeLayout>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="100dp"
+		android:text="@string/version"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textColor="@color/black" />
+</RelativeLayout>
